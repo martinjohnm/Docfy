@@ -1,10 +1,14 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { Home } from "./pages/user/Home"
 
 function App() {
 
   return (
-      <div>
-        Doc Booking app 
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home/>}/>
+        </Routes>
+      </BrowserRouter>
   )
 }
 
