@@ -38,6 +38,7 @@ export function initPassport() {
                 done : (error : any, user? : any) => void
             ) {
 
+        
                 const user = await db.user.upsert({
                     create : {
                         email : profile.emails[0].value,
@@ -46,7 +47,8 @@ export function initPassport() {
                         lastLogin : new Date()
                     }, 
                     update : {
-                        name : profile.displayName
+                        name : profile.displayName,
+                        email : profile.emails[0].value,
                     },
                     where : {
                         email : profile.emails[0].value,
@@ -54,8 +56,9 @@ export function initPassport() {
 
                 })
 
+       
                 
-                done(null, "user")
+                done(null, user)
                 
             }
             

@@ -4,11 +4,12 @@ import { configDotenv } from "dotenv";
 import cookieParser from "cookie-parser"
 import session from "express-session";
 import cors from "cors"
-
+import authRoute from "./routes/auth"
+import { initPassport } from "./passport";
 
 const app = express();
 configDotenv()
-
+initPassport()
 app.use(express.json())
 app.use(cookieParser())
 app.use(
@@ -33,6 +34,7 @@ app.use(
     })
 );
 
+app.use("/auth", authRoute)
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
