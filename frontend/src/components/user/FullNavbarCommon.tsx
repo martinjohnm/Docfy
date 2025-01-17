@@ -11,10 +11,10 @@ export const FullNavBarCommon = () => {
 
   return (
     
-    <div className="sticky">
+    <div className="">
         
       {/* Hamburger Menu */}
-      <div className="bg-[#061e34] rounded-3xl w-full">
+      <div className="bg-[#061e34] rounded-xl w-full">
           <div className="text-white hidden lg:block">
               <Navbar/>
           </div>
@@ -76,9 +76,9 @@ export const FullNavBarCommon = () => {
         <nav>
           <ul className="space-y-4 p-4 text-lg">
             <li><a href="/" className="block text-white hover:text-gray-300">Home</a></li>
-            <li><a href="/about" className="block text-white hover:text-gray-300">Doctors</a></li>
-            <li><a href="/services" className="block text-white hover:text-gray-300">Bookings</a></li>
-            <li><a href="/contact" className="block text-white hover:text-gray-300">Profile</a></li>
+            <li><a href="/doctors" className="block text-white hover:text-gray-300">Doctors</a></li>
+            <li><a href="/bookings" className="block text-white hover:text-gray-300">Bookings</a></li>
+            <li><a href="/profile" className="block text-white hover:text-gray-300">Profile</a></li>
           </ul>
         </nav>
       </div>

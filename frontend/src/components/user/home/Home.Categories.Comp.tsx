@@ -3,13 +3,13 @@
 
 export const HomeCategoriesComp = () => {
     return <div className="bg-[#061e34] rounded-md w-full p-4">
-        <div className="grid grid-cols-12 py-10">
+        <div className="md:grid md:grid-cols-12 py-10">
             <div className="col-span-6">
-                <div className="px-20 flex gap-2 items-center">
+                <div className="md:px-20 flex gap-2 items-center">
                     <img className="w-4 h-4" src="https://demo.casethemes.net/medicross/wp-content/uploads/2024/08/ic1.png" alt="" />
                     <p className="text-yellow-500 text-lg">We Provide the Best Service for your Health </p>
                 </div>
-                <div className="px-20 mx-5">
+                <div className="md:px-20 mx-5">
                     <p className="text-white text-4xl font-semibold">Our Practice Areas and Expertise</p>
                 </div>
             </div>
@@ -23,8 +23,8 @@ export const HomeCategoriesComp = () => {
             </div>
         </div>   
 
-        <div className="grid grid-cols-3 py-10 px-20 min-h-40">
-            <div className="bg-sky-800 px-10 py-24 rounded-md items-center justify-center">
+        <div className="xl:grid xl:grid-cols-3 md:py-10 md:px-20 min-h-40">
+            <div className="bg-[#21394f] px-10 py-24 rounded-2xl items-center justify-center">
                 <div>
                     <p className="text-white font-semibold text-3xl">Practice List</p>
                 </div>
@@ -44,9 +44,17 @@ export const HomeCategoriesComp = () => {
             </div>
             <div className="px-10 py-24 bg-white rounded-md">
                 <CategoryDiv title="Orthopedics" description="The orthopedics category encompasses the branch of medicine focused on the diagnosis, treatment, prevention, and rehabilitation of disorders, injuries, and conditions affecting the musculoskeletal system."/>
+                <div className="py-10 grid grid-cols-2">
+                    <div className="justify-start">
+                        <button className="p-2 bg-[#061e34] text-white rounded-lg hover:text-slate-400">Read More</button>
+                    </div>
+                    <div className="">
+                        
+                    </div>
+                </div>
             </div>
-            <div className="bg-sky-800 overflow-hidden">
-                <img className="rounded-md object-cover" src="https://demo.casethemes.net/medicross/wp-content/uploads/2024/09/sv8.webp" alt="" />
+            <div className="overflow-hidden w-full">
+                <img className="rounded-md object-cover w-full h-full" src="https://demo.casethemes.net/medicross/wp-content/uploads/2024/09/sv8.webp" alt="" />
             </div>
         </div>     
     </div>
