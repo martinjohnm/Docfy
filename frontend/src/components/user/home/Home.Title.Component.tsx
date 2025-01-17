@@ -26,11 +26,11 @@ export const HomeTitleComponent = () => {
                     
                 </div>
             </div>
-            <div className="relative bg-red-300 border border-gray-400">
+            <div className="bg-red-300 border border-gray-400 w-full h-full">
                 <img 
                     src="https://demo.casethemes.net/medicross/wp-content/uploads/2024/10/h3-2.webp" 
                     alt="Floating Image" 
-                    className=" top-0 left-0 w-screen max-h-96 object-cover transform rounded-md"
+                    className=" top-0 left-0 w-screen max-h-96 object-cover rounded-md"
                 />
             </div>
            
