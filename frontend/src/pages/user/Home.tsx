@@ -15,10 +15,10 @@ import { HomeWhyHealthComponent } from "../../components/user/home/Home.Why.Heal
 
 export const Home = () => {
  
-    return <div className="p-4">
+    return <div className="p-2">
     
         <div className="sticky top-0 z-40">
-            <FullNavBarCommon/>
+            <FullNavBarCommon page=""/>
         </div>
 
         <div className="py-4">

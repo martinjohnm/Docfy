@@ -6,10 +6,11 @@ import { useUserLogout } from "../../hooks/user/useUserLogout";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { userAtom } from "../../store/atoms/authState";
+import { NavbarTypes } from "./FullNavbarCommon";
 
 
 
-export const Navbar = () => {
+export const Navbar = ({page} : {page : NavbarTypes}) => {
 
     const logoutfn = useUserLogout()
     const user = useRecoilValue(userAtom)
@@ -29,16 +30,16 @@ export const Navbar = () => {
                         <img className="h-14" src="https://demo.casethemes.net/medicross/wp-content/uploads/2024/07/logo.png" alt="" />
                     </div>
                     <div className="col-span-6 grid-cols-4 grid items-center justify-center text-white font-semibold font-mono text-lg">
-                        <Link to={"/"} className="flex justify-center hover:text-slate-300 cursor-pointer">
+                        <Link to={"/"} className={`flex justify-center hover:text-slate-300 cursor-pointer ${page == '' ? "text-green-400" : ""}`}>
                             Home
                         </Link>
-                        <Link to={"/doctors"} className="flex justify-center hover:text-slate-300 cursor-pointer">
+                        <Link to={"/doctors"} className={`flex justify-center hover:text-slate-300 cursor-pointer ${page == 'doctors' ? "text-green-400" : ""}`}>
                             Doctors
                         </Link>
-                        <Link to={"/bookings"} className="flex justify-center hover:text-slate-300 cursor-pointer">
+                        <Link to={"/bookings"} className={`flex justify-center hover:text-slate-300 cursor-pointer ${page == 'bookings' ? "text-green-400" : ""}`}>
                             Bookings
                         </Link>
-                        <Link to={"/user-profile"} className="flex justify-center hover:text-slate-300 cursor-pointer">
+                        <Link to={"/user-profile"} className={`flex justify-center hover:text-slate-300 cursor-pointer ${page == 'user-profile' ? "text-green-400" : ""}`}>
                             Profile
                         </Link>
                      
