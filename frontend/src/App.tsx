@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-import { Home } from "./pages/user/Home"
 import { RecoilRoot, useSetRecoilState } from "recoil"
 import { LoginPageUser } from "./pages/user/LoginPageUser"
 import { GoogleCallBack } from "./pages/user/GoogleCallBack"
@@ -14,6 +13,8 @@ import { BookingsPageAdmin } from "./pages/admin/BookingsPageAdmin"
 import { UsersPageAdmin } from "./pages/admin/UsersPageAdmin"
 import { DoctorsPageAdmin } from "./pages/admin/DoctorsPageAdmin"
 import { ReportsPageAdmin } from "./pages/admin/ReportsPageAdmin"
+import { Home } from "./pages/user/home/Home"
+import { Doctors } from "./pages/user/doctor/Doctors"
 
 function App() {
 
@@ -54,6 +55,7 @@ const AuthApp = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home/>}/>
+        <Route path="/doctors" element={<Doctors/>}/>
         <Route path="/login" element={<LoginPageUser/>}/>
         <Route path="/google-callback" element={<GoogleCallBack/>}/>
         <Route path="/user-profile" element={<UserAuthProtector><UserProfilePage/></UserAuthProtector>}/>
