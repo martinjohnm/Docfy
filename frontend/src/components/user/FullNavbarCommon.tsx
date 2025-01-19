@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Navbar } from "../../components/user/NavBar";
 
-export type NavbarTypes  = "" | "doctors" | "user-profile" | "bookings"
+export type NavbarTypes  = "" | "doctors" | "user-profile" | "bookings" | "none"
 
 export const FullNavBarCommon = ({page} : {page : NavbarTypes}) => {
   const [isOpen, setIsOpen] = useState(false);

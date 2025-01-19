@@ -18,6 +18,7 @@ import { Doctors } from "./pages/user/doctor/Doctors"
 import { HomePageDoctor } from "./pages/doctor/home/Home.Page.Doctor"
 import { DoctorGoogleCallBack } from "./pages/doctor/DoctorGoogleCallBack"
 import { LoginPageDoctor } from "./pages/doctor/LoginPageDoctor"
+import { NotFoundPage } from "./pages/NotFoundPage"
 
 function App() {
 
@@ -75,6 +76,10 @@ const AuthApp = () => {
         <Route path="/doctor" element={<HomePageDoctor/>}/>
         <Route path="/doctor-login" element={<LoginPageDoctor/>}/>
         <Route path="/google-callback-doctor" element={<DoctorGoogleCallBack/>}/>
+
+
+        <Route path="*" element={<NotFoundPage />} />
+
       </Routes>
     </BrowserRouter>
 )
