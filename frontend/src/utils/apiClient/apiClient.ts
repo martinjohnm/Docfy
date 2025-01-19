@@ -2,7 +2,7 @@
 
 
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { TOKEN } from './consts';
+import { TOKEN } from '../consts';
 
 const BACKEND_URL = import.meta.env.VITE_APP_BACKEND_URL ?? 'http://localhost:3000';
 
@@ -35,7 +35,7 @@ apiClient.interceptors.response.use(
 );
 
 // Helper function to make API calls
-export const callApi = async <T>(
+export const userApi = async <T>(
   endpoint: string,
   method: 'GET' | 'POST' | 'PUT' | 'DELETE',
   data?: object,

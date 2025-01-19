@@ -1,8 +1,8 @@
 import { Router } from "express";
 import passport from "passport"
-import { generatToken } from "../utils";
-import { userMiddleWare } from "../middlewares/userMiddleWare";
-import { getUser, userLogin, userLogout, userSignup } from "../controllers/user/auth.user";
+import { generatToken } from "../../utils";
+import { userMiddleWare } from "../../middlewares/userMiddleWare";
+import { getUser, userLogin, userLogout, userSignup } from "../../controllers/user/auth.user";
 
 
 const router = Router()
@@ -11,11 +11,11 @@ const CLIENT_URL = process.env.FRONTEND_URL ?? 'http://localhost:5173';
 
 router.post("/login", userLogin)
 router.post("/signup", userSignup)
-router.get('/google', passport.authenticate('google', {
+router.get('/google', passport.authenticate('google-user', {
          scope: ['profile', 'email'] 
 }),);
 router.get('/google/callback',
-    passport.authenticate('google', {
+    passport.authenticate('google-user', {
         failureRedirect: `${CLIENT_URL}/login/failed`,
         session : false
     }),

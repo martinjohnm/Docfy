@@ -4,7 +4,9 @@ import { configDotenv } from "dotenv";
 import cookieParser from "cookie-parser"
 import session from "express-session";
 import cors from "cors"
-import authRoute from "./routes/auth"
+import userAuthhRoute from "./routes/user/auth"
+import doctorAuthhRoute from "./routes/doctor/auth.doctor"
+
 import { initPassport } from "./passport";
 
 const app = express();
@@ -34,7 +36,13 @@ app.use(
     })
 );
 
-app.use("/auth", authRoute)
+
+// user routes
+app.use("/auth", userAuthhRoute)
+
+
+// doctor routes
+app.use("/auth-doctor", doctorAuthhRoute)
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

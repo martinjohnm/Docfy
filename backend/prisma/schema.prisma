@@ -16,19 +16,89 @@ datasource db {
 
 model User {
 
-  id            Int @id @default(autoincrement())
+  id            String   @id @default(uuid())
   email         String  @unique
   username      String? @unique
   name          String? 
   password      String?
   isVerified    Boolean @default(false)
+  isBlocked     Boolean @default(false)
   provider      AuthProvider
+  bookings      Booking[]
   createdAt     DateTime @default(now())
   lastLogin     DateTime?
+}
+
+model Doctor {
+  id                  String   @id @default(uuid())
+  name                String?
+  email               String  @unique
+  username            String? @unique
+  password            String?
+  isVerified          Boolean @default(false)
+  isBlocked           Boolean @default(false)
+  provider            AuthProvider
+  specializationId    String?
+  specialization      Category? @relation(fields: [specializationId], references: [id])
+  hospitalId          String?
+  hospital            Hospital? @relation(fields: [hospitalId], references: [id])
+  bookings            Booking[]
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt @default(now())
+}
+
+model Category {
+  id            String   @id @default(uuid())
+  name          String @unique
+  doctors       Doctor[]
+  hospitals     Hospital[] @relation("HospitalCategories")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Hospital {
+  id            String   @id @default(uuid())
+  name          String
+  locationId    String
+  location      Location @relation(fields: [locationId], references: [id])
+  categories    Category[] @relation("HospitalCategories")
+  doctors       Doctor[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Location {
+  id            String   @id @default(uuid())
+  city          String
+  state         String
+  country       String
+  postalcode    String
+  hospitals     Hospital[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+
+model Booking  {
+  id              String   @id @default(uuid())
+  doctorId        String
+  doctor          Doctor @relation(fields: [doctorId], references: [id])
+  patientId       String 
+  patient         User   @relation(fields: [patientId], references: [id])
+  appointmentDate DateTime
+  status          BookingStatus @default(PENDING)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
 
 enum AuthProvider {
   EMAIL
   GOOGLE
   GUEST
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
 }

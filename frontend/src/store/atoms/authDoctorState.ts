@@ -1,15 +1,16 @@
 // recoil/authState.ts
 import { atom, selector } from 'recoil';
 import { UserType } from '../../types/authTypes';
-import { fetchUserData } from '../../apis/user/authApi';
+import { fetchDoctorData } from '../../apis/doctor/doctorAuthApis';
 
-export const userAtom = atom< UserType | null>({
-  key: 'userAtom',
+export const doctorAtom = atom< UserType | null>({
+  key: 'doctorAtom',
   default: selector({
-    key: 'user/default',
+    key: 'doctor/default',
     get: async () => {
     try {
-        const response = await fetchUserData() ;              
+        const response = await fetchDoctorData() ;    
+        console.log(response)
         if (response.success) {
           return response.data.user;
         }
@@ -22,7 +23,3 @@ export const userAtom = atom< UserType | null>({
 }) ,
 });
 
-export const isAuthenticatedAtom = selector({
-  key: 'isAuthenticatedAtom',
-  get: ({ get }) => !!get(userAtom),
-});

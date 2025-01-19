@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken";
 import { User } from "./types";
 
 interface TokeInputType {
-    id : number,
+    id : string,
     email : string
 }
 configDotenv()
