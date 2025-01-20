@@ -15,10 +15,11 @@ import { DoctorsPageAdmin } from "./pages/admin/DoctorsPageAdmin"
 import { ReportsPageAdmin } from "./pages/admin/ReportsPageAdmin"
 import { Home } from "./pages/user/home/Home"
 import { Doctors } from "./pages/user/doctor/Doctors"
-import { HomePageDoctor } from "./pages/doctor/home/Home.Page.Doctor"
+import { HomePageDoctor } from "./pages/doctor/Home.doctor/Home.Page.Doctor"
 import { DoctorGoogleCallBack } from "./pages/doctor/DoctorGoogleCallBack"
 import { LoginPageDoctor } from "./pages/doctor/LoginPageDoctor"
 import { NotFoundPage } from "./pages/NotFoundPage"
+import { ProfileDoctor } from "./pages/doctor/Profile.Doctor.tsx/Profile.Doctor"
 
 function App() {
 
@@ -76,7 +77,7 @@ const AuthApp = () => {
         <Route path="/doctor" element={<HomePageDoctor/>}/>
         <Route path="/doctor-login" element={<LoginPageDoctor/>}/>
         <Route path="/google-callback-doctor" element={<DoctorGoogleCallBack/>}/>
-
+        <Route path="/doctor-profile" element={<ProfileDoctor/>}/>
 
         <Route path="*" element={<NotFoundPage />} />
 

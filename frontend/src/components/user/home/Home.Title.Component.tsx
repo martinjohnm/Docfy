@@ -26,7 +26,7 @@ export const HomeTitleComponent = () => {
                     
                 </div>
             </div>
-            <div className="bg-red-300 border border-gray-400 w-full h-full">
+            <div className="border border-gray-400 w-full h-full">
                 <img 
                     src="https://demo.casethemes.net/medicross/wp-content/uploads/2024/10/h3-2.webp" 
                     alt="Floating Image" 
