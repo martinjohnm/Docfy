@@ -1,45 +1,45 @@
 import { Request, Response } from "express";
 import db from "../../db"
-import { categoryAddInput } from "../../types/zod.types";
+import { locaitonAddInput } from "../../types/zod.types";
 
 
 
-export const createCategoryAdmin = async (req : Request, res : Response) => {
+export const createLocationAdmin = async (req : Request, res : Response) => {
 
     try {
         
-        
-        const categoryData = categoryAddInput.safeParse(req.body);
-        if (!categoryData.success) {
+
+        const locationData = locaitonAddInput.safeParse(req.body);
+        if (!locationData.success) {
             res.status(400).json({
-                message : "Category already added",
+                message : "location already added",
                 success : false
             })
             return
         }
 
-        const category = await db.category.findFirst({
+        const location = await db.location.findFirst({
             where :{
-                name : categoryData.data?.name
+                city : locationData.data.city
             }
         })
 
-        if (category) {
+        if (location) {
             res.status(409).json({
-                message : "Category already added",
+                message : "location already added",
                 success : false
             })
             return
         }
 
-        const newCategory = await db.category.create({
-            data : categoryData.data
+        const newlocation = await db.location.create({
+            data : locationData.data
         })
 
         res.status(200).json({
-            message : "Category created successfully",
+            message : "location created successfully",
             data : {
-                category : newCategory
+                location : newlocation
             },
             success : true
         })
@@ -49,7 +49,7 @@ export const createCategoryAdmin = async (req : Request, res : Response) => {
         let message
         if (error instanceof Error) message = error.message
         else message = String(error)
-        console.log("Error during Logout",  message); 
+        console.log("Error during Location adding",  message); 
         res.status(500).json(
             {
                 success : false,
@@ -60,17 +60,17 @@ export const createCategoryAdmin = async (req : Request, res : Response) => {
 
 
 
-export const getCategoriesAdmin = async (req : Request, res : Response) => {
+export const getLocationsAdmin = async (req : Request, res : Response) => {
 
     try {
         
 
-        const categories = await db.category.findMany()
+        const locations = await db.location.findMany()
 
         res.status(200).json({
-            message : "Category created successfully",
+            message : "location created successfully",
             data : {
-                categories
+                locations
             },
             success : true
         })
@@ -80,7 +80,7 @@ export const getCategoriesAdmin = async (req : Request, res : Response) => {
         let message
         if (error instanceof Error) message = error.message
         else message = String(error)
-        console.log("Error during Logout",  message); 
+        console.log("Error during Getting locations",  message); 
         res.status(500).json(
             {
                 success : false,

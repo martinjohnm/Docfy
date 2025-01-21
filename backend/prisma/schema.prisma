@@ -69,7 +69,7 @@ model Hospital {
 
 model Location {
   id            String   @id @default(uuid())
-  city          String
+  city          String @unique
   state         String
   country       String
   postalcode    String

@@ -3,7 +3,7 @@
 import { configDotenv } from "dotenv";
 import bcrypt from 'bcryptjs';
 import jwt from "jsonwebtoken";
-import { User } from "./types";
+import { User } from "./types/types";
 
 interface TokeInputType {
     id : string,

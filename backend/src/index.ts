@@ -7,6 +7,8 @@ import cors from "cors"
 import userAuthhRoute from "./routes/user/auth"
 import doctorAuthhRoute from "./routes/doctor/auth.doctor"
 import categoryAdminRoute from "./routes/admin/category.admin"
+import hospitalAdminRoute from "./routes/admin/hospital.admin"
+import locationAdminRoute from "./routes/admin/location.admin"
 
 import { initPassport } from "./passport";
 
@@ -47,6 +49,8 @@ app.use("/auth-doctor", doctorAuthhRoute)
 
 // admin routes
 app.use("/admin/category", categoryAdminRoute)
+app.use("/admin/hospital", hospitalAdminRoute)
+app.use("/admin/location", locationAdminRoute)
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

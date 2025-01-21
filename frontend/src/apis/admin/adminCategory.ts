@@ -1,8 +1,9 @@
+import { CategoryAddInput } from '../../types/zod.types';
 import { adminApi } from '../../utils/apiClient/adminApiClient';
 
 
 
-export const createCategoryAdmin = async (data : { name : string} ) => {
+export const createCategoryAdmin = async (data : CategoryAddInput ) => {
     return adminApi< {success : boolean, data : { category : any }, message : string} >("admin/category/create", "POST", data)
 }
 
