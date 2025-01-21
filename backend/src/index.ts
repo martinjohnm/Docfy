@@ -6,6 +6,7 @@ import session from "express-session";
 import cors from "cors"
 import userAuthhRoute from "./routes/user/auth"
 import doctorAuthhRoute from "./routes/doctor/auth.doctor"
+import categoryAdminRoute from "./routes/admin/category.admin"
 
 import { initPassport } from "./passport";
 
@@ -43,6 +44,9 @@ app.use("/auth", userAuthhRoute)
 
 // doctor routes
 app.use("/auth-doctor", doctorAuthhRoute)
+
+// admin routes
+app.use("/admin/category", categoryAdminRoute)
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

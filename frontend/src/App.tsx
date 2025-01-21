@@ -20,6 +20,8 @@ import { DoctorGoogleCallBack } from "./pages/doctor/DoctorGoogleCallBack"
 import { LoginPageDoctor } from "./pages/doctor/LoginPageDoctor"
 import { NotFoundPage } from "./pages/NotFoundPage"
 import { ProfileDoctor } from "./pages/doctor/Profile.Doctor.tsx/Profile.Doctor"
+import { HospitalsPageAdmin } from "./pages/admin/HospitalsPageAdmin"
+import { DepartmentPageAdmin } from "./pages/admin/DepartmentsPageAdmin"
 
 function App() {
 
@@ -72,6 +74,9 @@ const AuthApp = () => {
         <Route path="/admin-users" element={<UsersPageAdmin/>}/>
         <Route path="/admin-doctors" element={<DoctorsPageAdmin/>}/>
         <Route path="/admin-reports" element={<ReportsPageAdmin/>}/>
+        <Route path="/admin-hospitals" element={<HospitalsPageAdmin/>}/>
+        <Route path="/admin-departments" element={<DepartmentPageAdmin/>}/>
+
 
         {/* doctor pages */}
         <Route path="/doctor" element={<HomePageDoctor/>}/>
