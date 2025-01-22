@@ -24,6 +24,8 @@ export const hospitalAddInput = z.object({
     name : z.string().min(1, {message : "name cannot be empty"}),
     locationId : z.string()
 })
+
+export const hospitalUpdateInput = z.array(z.string())
 // Booking
 export const bookingAddInput = z.object({
     name : z.string().min(1, {message : "name cannot be empty"}),
@@ -57,8 +59,11 @@ export const userAddInput = z.object({
 export type LocationAddInput = z.infer<typeof locaitonAddInput>
 // Category 
 export type CategoryAddInput = z.infer<typeof categoryAddInput>
+
 // Hospital
 export type HospitalAddInput = z.infer<typeof hospitalAddInput>
+export type HospitalUpdateInput = z.infer<typeof hospitalUpdateInput>
+
 // Booking
 export type BookingAddInput = z.infer<typeof bookingAddInput>
 // Doctor

@@ -1,5 +1,6 @@
 import Select from 'react-select'
 import { useGetlocations } from '../../hooks/admin/useGetLocations';
+import { useEffect, useState } from 'react';
 
 type OptionType = {
   value: string;
@@ -7,28 +8,27 @@ type OptionType = {
 };
 
 
-interface ChildSelectProps {
-  selectedCategory: string;
-  onCategoryChange: (value: OptionType["value"] | null) => void;
-}
 
-export const ReactSelectHospitals : React.FC<ChildSelectProps> = ({
-  selectedCategory,
-  onCategoryChange,
-}) => {
 
+export const ReactSelectHospitals = ({onLocationChange} : {onLocationChange : any}) => {
+
+    const [selectedOption, setSelectedOption] = useState<OptionType | null>()
     const locations = useGetlocations()
-
-    let locationOptions : OptionType[] = [{value : "", label : ""}]
-
-    if (!locations.locations) {
-      return  <Select className='' options={locationOptions} />
-    }
-    
-    locationOptions = locations.locations.map(loccation => ({value : loccation.id, label : loccation.city}))
+    let locationOptions = locations.locations?.map(loccation => ({value : loccation.id, label : loccation.city}))
 
 
-    //@ts-ignore
-    return <div> <Select className='' options={locationOptions} onChange={onCategoryChange} value={selectedCategory} /> <p>Selected Option: {selectedCategory}</p>
+    const handleChange = (option : any) => {
+      setSelectedOption(option);
+      {option ? onLocationChange(option.value) : null}
+    };
+
+    useEffect(() => {
+
+
+    }, [selectedOption])
+
+
+    return <div className='w-full h-full'>     <label className="block mb-2 text-sm font-medium text-black">Location</label>
+       <Select required className='border border-gray-300 text-black outline-none text-sm rounded-lg' placeholder="Location" options={locationOptions} onChange={handleChange} />
 </div> 
 }
