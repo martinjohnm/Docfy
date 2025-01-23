@@ -27,7 +27,7 @@ export const Locations = () => {
                     <div className="lg:max-w-[50%] mx-auto container p-4">
                         <div className="bg-blue-300 text-lg font-semibold">
                             {locations.locations?.map((loc) => (
-                                <div className="p-4 border border-t">{loc.city}</div>
+                                <div key={loc.id} className="p-4 border border-t">{loc.city}</div>
                             ))}
                         </div>
                     </div>

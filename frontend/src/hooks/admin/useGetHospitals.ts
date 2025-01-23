@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import { HospitalAddInput } from "../../types/zod.types"
 import { getHospitalsData } from "../../apis/admin/adminHospital"
+import { HospitalResponseType } from "../../types/response.types"
 
 
 
@@ -8,7 +8,7 @@ import { getHospitalsData } from "../../apis/admin/adminHospital"
 
 export const useGetHospitals = () => {
 
-    const [hospitals, sethospitals] = useState<HospitalAddInput[] | null>(null)
+    const [hospitals, sethospitals] = useState< HospitalResponseType[] | null>(null)
     const [loading, setLoading] = useState<boolean>(true)
     useEffect(() => {
 

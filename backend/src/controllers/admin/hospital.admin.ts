@@ -179,6 +179,11 @@ export const getHospitalAdmin = async (req : Request, res : Response) => {
         const hospital = await db.hospital.findUnique({
             where : {
                 id
+            },
+            include : {
+                location  :true,
+                doctors  :true,
+                categories  : true
             }
         })
 

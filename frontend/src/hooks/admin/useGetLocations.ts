@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { getLocationsData } from "../../apis/admin/adminLocation"
-import { LocationAddInput } from "../../types/zod.types"
+import { LocationResponseType } from "../../types/response.types"
 
 
 
@@ -8,7 +8,7 @@ import { LocationAddInput } from "../../types/zod.types"
 
 export const useGetlocations = () => {
 
-    const [locations, setlocations] = useState<LocationAddInput[] | null>(null)
+    const [locations, setlocations] = useState<LocationResponseType[] | null>(null)
     const [loading, setLoading] = useState<boolean>(true)
     useEffect(() => {
 

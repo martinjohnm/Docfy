@@ -1,36 +1,29 @@
 import { ChangeEvent, useEffect, useState } from "react"
 import { HospitalsFilter } from "./HospitalsFilter"
 import { HospitalsNavbar } from "./HospitalsNavbar"
-import { createHospitalAdmin, updateHospital } from "../../../apis/admin/adminHospital"
+import { createHospitalAdmin } from "../../../apis/admin/adminHospital"
 import { HospitalAddInput } from "../../../types/zod.types"
 import { TextInput } from "../../Common/TextInput"
 import { useGetHospitals } from "../../../hooks/admin/useGetHospitals"
 import { ReactSelectHospitals } from "../../Common/React.Select.Hospitals"
+import { Link } from "react-router-dom"
 
 
 
 export const Hospitals = () => {
 
-    const [isToggle, setIsToggle] = useState<Boolean>(true)
+    const [isToggleAdd, setIsToggleAdd] = useState<Boolean>(true)
+    
     const hospitals = useGetHospitals()
 
-    const setToggle = () => {
-        setIsToggle(c => !c)
+    const setToggleAdd = () => {
+        setIsToggleAdd(c => !c)
     }
-
-    const HandleHpdateHospital = async (e: any) => {
-        e.preventDefault()
-
-        const updatedHospital = await updateHospital({hospitalId : "33494035-cdad-47a4-9f32-98b62a3f9b60", categoryIds : ["d8bdfb19-d7ba-4564-93ed-dff56d8c4bbf"]})
-
-        alert(updatedHospital.message)
-    }
-
 
 
     return <div className="w-full h-full overflow-auto bg-slate-300">
                     <div className="sticky top-0 z-10 backdrop-filter backdrop-blur-lg bg-opacity-30">
-                        <HospitalsNavbar setToggleFn={setToggle}/>
+                        <HospitalsNavbar setToggleFn={setToggleAdd}/>
                         <HospitalsFilter/>
                     </div>
              
@@ -39,22 +32,25 @@ export const Hospitals = () => {
                             {hospitals.hospitals?.map((hospital) => (
                                 <div key={hospital.name}  className="p-4 border border-t justify-between flex">
                                     <p>{hospital.name}</p>
-                                    <button onClick={HandleHpdateHospital} className="bg-green-600 hover:bg-green-700 rounded-lg px-2">edit</button>
+                                    <Link to={`${hospital.id}`} className="bg-green-600 hover:bg-green-700 rounded-lg px-2">edit</Link>
                                 </div>
                                
                             ))}
                         </div>
                     </div>
                     <div>
-                        <AddNewDepartmentToggleWindow closeWindow={setToggle} hidden={isToggle}/>
+                        <AddNewHospitalToggleWindow closeWindow={setToggleAdd} hidden={isToggleAdd}/>
                     </div>
+                   
                 </div>
     }
 
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"></div>
 
 
-const AddNewDepartmentToggleWindow = ({hidden, closeWindow} : {hidden : Boolean, closeWindow : any} ) => {
+
+
+const AddNewHospitalToggleWindow = ({hidden, closeWindow} : {hidden : Boolean, closeWindow : any} ) => {
 
     const [postInputs, setpostInputs] =  useState<HospitalAddInput>({
         name : "",
@@ -63,7 +59,6 @@ const AddNewDepartmentToggleWindow = ({hidden, closeWindow} : {hidden : Boolean,
     })
 
     useEffect(() => {
-        console.log(postInputs);
         
     }, [postInputs])
 

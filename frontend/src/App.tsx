@@ -23,6 +23,7 @@ import { ProfileDoctor } from "./pages/doctor/Profile.Doctor.tsx/Profile.Doctor"
 import { HospitalsPageAdmin } from "./pages/admin/HospitalsPageAdmin"
 import { DepartmentPageAdmin } from "./pages/admin/DepartmentsPageAdmin"
 import { LocationsPageAdmin } from "./pages/admin/LocationsPageAdmin"
+import { SingleHospitalPageAdmin } from "./pages/admin/SingleHospitalPageAdmin"
 
 function App() {
 
@@ -76,6 +77,7 @@ const AuthApp = () => {
         <Route path="/admin-doctors" element={<DoctorsPageAdmin/>}/>
         <Route path="/admin-reports" element={<ReportsPageAdmin/>}/>
         <Route path="/admin-hospitals" element={<HospitalsPageAdmin/>}/>
+        <Route path="/admin-hospitals/:id" element={<SingleHospitalPageAdmin/>}/>
         <Route path="/admin-departments" element={<DepartmentPageAdmin/>}/>
         <Route path="/admin-locations" element={<LocationsPageAdmin/>}/>
 
