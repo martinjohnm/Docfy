@@ -13,6 +13,7 @@ export const LoginPageDoctor = () => {
    
     const doctor = useDoctor()
 
+
     useEffect(() => {
       if (doctor && getDoctorToken()) {
         navi("/doctor")

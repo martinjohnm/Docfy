@@ -1,4 +1,4 @@
-import { UserType } from '../../types/authTypes';
+import { DoctorResponseType } from '../../types/response.types';
 import { doctorApi } from '../../utils/apiClient/doctorapiClient';
 
 // Login API
@@ -18,7 +18,7 @@ export const getProtectedData = async () => {
 
 
 export const fetchDoctorData = async () => {
-  return doctorApi<{ success : boolean,  data : {user : UserType} , message : string}>("auth-doctor/doctor", "GET")
+  return doctorApi<{ success : boolean,  data : {user : DoctorResponseType} , message : string}>("auth-doctor/doctor", "GET")
 };
 
 export const logOutDoctor = async () => {

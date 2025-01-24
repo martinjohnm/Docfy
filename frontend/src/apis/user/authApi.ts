@@ -1,4 +1,5 @@
 import { UserType } from '../../types/authTypes';
+import { UserResponseType } from '../../types/response.types';
 import { userApi } from '../../utils/apiClient/apiClient';
 
 // Login API
@@ -18,7 +19,7 @@ export const getProtectedData = async () => {
 
 
 export const fetchUserData = async () => {
-  return userApi<{ success : boolean,  data : {user : UserType} , message : string}>("auth/user", "GET")
+  return userApi<{ success : boolean,  data : {user : UserResponseType} , message : string}>("auth/user", "GET")
 };
 
 export const logOutUser = async () => {

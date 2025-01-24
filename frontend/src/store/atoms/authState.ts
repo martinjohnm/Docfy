@@ -1,28 +1,32 @@
+
 // recoil/authState.ts
 import { atom, selector } from 'recoil';
-import { UserType } from '../../types/authTypes';
+import { userAuthType } from '../../types/recoil/user/userAuthType';
 import { fetchUserData } from '../../apis/user/authApi';
 
-export const userAtom = atom< UserType | null>({
+export const userAtom = atom< userAuthType>({
   key: 'userAtom',
-  default: selector({
-    key: 'user/default',
-    get: async () => {
-    try {
-        const response = await fetchUserData() ;              
-        if (response.success) {
-          return response.data.user;
-        }
-    } catch (e) {
-        console.error(e);
-    }
-
-    return null;
-    },
-}) ,
+  default: {
+    isAuthenticated : false,
+    user : null,
+    token : null
+  }
 });
 
-export const isAuthenticatedAtom = selector({
-  key: 'isAuthenticatedAtom',
-  get: ({ get }) => !!get(userAtom),
-});
+
+selector({
+  key: 'user/default',
+  get: async () => {
+  try {
+      const response = await fetchUserData() ;              
+      if (response.success) {
+        return response.data.user;
+      }
+  } catch (e) {
+      console.error(e);
+  }
+
+  return null;
+  },
+}) 
+

@@ -90,6 +90,7 @@ export const getDoctor = async (req : Request, res : Response) => {
     try {
         const token = req.header('Authorization')?.replace('Bearer ', ''); // Extract token from header
         
+
         if (!token) {
             res.status(401).json({ success: false, message: 'Unauthorized' });
             return
@@ -115,7 +116,8 @@ export const getDoctor = async (req : Request, res : Response) => {
             data : {
                 user
             },
-            success : true
+            success : true,
+            token
         })
         
     

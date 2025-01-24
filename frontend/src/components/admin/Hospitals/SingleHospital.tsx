@@ -19,14 +19,12 @@ export const SingleHospital = () => {
     const [postInputs, setpostInputs] =  useState<HospitalUpdateInput | null>(hospital)
 
     useEffect(() => {
-        
         setpostInputs(hospital)
-        
     }, [hospital])
 
-    useEffect(() => {
 
-    },[postInputs])
+    console.log(postInputs);
+    
  
 
     return <div className="w-full h-full overflow-auto bg-slate-300">
@@ -35,14 +33,10 @@ export const SingleHospital = () => {
                     </div>
                     <div className="lg:max-w-[60%] mx-auto container mt-4">
                         <div className="w-full h-full p-4 bg-white mx-auto container rounded-lg">
-                            <div className="text-lg font-semibold w-full h-full p-4">
+                            <div className="text-lg font-semibold w-full h-full">
                                 {hospital?.name}
                             </div>
                        
-                        
-                            <div className="text-lg font-semibold w-full h-full p-4">
-                                {hospital?.locationId}
-                            </div> 
 
                             <TextInput defaultValue={postInputs?.name} label="Name" placeholder="ABC" onChange={(e : ChangeEvent<HTMLInputElement>) => {
                                     setpostInputs(c => ({

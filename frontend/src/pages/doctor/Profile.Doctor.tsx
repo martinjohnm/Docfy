@@ -1,7 +1,7 @@
-import { FullNavBarDocotor } from "../../../components/doctor/FullNavbar.doctor"
-import { ProfileContentDoctor } from "../../../components/doctor/profile/Profile.Content.Doctor"
-import { HomeFooter } from "../../../components/user/home/Home.Footer"
-import { HomeTermsCondition } from "../../../components/user/home/Home.Terms.Conditions"
+import { FullNavBarDocotor } from "../../components/doctor/FullNavbar.doctor"
+import { ProfileContentDoctor } from "../../components/doctor/profile/Profile.Content.Doctor"
+import { HomeFooter } from "../../components/user/home/Home.Footer"
+import { HomeTermsCondition } from "../../components/user/home/Home.Terms.Conditions"
 
 
 

@@ -1,5 +1,6 @@
-import { useRecoilValue } from "recoil"
-import { doctorAtom } from "../../../store/atoms/authDoctorState"
+
+import { useEffect } from "react"
+import { useGetDoctor } from "../../../hooks/doctor/useGetDoctor"
 
 
 
@@ -7,9 +8,14 @@ import { doctorAtom } from "../../../store/atoms/authDoctorState"
 
 export const ProfileContentDoctor = () => {
 
-    const doctor = useRecoilValue(doctorAtom)
-    
-    return <div className="bg-[#DAEAF5] rounded-md w-full p-4 relative mt-10">
+    const doctor = useGetDoctor()
+
+    useEffect(() => {
+        if (doctor){
+        }
+    }, [doctor])    
+
+    return <div className="bg-[#DAEAF5] rounded-md w-full p-4 relative mt-10 min-h-svh">
         <div className="lg:grid lg:grid-cols-3  max-w-9xl container mx-auto min-h-96 gap-2">
                 
                 <div className="bg-red-400 col-span-1 p-2 shadow-2xl rounded-xl">
@@ -20,7 +26,7 @@ export const ProfileContentDoctor = () => {
                                 </div>
                             </div>
                             <div className="mt-2 flex items-center justify-center bg-blue-200">
-                                <p className="font-semibold text-xl">{doctor?.name}</p>
+                                <p className="font-semibold text-xl">{doctor.doctor?.name}</p>
                             </div>
                     </div>
                     <div className="bg-blue-200 mt-2 min-h-60">

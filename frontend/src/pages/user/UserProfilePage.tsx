@@ -9,8 +9,8 @@ export const UserProfilePage: React.FC = () => {
 
     return (
         <div>
-            <h1>Welcome, {user.name}</h1>
-            <p>Email: {user.email}</p>
+            <h1>Welcome, {user.user?.name}</h1>
+            <p>Email: {user.user?.email}</p>
         </div>
     );
 };

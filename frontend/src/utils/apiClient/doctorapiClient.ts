@@ -14,10 +14,11 @@ const apiDoctor = axios.create({
     (config) => {
       const token = localStorage.getItem(DOCTOR_TOKEN);
 
+
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
-      
+
       return config;
     },
     (error) => Promise.reject(error)
@@ -27,7 +28,7 @@ const apiDoctor = axios.create({
   apiDoctor.interceptors.response.use(
     (response: AxiosResponse) => response,
     (error) => {
-      console.error('API Error:', error.response || error.message);
+      // console.error('API Error:', error.response || error.message);
       return Promise.reject(error);
     }
   );
@@ -48,13 +49,26 @@ const apiDoctor = axios.create({
         ...config,
       });
      
+                
       return response.data;
     } catch (error: any) {
-    
-      throw new Error(
-        
-        error.response?.data?.message || 'Something went wrong. Please try again.'
-      );
+      
+      if (error.response) {
+        // Handle error responses from the server
+        // console.error('API Error:', error.response.status, error.response.data.message);
+  
+        return error.response.data
+  
+      } else if (error.request) {
+        // Handle no response from the server
+  
+        // console.error('No response received:', error.request);
+        return error.data
+      } else {
+        // Handle other errors (e.g., network errors)
+        // console.error('Error during request:', error.message);
+        return error.data
+      }
           
     }
   };

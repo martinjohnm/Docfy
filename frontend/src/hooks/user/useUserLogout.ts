@@ -1,18 +1,29 @@
-import { useNavigate } from "react-router-dom";
 import { removeToken } from "../../utils/tokenUtils";
 import { useSetRecoilState } from "recoil";
+import { useState } from "react";
 import { userAtom } from "../../store/atoms/authState";
 
 
 
 export const useUserLogout = () =>{
-    const navigate = useNavigate();
-    const setUsr = useSetRecoilState(userAtom)
-    const logout = () => {
-        removeToken()
-        setUsr(null)
-        navigate('/login');
-      };
+    const [loading, setLoading] = useState<boolean>(false)
+    const userState = useSetRecoilState(userAtom)
+    
+    const logoutUser = async ( ) => {
+        setLoading(true)
+        try {
+              removeToken()
+              userState({
+                isAuthenticated : false,
+                user : null,
+                token : null
+              })
+              setLoading(false)
+        } catch(e) {
+            setLoading(false)
+        }
+    }
 
-    return logout
+
+    return {loading, logoutUser}
 }
