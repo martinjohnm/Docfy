@@ -4,7 +4,6 @@ import { useRecoilValue } from 'recoil';
 import { getToken } from '../utils/tokenUtils';
 import { useNavigate } from 'react-router-dom';
 import { userAtom } from '../store/atoms/authState';
-import { LoginPageUser } from '../pages/user/LoginPageUser';
 
 
 
@@ -20,7 +19,5 @@ export const UserAuthProtector = ({ children } : {children : React.ReactNode}) =
   }, [user, user_token]);
 
   
-  if (!user.isAuthenticated || !user_token) {
-      return <LoginPageUser/>
-  } else return children
+  return children
 };
