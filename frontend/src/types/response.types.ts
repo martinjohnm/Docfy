@@ -35,7 +35,7 @@ export interface DoctorResponseType {
     isVerified          :      boolean
     isBlocked           :      boolean
     specializationId?    :      string
-    specialization?      :      string
+    specialization?      :      CategoryResponseType
     hospitalId?          :      string
     hospital?            :      HospitalResponseType
     bookings            :      BookingResponseType[]

@@ -35,3 +35,8 @@ export const isDoctorAuthenticatedAtom = selector({
   get: ({ get }) => !!get(doctorAtom),
 });
 
+
+export const doctorLoadingState = atom({
+  key: 'doctorLoadingState',
+  default: true, // True while fetching data
+});

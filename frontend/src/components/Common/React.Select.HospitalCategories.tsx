@@ -1,6 +1,6 @@
 import Select from 'react-select'
 import { useEffect, useState } from 'react';
-import { useGetCategories } from '../../hooks/admin/useGetCategories';
+import { useGetHospitalCategories } from '../../hooks/doctor/useGetHospitalCategories';
 
 type OptionType = {
   value: string;
@@ -8,12 +8,12 @@ type OptionType = {
 };
 
 
-export const ReactSelectCategories = ({onCategoryChange, isDisabledd} : {onCategoryChange : any, isDisabledd? : boolean}) => {
-
+export const ReactSelectHospitalCategories = ({onCategoryChange, isDisabledd, hospitalId} : {onCategoryChange : any, isDisabledd? : boolean, hospitalId : string}) => {
     
+    const categories = useGetHospitalCategories(hospitalId)
     const [selectedOption, setSelectedOption] = useState<OptionType | null>()
 
-    const categories = useGetCategories()
+
     let categoryOptions = categories.categories?.map(category => ({value : category.id, label : category.name}))
 
 

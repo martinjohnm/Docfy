@@ -82,7 +82,7 @@ export function initPassport() {
             {
                 clientID: GOOGLE_DOCTOR_ID,
                 clientSecret: GOOGLE_DOCTOR_SECRET,
-                callbackURL: `${CALLBACK_URL}/auth-doctor/google-doctor/callback`,
+                callbackURL: `${CALLBACK_URL}/doctor/auth/google-doctor/callback`,
             },
             async function(
                 accessToken : string, 

@@ -9,16 +9,21 @@ import { getDoctorToken } from '../utils/tokenUtils';
 
 export const DoctorAuthProtector = ({ children } : {children : React.ReactNode}) => {
 
-    const doctor = useRecoilValue(doctorAtom)
+    const doctorFromStore = useRecoilValue(doctorAtom)
     const doc_token = getDoctorToken()
     const navi = useNavigate()
 
     useEffect(() => {
-        if (!doctor.isAuthenticated || !doc_token) {
+
+    }, [doctorFromStore])
+
+    useEffect(() => {
+        if (!doctorFromStore.isAuthenticated || !doc_token) {
             navi("/doctor-login")
         }
-    }, [doctor, doc_token]);
-    
-    return children
+    }, [doctorFromStore, doc_token]);
 
+
+    return children
+    
 };

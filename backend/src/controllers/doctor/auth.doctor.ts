@@ -88,36 +88,29 @@ export const DoctorSignup = async (req : Request, res : Response) => {
 export const getDoctor = async (req : Request, res : Response) => {
 
     try {
-        const token = req.header('Authorization')?.replace('Bearer ', ''); // Extract token from header
         
 
-        if (!token) {
-            res.status(401).json({ success: false, message: 'Unauthorized' });
-            return
-        }
-
-        const userFromTokne = getUserFromToken(token)
-
-        if (!userFromTokne) {
-            res.status(401).json({ success: false, message: 'Token expired Login again' });
-                return
-        }
 
         const user = await db.doctor.findFirst({
             where : {
-                id : userFromTokne.id
+                id : req.doctor.id
+            },
+            include : {
+                hospital : true,
+                specialization : true,
+                bookings : true
             }
         })
 
     
         
         res.status(200).json({
-            message : "User fetched successfully",
+            message : "Doctor fetched successfully",
             data : {
                 user
             },
             success : true,
-            token
+            token : ""
         })
         
     

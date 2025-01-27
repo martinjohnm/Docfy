@@ -30,3 +30,8 @@ selector({
   },
 }) 
 
+
+export const userLoadingState = atom({
+  key: 'userLoadingState',
+  default: true, // True while fetching data
+});

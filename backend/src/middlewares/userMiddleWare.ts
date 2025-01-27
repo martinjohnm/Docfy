@@ -8,8 +8,6 @@ export const userMiddleWare = (req : Request, res : Response, next : NextFunctio
         
         const token = req.header('Authorization')?.replace('Bearer ', ''); // Extract token from header
 
-        console.log(token);
-        
    
         if (!token) {
         

@@ -59,6 +59,20 @@ export const doctorAddInput = z.object({
     hospitalId : z.string().optional()
 })
 
+export const doctorUpdateInput = z.object({
+    name : z.string().optional(),
+    email : z.string().min(1, {message : "email cannot be empty"}).optional(),
+    username : z.string().optional(),
+    oldPassword : z.string().optional(),
+    password : z.string().optional(),
+    confirmPassword : z.string().optional(),
+    provider : AuthProviderEnum.optional(),
+    specializationId : z.string().optional(),
+    hospitalId : z.string().optional()
+})
+
+
+
 
 export const userAddInput = z.object({
     name : z.string().optional(),
@@ -83,5 +97,8 @@ export type HospitalUpdateInput = z.infer<typeof hospitalUpdateInput>
 export type BookingAddInput = z.infer<typeof bookingAddInput>
 // Doctor
 export type DoctorAddInput = z.infer<typeof doctorAddInput>
+export type DoctorUpdateInput = z.infer<typeof doctorUpdateInput>
+
+
 // User 
 export type UserAddInput = z.infer<typeof userAddInput>

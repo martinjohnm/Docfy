@@ -8,8 +8,7 @@ export const doctorMiddleWare = (req : Request, res : Response, next : NextFunct
         
         const token = req.header('Authorization')?.replace('Bearer ', ''); // Extract token from header
 
-        console.log(token);
-        
+
    
         if (!token) {
         
@@ -23,6 +22,8 @@ export const doctorMiddleWare = (req : Request, res : Response, next : NextFunct
             res.status(401).json({ success: false, message: 'Token expired Login again' });
               return
         }
+
+        req.doctor = userFromTokne
         
         next()
         } catch(e) {

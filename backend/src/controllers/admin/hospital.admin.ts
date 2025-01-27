@@ -10,8 +10,7 @@ export const createHospitalAdmin = async (req : Request, res : Response) => {
         
 
         const hospitalData = hospitalAddInput.safeParse(req.body);
-        console.log(hospitalData);
-        
+   
         if (!hospitalData.success) {
             res.status(400).json({
                 message : "hospital already added",
@@ -138,16 +137,18 @@ export const updateHospitalCategoryAdmin = async (req : Request, res : Response)
             return
         }
 
+       
         const updatedHospital = await db.hospital.update({
             where : {
                 id : hospitalId
             }, 
             data : {
                 categories : {
-                    connect : parsedCategories.data.map(( id ) => ({ id }))
+                    connect : parsedCategories.data.categories.map(( id ) => (id))
                 }
             }
         })
+        
 
         res.status(200).json({
             message : "Hospital updated successfully",

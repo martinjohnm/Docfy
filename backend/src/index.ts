@@ -5,7 +5,12 @@ import cookieParser from "cookie-parser"
 import session from "express-session";
 import cors from "cors"
 import userAuthhRoute from "./routes/user/auth"
+
+
 import doctorAuthhRoute from "./routes/doctor/auth.doctor"
+import doctorhospitalsRoute from "./routes/doctor/hospitals.doctor"
+import doctorEdithRoute from "./routes/doctor/edit.doctor"
+
 import categoryAdminRoute from "./routes/admin/category.admin"
 import hospitalAdminRoute from "./routes/admin/hospital.admin"
 import locationAdminRoute from "./routes/admin/location.admin"
@@ -45,7 +50,10 @@ app.use("/auth", userAuthhRoute)
 
 
 // doctor routes
-app.use("/auth-doctor", doctorAuthhRoute)
+app.use("/doctor/auth", doctorAuthhRoute)
+app.use("/doctor/edit", doctorEdithRoute)
+app.use("/doctor/hospital", doctorhospitalsRoute)
+app.use("/doctor/category", doctorhospitalsRoute)
 
 // admin routes
 app.use("/admin/category", categoryAdminRoute)

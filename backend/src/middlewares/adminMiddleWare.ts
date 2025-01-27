@@ -8,8 +8,7 @@ export const adminMiddleWare = (req : Request, res : Response, next : NextFuncti
         
         const token = req.header('Authorization')?.replace('Bearer ', ''); // Extract token from header
 
-        console.log(token);
-        
+ 
    
         if (!token) {
         

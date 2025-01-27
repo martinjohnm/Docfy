@@ -2,30 +2,34 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getDoctorToken } from "../../utils/tokenUtils";
 import { useDoctor } from "../../store/hooks/useDoctor";
-
+import { doctorGoogelLogin } from "../../apis/doctor/doctorAuthApis";
+import { useRecoilValue } from "recoil";
+import { doctorAtom } from "../../store/atoms/authDoctorState";
 const BACKEND_URL = import.meta.env.VITE_APP_BACKEND_URL ?? 'http://localhost:3000';
 
 
 
 export const LoginPageDoctor = () => {
     const navi = useNavigate()
-
-   
     const doctor = useDoctor()
+
+    const doc = useRecoilValue(doctorAtom)
 
 
     useEffect(() => {
-      if (doctor && getDoctorToken()) {
+      if (doc.isAuthenticated && getDoctorToken()) {
         navi("/doctor")
       }
     }, [doctor])
 
+
+  
     
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
   
     const google = () => {
-        window.open(`${BACKEND_URL}/auth-doctor/google-doctor`, '_self');
+        window.open(doctorGoogelLogin(), '_self');
     };
 
     

@@ -1,13 +1,13 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-import { RecoilRoot, useSetRecoilState } from "recoil"
+import { RecoilRoot, useRecoilValue, useSetRecoilState } from "recoil"
 import { LoginPageUser } from "./pages/user/LoginPageUser"
 import { GoogleCallBack } from "./pages/user/GoogleCallBack"
-import { Suspense, useEffect } from "react"
+import React, { Suspense, useEffect } from "react"
 import { fetchUserData } from "./apis/user/authApi"
 import { UserProfilePage } from "./pages/user/UserProfilePage"
 import { UserAuthProtector } from "./protected/UserAuthProtecter"
 import { Loader } from "./components/user/home/Loader"
-import { userAtom } from "./store/atoms/authState"
+import { userAtom, userLoadingState } from "./store/atoms/authState"
 import { DashboardPageAdmin } from "./pages/admin/DashboardPageAdmin"
 import { BookingsPageAdmin } from "./pages/admin/BookingsPageAdmin"
 import { UsersPageAdmin } from "./pages/admin/UsersPageAdmin"
@@ -26,7 +26,7 @@ import { SingleHospitalPageAdmin } from "./pages/admin/SingleHospitalPageAdmin"
 import { HomePageDoctor } from "./pages/doctor/Home.Page.Doctor"
 import { PatientBookingsDoctor } from "./pages/doctor/Patient.Bookings.Doctor"
 import { fetchDoctorData } from "./apis/doctor/doctorAuthApis"
-import { doctorAtom } from "./store/atoms/authDoctorState"
+import { doctorAtom, doctorLoadingState } from "./store/atoms/authDoctorState"
 import { DoctorAuthProtector } from "./protected/DoctorAuthProtector"
 
 function App() {
@@ -36,64 +36,17 @@ function App() {
   return (
   <RecoilRoot>
     <Suspense fallback={<Loader />}>
-      <AuthApp />
+      <InitialLoader>
+        <AuthApp />
+      </InitialLoader>
     </Suspense>
   </RecoilRoot>)
 
 }
+
+
 const AuthApp = () => {
-  const setUser = useSetRecoilState(userAtom);
-  const setDoctor = useSetRecoilState(doctorAtom)
-
-
-  useEffect(() => {
-    const getUserData = async () => {
-      try {
-        const fetchedData = await fetchUserData() ;        
-        if (fetchedData.success) {
-          setUser({
-            isAuthenticated : true,
-            user : fetchedData.data.user,
-            token : ""
-          })
-        };
-
-      } catch (error) {
-        setUser({
-          isAuthenticated : true,
-          user : null,
-          token : null
-        }); // Clear user data if fetch fails
-      }
-    };
-
-    const getDoctorData = async () => {
-      try {
-        const fetchedData = await fetchDoctorData() ;        
-        if (fetchedData.success) {
-          setDoctor({
-            isAuthenticated : true,
-            doctor : fetchedData.data.user,
-            token : ""
-          })
-        };
-
-        
-      } catch (error) {
-        console.error('Failed to fetch user data:', error);
-        setDoctor({
-          isAuthenticated : false,
-          doctor : null,
-          token : null
-        }); // Clear user data if fetch fails
-      }
-    };
-
-    
-
-    getUserData();
-    getDoctorData()
-  }, [setUser])
+  
 
   return (
     <BrowserRouter>
@@ -129,6 +82,83 @@ const AuthApp = () => {
       </Routes>
     </BrowserRouter>
 )
+}
+
+
+const  InitialLoader  = ({ children } : {children : React.ReactNode}) =>  {
+
+  const userLoading = useRecoilValue(userLoadingState)
+  const doctorLoading = useRecoilValue(doctorLoadingState)
+  const setUser = useSetRecoilState(userAtom);
+  const setDoctor = useSetRecoilState(doctorAtom)
+
+  const setUserLoading = useSetRecoilState(userLoadingState)
+  const setDoctorLoading = useSetRecoilState(doctorLoadingState)
+
+  useEffect(() => {
+    const getUserData = async () => {
+      try {
+
+        setUserLoading(true)
+        const fetchedData = await fetchUserData() ;        
+        if (fetchedData.success) {
+          setUser({
+            isAuthenticated : true,
+            user : fetchedData.data.user,
+            token : ""
+          })
+        };
+
+      } catch (error) {
+        setUser({
+          isAuthenticated : false,
+          user : null,
+          token : null
+        }); // Clear user data if fetch fails
+      } finally {
+        setUserLoading(false)
+      }
+    };
+
+    const getDoctorData = async () => {
+      try {
+        setDoctorLoading(true)
+        const fetchedData = await fetchDoctorData() ;        
+        if (fetchedData.success) {
+          setDoctor({
+            isAuthenticated : true,
+            doctor : fetchedData.data.user,
+            token : ""
+          })
+        };
+
+        
+      } catch (error) {
+        console.error('Failed to fetch user data:', error);
+        setDoctor({
+          isAuthenticated : false,
+          doctor : null,
+          token : null
+        }); // Clear user data if fetch fails
+      } finally {
+         setDoctorLoading(false)
+      }
+    };
+
+    
+
+    getUserData();
+    getDoctorData()
+  }, [setUser])
+
+
+  if (userLoading || doctorLoading) {
+    return <div>Loading...</div>;
+  }
+
+  
+
+  return <>{children}</>;
 }
 
 export default App
