@@ -28,6 +28,7 @@ import { PatientBookingsDoctor } from "./pages/doctor/Patient.Bookings.Doctor"
 import { fetchDoctorData } from "./apis/doctor/doctorAuthApis"
 import { doctorAtom, doctorLoadingState } from "./store/atoms/authDoctorState"
 import { DoctorAuthProtector } from "./protected/DoctorAuthProtector"
+import { SignUpPageDoctor } from "./pages/doctor/SignUpPageDoctor"
 
 function App() {
 
@@ -73,6 +74,7 @@ const AuthApp = () => {
         {/* doctor pages */}
         <Route path="/doctor" element={<DoctorAuthProtector><HomePageDoctor/></DoctorAuthProtector>}/>
         <Route path="/doctor-login" element={<LoginPageDoctor/>}/>
+        <Route path="/doctor-signup" element={<SignUpPageDoctor/>}/>
         <Route path="/google-callback-doctor" element={<DoctorGoogleCallBack/>}/>
         <Route path="/doctor-profile" element={<DoctorAuthProtector><ProfileDoctor/></DoctorAuthProtector>}/>
         <Route path="/patient-bookings" element={<DoctorAuthProtector><PatientBookingsDoctor/></DoctorAuthProtector>}/>
@@ -123,11 +125,13 @@ const  InitialLoader  = ({ children } : {children : React.ReactNode}) =>  {
     const getDoctorData = async () => {
       try {
         setDoctorLoading(true)
-        const fetchedData = await fetchDoctorData() ;        
+        const fetchedData = await fetchDoctorData() ;     
+        console.log(fetchedData);
+           
         if (fetchedData.success) {
           setDoctor({
             isAuthenticated : true,
-            doctor : fetchedData.data.user,
+            doctor : fetchedData.data.doctor,
             token : ""
           })
         };

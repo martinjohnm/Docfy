@@ -56,7 +56,7 @@ const apiDoctor = axios.create({
       if (error.response) {
         // Handle error responses from the server
         // console.error('API Error:', error.response.status, error.response.data.message);
-  
+        console.log(error.response.data);
         return error.response.data
   
       } else if (error.request) {

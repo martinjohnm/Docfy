@@ -72,6 +72,21 @@ export const doctorUpdateInput = z.object({
 })
 
 
+export const doctorSignUpInput = z.object({
+    name : z.string(),
+    email : z.string().min(1, {message : "email cannot be empty"}),
+    username : z.string().optional(),
+    password : z.string(),
+    confirmPassword : z.string(),
+    specializationId : z.string().optional(),
+    hospitalId : z.string().optional()
+})
+
+export const doctorLoginInput = z.object({
+    email : z.string().min(1, {message : "email cannot be empty"}),
+    password : z.string().min(1, {message : "Password cannot be empty"}),
+})
+
 
 
 export const userAddInput = z.object({
@@ -98,7 +113,8 @@ export type BookingAddInput = z.infer<typeof bookingAddInput>
 // Doctor
 export type DoctorAddInput = z.infer<typeof doctorAddInput>
 export type DoctorUpdateInput = z.infer<typeof doctorUpdateInput>
-
+export type DoctorSignUpInput = z.infer<typeof doctorSignUpInput>
+export type DoctorLoginInput = z.infer<typeof doctorLoginInput>
 
 // User 
 export type UserAddInput = z.infer<typeof userAddInput>

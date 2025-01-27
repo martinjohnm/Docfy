@@ -19,10 +19,10 @@ export const useGetDoctor = () => {
             const doctor = await fetchDoctorData()
 
             if (doctor.success) {
-                setDoctor(doctor.data.user)
+                setDoctor(doctor.data.doctor)
                 setRecoilDoctor({
                     isAuthenticated : true,
-                    doctor : doctor.data.user,
+                    doctor : doctor.data.doctor,
                     token : ""
                   })
             } else {

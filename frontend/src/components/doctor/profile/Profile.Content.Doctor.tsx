@@ -9,6 +9,7 @@ import { DoctorResponseType } from "../../../types/response.types"
 import { useUpdateDoctor } from "../../../hooks/doctor/useUpdateDoctor"
 import { useRecoilValue, useSetRecoilState } from "recoil"
 import { doctorAtom } from "../../../store/atoms/authDoctorState"
+import { useNavigate } from "react-router-dom"
 
 
 
@@ -17,6 +18,7 @@ export const ProfileContentDoctor = () => {
     const doctorFromDb = useGetDoctor()
     const updateDoc = useUpdateDoctor()
 
+    const navi= useNavigate()
     const doctorInAtom = useRecoilValue(doctorAtom)
     const setRecoilDoctor = useSetRecoilState(doctorAtom)
 
@@ -26,12 +28,12 @@ export const ProfileContentDoctor = () => {
 
 
     useEffect(() => {
-        setDoctor(doctorFromDb.doctor)
+        setDoctor(doctorFromDb.doctor)        
     }, [doctorFromDb])  
     
     useEffect(() => {
         
-    }, [updateDoc, doctor])
+    }, [updateDoc, doctor, postInputs])
 
     const onSubmit = async () => {
         if (postInputs){
@@ -45,12 +47,21 @@ export const ProfileContentDoctor = () => {
                     token : ""
                 })
             }
-            console.log(docNew);
-            
+            setPostinputs(null)
+            navi("/doctor-profile")
         } else {
             alert("nothing changed")
+            
         }
+
+        setToggle(c => !c)
     }
+
+    const [passwordToggle, setpasswordToggle] = useState<boolean>(false);
+
+    const passwordField = () => {
+        setpasswordToggle(c => !c)
+    };                        
 
 
     return <div className="bg-[#DAEAF5] rounded-md w-full p-4 relative mt-2 min-h-svh">
@@ -112,43 +123,51 @@ export const ProfileContentDoctor = () => {
                                     email : e.target.value
                                 }))
                             }}/>
-                            { !doctor?.password ? (<div>
-                                    <p className="text-sm py-2">{"Password not set yet create one!"}</p>
-                            <TextInput type="password" label="Password" placeholder="New Passoword" onChange={(e : ChangeEvent<HTMLInputElement>) => {
-                                setPostinputs(c => ({
-                                    ...c,
-                                    password : e.target.value
-                                }))
-                            }}/>
-                            <TextInput type="password" label="Confirm password" placeholder="Retype password" onChange={(e : ChangeEvent<HTMLInputElement>) => {
-                                setPostinputs(c => ({
-                                    ...c,
-                                    confirmPassword : e.target.value
-                                }))
-                            }}/>
-                            </div>) : (
-                                <div>
-                                    <p className="text-sm mt-2">{"Change password!"}</p>
-                                    <TextInput type="password" label="Old Password" placeholder="old Password" onChange={(e : ChangeEvent<HTMLInputElement>) => {
-                                        setPostinputs(c => ({
-                                            ...c,
-                                            oldPassword : e.target.value
-                                        }))
-                                    }}/>
-                                    <TextInput type="password" label="New Password" placeholder="New Password" onChange={(e : ChangeEvent<HTMLInputElement>) => {
-                                        setPostinputs(c => ({
-                                            ...c,
-                                            password : e.target.value
-                                        }))
-                                    }}/>
-                                    <TextInput type="password" label="Retype New Password" placeholder="confirm new Password" onChange={(e : ChangeEvent<HTMLInputElement>) => {
-                                        setPostinputs(c => ({
-                                            ...c,
-                                            confirmPassword : e.target.value
-                                        }))
-                                    }}/>
-                                </div>
-                            )}
+                            
+                            <div>
+                                <button onClick={passwordField} className="bg-blue-500 text-white text-sm px-2 rounded-md mt-2 w-full">{!passwordToggle ? "Change Or Update password" : "Collapse"}</button>
+                            </div>
+                            <div className={`${!passwordToggle ? "hidden" : "block"}`}>
+                                        { !doctor?.password ? (<div>
+                                                <p className="text-sm py-2">{"Password not set yet create one!"}</p>
+                                        <TextInput type="password" label="Password" placeholder="New Passoword" onChange={(e : ChangeEvent<HTMLInputElement>) => {
+                                            setPostinputs(c => ({
+                                                ...c,
+                                                password : e.target.value
+                                            }))
+                                        }}/>
+                                        <TextInput type="password" label="Confirm password" placeholder="Retype password" onChange={(e : ChangeEvent<HTMLInputElement>) => {
+                                            setPostinputs(c => ({
+                                                ...c,
+                                                confirmPassword : e.target.value
+                                            }))
+                                        }}/>
+                                        
+                                    
+                                        </div>) : (
+                                            <div>
+                                                <p className="text-sm mt-2">{"Change password!"}</p>
+                                                <TextInput type="password" label="Old Password" placeholder="old Password" onChange={(e : ChangeEvent<HTMLInputElement>) => {
+                                                    setPostinputs(c => ({
+                                                        ...c,
+                                                        oldPassword : e.target.value
+                                                    }))
+                                                }}/>
+                                                <TextInput type="password" label="New Password" placeholder="New Password" onChange={(e : ChangeEvent<HTMLInputElement>) => {
+                                                    setPostinputs(c => ({
+                                                        ...c,
+                                                        password : e.target.value
+                                                    }))
+                                                }}/>
+                                                <TextInput type="password" label="Retype New Password" placeholder="confirm new Password" onChange={(e : ChangeEvent<HTMLInputElement>) => {
+                                                    setPostinputs(c => ({
+                                                        ...c,
+                                                        confirmPassword : e.target.value
+                                                    }))
+                                                }}/>
+                                            </div>
+                                        )}
+                            </div>
                         </div>
                     </div>
                     

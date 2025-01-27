@@ -1,18 +1,18 @@
 import { DoctorResponseType } from '../../types/response.types';
-import { DoctorUpdateInput } from '../../types/zod.types';
+import { DoctorLoginInput, DoctorSignUpInput, DoctorUpdateInput } from '../../types/zod.types';
 import { doctorApi } from '../../utils/apiClient/doctorapiClient';
 
 const BACKEND_URL = import.meta.env.VITE_APP_BACKEND_URL ?? 'http://localhost:3000';
 
 
 // Login API
-export const loginDoctor = async (email: string, password: string) => {
-  return doctorApi<{ token: string }>( 'doctor/auth/login', 'POST', { email, password });
+export const loginDoctor = async (data : DoctorLoginInput) => {
+  return doctorApi<{ success : boolean,  data : {doctor : DoctorResponseType} , message : string, token : string}>( 'doctor/auth/login', 'POST', data);
 };
 
 // Register API
-export const registerDoctor = async (email: string, password: string, name: string) => {
-  return doctorApi<void>('doctor/auth/signup', 'POST', { email, password, name });
+export const signUpDoctor = async (data : DoctorSignUpInput) => {
+  return doctorApi<{ success : boolean,  data : {doctor : DoctorResponseType} , message : string, token : string}>('doctor/auth/signup', 'POST', data);
 };
 
 export const updateDoctorData = async (data : DoctorUpdateInput) => {
@@ -26,7 +26,7 @@ export const getProtectedData = async () => {
 
 
 export const fetchDoctorData = async () => {
-  return doctorApi<{ success : boolean,  data : {user : DoctorResponseType} , message : string}>("doctor/auth/doctor", "GET")
+  return doctorApi<{ success : boolean,  data : {doctor  : DoctorResponseType} , message : string}>("doctor/auth/doctor", "GET")
 };
 
 export const logOutDoctor = async () => {

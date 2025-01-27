@@ -1,87 +1,143 @@
 import { Request, Response } from "express";
 import db from "../../db"
-import { comparePassword, generatToken, getUserFromToken, hashPassword } from "../../utils";
+import { comparePassword, generatToken, hashPassword } from "../../utils";
+import { doctorLoginInput, doctorSignUpInput } from "../../types/zod.types";
 
 
 
 
 export const doctorLogin = async (req : Request, res : Response) => {
 
-    const { email, password} = req.body;
-
-    const user = await db.doctor.findFirst({
-        where : {
-            email
+    try {
+            
+        const parsedDoctorLogin = doctorLoginInput.safeParse(req.body);
+        console.log(parsedDoctorLogin);
+        
+        if (!parsedDoctorLogin.success) {
+            res.status(400).json({
+                message : "Input error",
+                success : false
+            })
+            return
         }
-    })
+        const doctor = await db.doctor.findFirst({
+            where : {
+                email : parsedDoctorLogin.data?.email
+            }
+        })
 
-    if (!user) { 
-        res.status(404).json({
-            message : "User not found",
-            success : false
+
+        if (!doctor) { 
+            res.status(404).json({
+                message : "doctor not found",
+                success : false
+            });
+            return
+        }
+
+        const isValid = await comparePassword(parsedDoctorLogin.data?.password ?? "", String(doctor.password));
+
+
+        if (!isValid) {
+            res.status(401).json({
+                message : "Password not matching",
+                success : false
+            });
+            return
+        }
+
+        const token = generatToken({ id: doctor.id, email  :doctor.email});
+        res.status(200).json({
+            message : "Login successfull",
+            data : {
+                doctor
+            },
+            success : true,
+            token 
         });
-        return
+    } catch(error) {
+        let message
+        if (error instanceof Error) message = error.message
+        else message = String(error)
+        console.log("Error during Logout",  message); 
+        res.status(500).json(
+            {
+                success : false,
+                message : "Internal server error"
+            })
     }
-
-    const isValid = await comparePassword(password, String(user.password));
-
-    if (!isValid) {
-        res.status(401).json({
-            message : "Password not matching",
-            success : false
-        });
-        return
-    }
-
-    const token = generatToken({ id: user.id, email  :user.email});
-    res.json({
-        message : "Login successfull",
-        data : {
-            token
-        },
-        success : true
-    });
-
 }
 
 export const DoctorSignup = async (req : Request, res : Response) => {
 
-    const { email, password, name} = req.body;
+    try {
+        
+        const parsedDoctorSignUp = doctorSignUpInput.safeParse(req.body);
 
-    const user = await db.doctor.findFirst({
-        where : {
-            email
+        if (!parsedDoctorSignUp.success) {
+            res.status(400).json({
+                message : "Input error",
+                success : false
+            })
+            return
         }
-    })
 
-    if (user) { 
-        res.status(400).json({
-            message : "User already registered",
-            success : false
-        });
-        return
+        const doctor = await db.doctor.findFirst({
+            where : {
+                email : parsedDoctorSignUp.data.email
+            }
+        })
+
+        if (doctor) { 
+            res.status(400).json({
+                message : "Doctor already registered",
+                success : false
+            });
+            return
+        }
+
+        if (parsedDoctorSignUp.data.password !== parsedDoctorSignUp.data.confirmPassword) {
+            res.status(400).json({
+                message : "Password dont match",
+                success : false
+            });
+            return
+        }
+
+        const hashedPassword = await hashPassword(parsedDoctorSignUp.data.password)
+
+    
+        const newdoctor = await db.doctor.create({
+            data : {
+                name : parsedDoctorSignUp.data.name,
+                email : parsedDoctorSignUp.data.email,
+                provider : "EMAIL",
+                password : hashedPassword,
+            }
+        })
+
+        const token = generatToken({id : newdoctor.id, email : newdoctor.email})
+
+        res.status(201).json({
+            message : "Doctor created successfully",
+            data : {
+                doctor : newdoctor
+            },
+            success : true,
+            token 
+        })
+
+    } catch(error) {
+        let message
+        if (error instanceof Error) message = error.message
+        else message = String(error)
+        console.log("Error during Logout",  message); 
+        res.status(500).json(
+            {
+                success : false,
+                message : "Internal server error"
+            })
     }
-
-    const hashedPassword = await hashPassword(password)
-
-    const newUser = await db.user.create({
-        data : {
-            email,
-            password : hashedPassword,
-            name,
-            provider : "EMAIL"
-        }
-    })
-
-    const token = generatToken({id : newUser.id, email : newUser.email})
-
-    res.status(201).json({
-        message : "Doctor created successfully",
-        data : {
-            token
-        },
-        success : true
-    })
     
 }
 
@@ -89,9 +145,9 @@ export const getDoctor = async (req : Request, res : Response) => {
 
     try {
         
+      
 
-
-        const user = await db.doctor.findFirst({
+        const doctor = await db.doctor.findFirst({
             where : {
                 id : req.doctor.id
             },
@@ -102,12 +158,13 @@ export const getDoctor = async (req : Request, res : Response) => {
             }
         })
 
-    
+        console.log(doctor);
+        
         
         res.status(200).json({
             message : "Doctor fetched successfully",
             data : {
-                user
+                doctor
             },
             success : true,
             token : ""

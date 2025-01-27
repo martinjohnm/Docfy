@@ -1,31 +1,36 @@
+
+
 import { useEffect, useState } from "react"
-import { loginDoctor } from "../../apis/doctor/doctorAuthApis"
+import { signUpDoctor } from "../../apis/doctor/doctorAuthApis"
 import { useSetRecoilState } from "recoil"
 import { doctorAtom } from "../../store/atoms/authDoctorState"
-import { DoctorLoginInput } from "../../types/zod.types"
+import { DoctorSignUpInput } from "../../types/zod.types"
+import { DoctorResponseType } from "../../types/response.types"
 import { setDoctorToken } from "../../utils/tokenUtils"
 
 
 
-export const useDoctorLogin = () =>{
+export const useSignUpDoctor = () =>{
     
-    const [loggedIndoctor, setLoggedInDoctor] = useState<any | null>(null)
-    const [loading, setLoading] = useState<boolean>(true)
+    const [updatedDoctor, setUpdatedDoctor] = useState<DoctorResponseType | null>(null)
+    const [loading, setLoading] = useState<boolean>(false)
 
     const doctorState = useSetRecoilState(doctorAtom)
 
     useEffect(() => {
 
-    }, [loggedIndoctor])
 
-    const loginDoctorr = async (postInputs : DoctorLoginInput ) => {
+    }, [updatedDoctor])
+
+
+    const signupDoctor = async ( postInputs : DoctorSignUpInput)  => {
 
         try {
                 setLoading(true)
-                const doctor = await loginDoctor(postInputs)
-            
+                const doctor = await signUpDoctor(postInputs)
+           
                 if (doctor.success) {
-                    setLoggedInDoctor(doctor.data.doctor)
+                    setUpdatedDoctor(doctor.data.doctor)
                     doctorState({
                         doctor : doctor.data.doctor,
                         isAuthenticated : true,
@@ -45,8 +50,7 @@ export const useDoctorLogin = () =>{
         }
     }
 
+   
 
-
-
-    return {loading, loggedIndoctor, loginDoctorr}
+    return {loading, updatedDoctor, signupDoctor}
 }
