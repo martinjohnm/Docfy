@@ -16,6 +16,6 @@ export const getSingleHospitalData = async (id : string) => {
   return adminApi<{ success : boolean,  data : { hospital : HospitalResponseType } , message : string}>(`admin/hospital/get/${id}`, "GET")
 };
 
-export const updateHospital = async ({hospitalId, categoryIds} : {hospitalId : string, categoryIds : HospitalUpdateInput}) => {
-  return adminApi<{ success : boolean,  data : { hospital : HospitalResponseType } , message : string}>(`admin/hospital/update-category/${hospitalId}`, "PUT", categoryIds)
+export const updateHospital = async ({hospitalId, postInputs} : {hospitalId : string, postInputs : HospitalUpdateInput}) => {
+  return adminApi<{ success : boolean,  data : { hospital : HospitalResponseType } , message : string}>(`admin/hospital/update-category/${hospitalId}`, "PUT", postInputs)
 };

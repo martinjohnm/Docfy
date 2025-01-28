@@ -1,11 +1,12 @@
 import { TextInput } from "../../Common/TextInput"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { SingleHospitalNavbar } from "./SingleHospitalNavbar"
 import { ReactMultiSelectCategories } from "../../Common/React.Multi.Select.Categories"
 import { ChangeEvent, useEffect, useState } from "react"
 import { HospitalUpdateInput } from "../../../types/zod.types"
 import { useGetSingleHospital } from "../../../hooks/admin/useGetSingleHospital"
 import { ReactSelectLocations } from "../../Common/ReactSelectLocations"
+import { updateHospital } from "../../../apis/admin/adminHospital"
 
 
 
@@ -16,7 +17,7 @@ export const SingleHospital = () => {
         return <div>ID is required but not found.</div>;
     }
     const {hospital} = useGetSingleHospital(id)
-    const [postInputs, setpostInputs] =  useState<HospitalUpdateInput | null>(hospital)
+    const [postInputs, setpostInputs] =  useState<HospitalUpdateInput | null>(null)
 
     useEffect(() => {
         setpostInputs(hospital)
@@ -24,6 +25,19 @@ export const SingleHospital = () => {
 
 
     console.log(postInputs);
+
+    const navigate = useNavigate();
+
+
+    const handleGoBack = () => {
+        navigate(-1)
+    }
+
+    const handleSubmit = async () => {
+        if (postInputs){
+            await updateHospital({hospitalId : id, postInputs : postInputs})
+        }
+    }
     
  
 
@@ -31,7 +45,7 @@ export const SingleHospital = () => {
                     <div className="sticky top-0 z-10 backdrop-filter backdrop-blur-lg bg-opacity-30">
                         <SingleHospitalNavbar/>
                     </div>
-                    <div className="lg:max-w-[60%] mx-auto container mt-4">
+                    <div className="lg:max-w-3xl p-6 mx-auto container mt-4">
                         <div className="w-full h-full p-4 bg-white mx-auto container rounded-lg">
                             <div className="text-lg font-semibold w-full h-full">
                                 {hospital?.name}
@@ -59,6 +73,10 @@ export const SingleHospital = () => {
                                     }))
                             }} defaultValues={postInputs?.categories?.map((cat) => ({value : cat.id, label : cat.name})) }/>
                             
+                        </div>
+                        <div className="w-full h-full p-4 bg-white mx-auto container rounded-lg mt-2 justify-start items-center flex gap-2">
+                            <button onClick={handleGoBack} className="px-4 bg-red-600 rounded-md text-white text-base py-1">Cancel</button>
+                            <button onClick={handleSubmit} className="px-4 bg-green-600 rounded-md text-white text-base py-1">Update</button>
                         </div>
                       
                     </div>

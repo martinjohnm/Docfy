@@ -31,7 +31,7 @@ export const hospitalUpdateInput = z.object({
     categories : z.array(z.object({
         id : z.string(),
         name : z.string()
-    })),
+    })).optional(),
     location : z.object({
         city : z.string().min(1, {message : "City cannot be empty"}),
         state : z.string().min(1, {message : "State cannot be empty"}),

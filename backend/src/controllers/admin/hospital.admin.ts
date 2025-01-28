@@ -122,6 +122,7 @@ export const updateHospitalCategoryAdmin = async (req : Request, res : Response)
             return
         }
 
+
         const hospital = await db.hospital.findFirst({
             where : {
                 id : hospitalId
@@ -136,6 +137,9 @@ export const updateHospitalCategoryAdmin = async (req : Request, res : Response)
             })
             return
         }
+
+        console.log(parsedCategories.data.categories);
+        
 
        
         const updatedHospital = await db.hospital.update({
