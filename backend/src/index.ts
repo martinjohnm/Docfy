@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser"
 import session from "express-session";
 import cors from "cors"
 import userAuthhRoute from "./routes/user/auth"
+import doctorRoute from "./routes/user/doctor"
 
 
 import doctorAuthhRoute from "./routes/doctor/auth.doctor"
@@ -47,8 +48,7 @@ app.use(
 
 // user routes
 app.use("/auth", userAuthhRoute)
-
-
+app.use("/doctor", doctorRoute)
 // doctor routes
 app.use("/doctor/auth", doctorAuthhRoute)
 app.use("/doctor/edit", doctorEdithRoute)

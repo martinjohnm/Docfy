@@ -1,4 +1,3 @@
-import { UserType } from '../../types/authTypes';
 import { UserResponseType } from '../../types/response.types';
 import { userApi } from '../../utils/apiClient/apiClient';
 

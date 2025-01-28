@@ -1,8 +1,18 @@
 
 
 
+import { useRecoilValue } from "recoil"
+import { allDoctorsAtom } from "../../../store/atoms/user/doctorsState"
+import { useGetDoctors } from "../../../hooks/user/useGetDoctors"
+
+
+
 
 export const DoctorsAllComponent = () => {
+
+    useGetDoctors()
+    const allDoctorsFromStore = useRecoilValue(allDoctorsAtom)
+
     return <div className="w-full">
     <div className="max-w-4xl container mx-auto">
         <div className="flex items-center justify-center">
@@ -19,30 +29,24 @@ export const DoctorsAllComponent = () => {
             </p>
         </div>
     </div>
-    <div className="max-w-7xl container mx-auto justify-center lg:grid lg:grid-cols-4 sm:grid sm:grid-cols-2 gap-3 p-4">
-        <DoctorProfileDiv img="https://demo.casethemes.net/medicross/wp-content/uploads/2024/09/dt2.webp" name="Dr Julia stuard" dept="Endocrinologist"/>
-        <DoctorProfileDiv img="https://demo.casethemes.net/medicross/wp-content/uploads/2024/09/dt2.webp" name="Dr Julia stuard" dept="Endocrinologist"/>
-        <DoctorProfileDiv img="https://demo.casethemes.net/medicross/wp-content/uploads/2024/09/dt2.webp" name="Dr Julia stuard" dept="Endocrinologist"/>
-        <DoctorProfileDiv img="https://demo.casethemes.net/medicross/wp-content/uploads/2024/09/dt2.webp" name="Dr Julia stuard" dept="Endocrinologist"/>
-        <DoctorProfileDiv img="https://demo.casethemes.net/medicross/wp-content/uploads/2024/09/dt2.webp" name="Dr Julia stuard" dept="Endocrinologist"/>
-        <DoctorProfileDiv img="https://demo.casethemes.net/medicross/wp-content/uploads/2024/09/dt2.webp" name="Dr Julia stuard" dept="Endocrinologist"/>
-        <DoctorProfileDiv img="https://demo.casethemes.net/medicross/wp-content/uploads/2024/09/dt2.webp" name="Dr Julia stuard" dept="Endocrinologist"/>
-        <DoctorProfileDiv img="https://demo.casethemes.net/medicross/wp-content/uploads/2024/09/dt2.webp" name="Dr Julia stuard" dept="Endocrinologist"/>
-        <DoctorProfileDiv img="https://demo.casethemes.net/medicross/wp-content/uploads/2024/09/dt2.webp" name="Dr Julia stuard" dept="Endocrinologist"/>
+    <div className="max-w-7xl container mx-auto justify-center lg:grid lg:grid-cols-3 sm:grid sm:grid-cols-2 gap-6">
+        {allDoctorsFromStore?.map((doctor) => (<DoctorProfileDiv location={doctor.hospital?.location.city ?? ""} name={doctor?.name ?? ""} dept={doctor.specialization?.name ?? ""} hospital={doctor.hospital?.name ?? ""}/>))}
     </div>
 </div>
 }
 
-const DoctorProfileDiv = ({img, name, dept} : {img : string, name : string, dept : string}) => {
+const DoctorProfileDiv = ({name, dept, hospital, location} : {name : string , dept : string, hospital : string, location : string}) => {
+
     return <div className="flex justify-center items-center">
-        <div>
-            <div className="">
-                <img className="rounded-3xl" src={img} alt="" />
-            </div>
-            <div className="flex justify-center items-center w-full py-2">
-                <div>
-                    <p className="text-xl font-medium">{name}</p>
-                    <p>{dept}</p>
+        
+        <div className="min-h-96 min-w-80 bg-slate-200 border-spacing-5 rounded-2xl shadow-xl">
+         
+            <div className="flex w-full py-2">
+                <div className="p-2">
+                    <p className="text-2xl font-medium">{`Dr. ${name}`}</p>
+                    <p className="text-base font-medium">{`Hospital : ${hospital}, ${location}`}</p>
+                    <p className="text-base font-medium">{`Spec : ${dept}`}</p>
+                    
                 </div>
             </div>
         </div>

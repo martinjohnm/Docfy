@@ -1,6 +1,5 @@
 // recoil/authState.ts
 import { atom, selector } from 'recoil';
-import { fetchDoctorData } from '../../apis/doctor/doctorAuthApis';
 import { doctorAuthType } from '../../types/recoil/doctor/doctorAuth.type';
 
 export const doctorAtom = atom< doctorAuthType>({
@@ -13,22 +12,22 @@ export const doctorAtom = atom< doctorAuthType>({
 });
 
 
-selector({
-  key: 'doctor/default',
-  get: async () => {
-  try {
-      const response = await fetchDoctorData() ;    
-      console.log(response)
-      if (response.success) {
-        return response.data.user;
-      }
-  } catch (e) {
-      console.error(e);
-  }
+// selector({
+//   key: 'doctor/default',
+//   get: async () => {
+//   try {
+//       const response = await fetchDoctorData() ;    
+//       console.log(response)
+//       if (response.success) {
+//         return response.data.user;
+//       }
+//   } catch (e) {
+//       console.error(e);
+//   }
 
-  return null;
-  },
-}) 
+//   return null;
+//   },
+// }) 
 
 export const isDoctorAuthenticatedAtom = selector({
   key: 'isDoctorAuthenticatedAtom',
