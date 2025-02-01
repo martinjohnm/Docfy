@@ -26,9 +26,7 @@ export const updateDoctor = async (req : Request, res : Response) => {
                 }
             })
 
-            console.log("old incorrect");
-            
-
+        
             if (doctorr?.password) {
                 
                 if (!await comparePassword(parsedDoctorUpdate.data.oldPassword, doctorr.password)) {
@@ -56,9 +54,6 @@ export const updateDoctor = async (req : Request, res : Response) => {
         }
         delete parsedDoctorUpdate.data?.confirmPassword
         delete parsedDoctorUpdate.data?.oldPassword
-        
-
-        console.log(parsedDoctorUpdate.data);
         
 
 

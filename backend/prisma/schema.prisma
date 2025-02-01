@@ -43,6 +43,7 @@ model Doctor {
   hospitalId          String?
   hospital            Hospital? @relation(fields: [hospitalId], references: [id])
   bookings            Booking[]
+  slots               Slot[]
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt @default(now())
 }
@@ -85,10 +86,22 @@ model Booking  {
   doctor          Doctor @relation(fields: [doctorId], references: [id])
   patientId       String 
   patient         User   @relation(fields: [patientId], references: [id])
+  slotId          String? @unique
+  slot            Slot? @relation(fields: [slotId], references: [id])
   appointmentDate DateTime
   status          BookingStatus @default(PENDING)
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
+}
+
+model Slot     {
+  id             String   @id @default(uuid())
+  doctorId       String
+  doctor         Doctor @relation(fields: [doctorId], references: [id])
+  startTime      DateTime
+  endTime        DateTime
+  duration       Int
+  booking        Booking?
 }
 
 enum AuthProvider {

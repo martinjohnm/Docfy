@@ -158,8 +158,7 @@ export const getDoctor = async (req : Request, res : Response) => {
             }
         })
 
-        console.log(doctor);
-        
+
         
         res.status(200).json({
             message : "Doctor fetched successfully",

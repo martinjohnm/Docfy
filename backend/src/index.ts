@@ -11,6 +11,8 @@ import doctorRoute from "./routes/user/doctor"
 import doctorAuthhRoute from "./routes/doctor/auth.doctor"
 import doctorhospitalsRoute from "./routes/doctor/hospitals.doctor"
 import doctorEdithRoute from "./routes/doctor/edit.doctor"
+import doctorSlotRoute from "./routes/doctor/slot.doctor"
+
 
 import categoryAdminRoute from "./routes/admin/category.admin"
 import hospitalAdminRoute from "./routes/admin/hospital.admin"
@@ -54,6 +56,7 @@ app.use("/doctor/auth", doctorAuthhRoute)
 app.use("/doctor/edit", doctorEdithRoute)
 app.use("/doctor/hospital", doctorhospitalsRoute)
 app.use("/doctor/category", doctorhospitalsRoute)
+app.use("/doctor/slot", doctorSlotRoute)
 
 // admin routes
 app.use("/admin/category", categoryAdminRoute)
