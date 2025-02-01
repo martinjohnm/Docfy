@@ -24,8 +24,6 @@ export const SingleHospital = () => {
     }, [hospital])
 
 
-    console.log(postInputs);
-
     const navigate = useNavigate();
 
 

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { NavbarDoctor } from "./Navbar.doctor";
 
-export type NavbarTypesDoctor  = "" | "patient-bookings" | "doctor-profile" | "" | "none"
+export type NavbarTypesDoctor  = "" | "patient-bookings" | "doctor-profile" | "" | "none" | "doctor-slots"
 
 export const FullNavBarDocotor = ({page} : {page : NavbarTypesDoctor}) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -81,6 +81,7 @@ export const FullNavBarDocotor = ({page} : {page : NavbarTypesDoctor}) => {
           </div>
           <ul className="space-y-4 p-4 text-lg">
             <li><a href="/doctor" className={`block hover:text-gray-300 ${page == "" ? "text-green-300" : "text-white"}`}>Home</a></li>
+            <li><a href="/doctor-slots" className={`block hover:text-gray-300 ${page == "doctor-slots" ? "text-green-300" : "text-white"}`}>Slots</a></li>
             <li><a href="/patient-bookings" className={`block hover:text-gray-300 ${page == "patient-bookings" ? "text-green-300" : "text-white"}`}>Bookings</a></li>
             <li><a href="/doctor-profile" className={`block hover:text-gray-300 ${page == "doctor-profile" ? "text-green-300" : "text-white"}`}>Profile</a></li>
           </ul>

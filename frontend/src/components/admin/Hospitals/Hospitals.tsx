@@ -5,8 +5,8 @@ import { createHospitalAdmin } from "../../../apis/admin/adminHospital"
 import { HospitalAddInput } from "../../../types/zod.types"
 import { TextInput } from "../../Common/TextInput"
 import { useGetHospitals } from "../../../hooks/admin/useGetHospitals"
-import { ReactSelectHospitals } from "../../Common/React.Select.Hospitals"
 import { Link } from "react-router-dom"
+import { ReactSelectLocations } from "../../Common/ReactSelectLocations"
 
 
 
@@ -19,6 +19,7 @@ export const Hospitals = () => {
     const setToggleAdd = () => {
         setIsToggleAdd(c => !c)
     }
+
 
 
     return <div className="w-full h-full overflow-auto bg-slate-300">
@@ -99,7 +100,7 @@ const AddNewHospitalToggleWindow = ({hidden, closeWindow} : {hidden : Boolean, c
                             }))
                         }} type="text"/>
                     
-                    <ReactSelectHospitals onLocationChange={(locationId  : string) => {
+                    <ReactSelectLocations onLocationChange={(locationId  : string) => {
                         setpostInputs(c => ({
                             ...c,
                             locationId

@@ -29,6 +29,7 @@ import { fetchDoctorData } from "./apis/doctor/doctorAuthApis"
 import { doctorAtom, doctorLoadingState } from "./store/atoms/authDoctorState"
 import { DoctorAuthProtector } from "./protected/DoctorAuthProtector"
 import { SignUpPageDoctor } from "./pages/doctor/SignUpPageDoctor"
+import { SlotsDoctor } from "./pages/doctor/Slots.Doctor"
 
 function App() {
 
@@ -77,6 +78,7 @@ const AuthApp = () => {
         <Route path="/doctor-signup" element={<SignUpPageDoctor/>}/>
         <Route path="/google-callback-doctor" element={<DoctorGoogleCallBack/>}/>
         <Route path="/doctor-profile" element={<DoctorAuthProtector><ProfileDoctor/></DoctorAuthProtector>}/>
+        <Route path="/doctor-slots" element={<DoctorAuthProtector><SlotsDoctor/></DoctorAuthProtector>}/>
         <Route path="/patient-bookings" element={<DoctorAuthProtector><PatientBookingsDoctor/></DoctorAuthProtector>}/>
 
         <Route path="*" element={<NotFoundPage />} />
@@ -126,7 +128,6 @@ const  InitialLoader  = ({ children } : {children : React.ReactNode}) =>  {
       try {
         setDoctorLoading(true)
         const fetchedData = await fetchDoctorData() ;     
-        console.log(fetchedData);
            
         if (fetchedData.success) {
           setDoctor({

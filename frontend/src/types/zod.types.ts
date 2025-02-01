@@ -40,6 +40,9 @@ export const hospitalUpdateInput = z.object({
     }).optional()
 })
 
+
+
+
 // Booking
 export const bookingAddInput = z.object({
     name : z.string().min(1, {message : "name cannot be empty"}),
@@ -98,6 +101,18 @@ export const userAddInput = z.object({
 })
 
 
+// SLots
+
+export const slotsCreateInput = z.object({
+    selectedDates : z.array(z.string()),
+    startTime : z.number(),
+    endTime : z.number(),
+    breakStartTime : z.number(),
+    breakEndTime : z.number(),
+    duration : z.number()
+})
+
+
 // Location 
 export type LocationAddInput = z.infer<typeof locaitonAddInput>
 // Category 
@@ -118,3 +133,6 @@ export type DoctorLoginInput = z.infer<typeof doctorLoginInput>
 
 // User 
 export type UserAddInput = z.infer<typeof userAddInput>
+
+// Slots 
+export type SlotsCreateInput = z.infer<typeof slotsCreateInput>

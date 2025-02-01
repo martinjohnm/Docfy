@@ -28,6 +28,9 @@ export const NavbarDoctor = ({page} : {page : NavbarTypesDoctor}) => {
                         <Link to={"/doctor"} className={`flex justify-center hover:text-slate-300 cursor-pointer ${page == '' ? "text-green-400" : ""}`}>
                             Home
                         </Link>
+                        <Link to={"/doctor-slots"} className={`flex justify-center hover:text-slate-300 cursor-pointer ${page == 'doctor-slots' ? "text-green-400" : ""}`}>
+                            Slots
+                        </Link>
                         <Link to={"/patient-bookings"} className={`flex justify-center hover:text-slate-300 cursor-pointer ${page == 'patient-bookings' ? "text-green-400" : ""}`}>
                             Patients
                         </Link>

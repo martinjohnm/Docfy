@@ -39,7 +39,7 @@ const DoctorProfileDiv = ({name, dept, hospital, location} : {name : string , de
 
     return <div className="flex justify-center items-center">
         
-        <div className="min-h-96 min-w-80 bg-slate-200 border-spacing-5 rounded-2xl shadow-xl">
+        <div className="w-80 h-96 bg-slate-200 border-spacing-5 rounded-2xl shadow-xl px-2 mt-6">
          
             <div className="flex w-full py-2">
                 <div className="p-2">
