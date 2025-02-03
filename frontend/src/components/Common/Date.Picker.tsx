@@ -1,12 +1,32 @@
 import { useState } from "react";
-import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, addMonths, subMonths } from "date-fns";
+import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, addMonths, subMonths, isSameMonth } from "date-fns";
 import { weekdays, weekMap } from "../../utils/dateTimeHelpers";
+import { useRecoilValue } from "recoil";
+import { slotsByDoctorAtom } from "../../store/atoms/doctor/slotsByDoctorAtom";
+import { useGetSlotsDoctor } from "../../hooks/doctor/useGetSlotsDoctor";
+import { SlotResponseType } from "../../types/response.types";
 
 
 
 export const MultipleDateSelector = ({onSubmit, setTimeToggle} : {onSubmit : any, setTimeToggle:any}) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDates, setSelectedDates] = useState<Date[]>([]);
+
+  useGetSlotsDoctor()
+
+  const slots = useRecoilValue(slotsByDoctorAtom)
+
+  console.log(slots?.length);
+  const sameMonthSlot = slots?.filter((slot) => isSameMonth(slot.startTime, currentMonth)
+  )
+
+  const dayWiseSlots = ({day} : {day : Date}) : SlotResponseType[] =>  { 
+    return slots?.filter((slot) => isSameDay(slot.startTime, day) ) as SlotResponseType[]
+
+}
+  console.log(sameMonthSlot?.length);
+  
+  
 
   // Generate dates for the current month
   const daysInMonth = eachDayOfInterval({
@@ -75,17 +95,41 @@ export const MultipleDateSelector = ({onSubmit, setTimeToggle} : {onSubmit : any
         {/* Date divs */}
         {daysInMonth.map((date) => (
  
-            <button
-              key={date.toISOString()}
-              className={`py-2 rounded-lg text-center ${date <= new Date() ? "bg-slate-700" : ""} ${
-                isSelected(date)
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-100 text-gray-800"
-              } hover:bg-blue-200 transition`}
-              onClick={() => toggleDate(date)}
-            >
-              {format(date, "d")}
-            </button>
+            date <= new Date() ? (
+              <div className={`py-2 rounded-lg text-center relative bg-gray-300`}>
+                <div
+                  key={date.toISOString()}
+                  className="relative"
+                >
+                  <div
+                    className="absolute top-1/2 left-1/2 w-16 h-0.5 bg-black rotate-12 -translate-x-1/2 -translate-y-1/2"
+                  >
+                  </div>
+                  {format(date, "d")}
+                </div>
+              </div>
+            ) : (
+              dayWiseSlots({day : date})?.length === 0 ? (<button
+                key={date.toISOString()}
+                className={`py-2 rounded-lg text-center bg-slate-700" ${
+                  isSelected(date)
+                    ? "bg-blue-500 text-white"
+                    : "bg-gray-100 text-gray-800"
+                } hover:bg-blue-200 transition`}
+                onClick={() => toggleDate(date)}
+              >
+                {format(date, "d")}
+              </button>) : (
+                <button
+                className={`py-2 rounded-lg text-center bg-slate-700 text-white`}
+                >
+                  {format(date, "d")}
+                </button>
+              )
+              
+            )
+            
+            
       
         ))}
       </div>

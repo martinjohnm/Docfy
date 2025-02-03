@@ -16,14 +16,16 @@ export const SlotsComponent = () => {
         duration : 15
     })
 
+
+   
+
     const [isToggle, setIsToggle] = useState<boolean>(true)
     const setToggleAdd = () => {
         setIsToggle(c => !c)
     }
 
     useEffect(() => {
-        console.log(postInputs.selectedDates);
-        
+
     },[postInputs])
 
 
@@ -43,7 +45,9 @@ export const SlotsComponent = () => {
             ...c,
             selectedDates : postInputs.selectedDates.map(c => (new Date(c).toISOString()))
         }))
-        const createdloc = await createSlots(postInputs)
+        await createSlots(postInputs)
+
+
         
         //alert(createdloc.message)
         

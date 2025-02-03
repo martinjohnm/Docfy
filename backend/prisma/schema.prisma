@@ -98,10 +98,13 @@ model Slot     {
   id             String   @id @default(uuid())
   doctorId       String
   doctor         Doctor @relation(fields: [doctorId], references: [id])
-  startTime      DateTime
-  endTime        DateTime
+  startTime      DateTime 
+  endTime        DateTime 
   duration       Int
   booking        Booking?
+
+  // composite uniqueness to prevent duplicates
+  @@unique([doctorId, startTime, endTime])
 }
 
 enum AuthProvider {

@@ -55,3 +55,12 @@ export interface UserResponseType {
 export interface BookingResponseType {
     id                  :      string
 }
+
+export interface SlotResponseType {
+    id                  : string
+    startTime           : Date
+    endTime             : Date
+    duration            : number
+    doctorId            : string,
+    
+}
