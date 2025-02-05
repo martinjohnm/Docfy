@@ -44,9 +44,9 @@ export const createSlot = async (req : Request, res : Response) => {
         const nonConflictingSlotsToCreate = filteredCurrentAndNewSlotToCreateArr({newSlots : slotsToCreate, currentSlots : currentSlotsForTheGivenDateArr})
 
 
-        nonConflictingSlotsToCreate.forEach(ele => {
-            console.log(` ${ele.startTime.getDate()} ${ele.startTime.getHours()}:${ele.startTime.getMinutes()} to ${ele.endTime.getHours()}:${ele.endTime.getMinutes()}`)
-        })
+        // nonConflictingSlotsToCreate.forEach(ele => {
+        //     console.log(` ${ele.startTime.getDate()} ${ele.startTime.getHours()}:${ele.startTime.getMinutes()} to ${ele.endTime.getHours()}:${ele.endTime.getMinutes()}`)
+        // })
         
         await db.slot.createMany({
             data : nonConflictingSlotsToCreate,

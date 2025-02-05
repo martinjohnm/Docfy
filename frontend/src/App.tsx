@@ -30,6 +30,7 @@ import { doctorAtom, doctorLoadingState } from "./store/atoms/authDoctorState"
 import { DoctorAuthProtector } from "./protected/DoctorAuthProtector"
 import { SignUpPageDoctor } from "./pages/doctor/SignUpPageDoctor"
 import { SlotsDoctor } from "./pages/doctor/Slots.Doctor"
+import { SingleDoctor } from "./pages/user/doctor/SingleDoctor"
 
 function App() {
 
@@ -56,6 +57,7 @@ const AuthApp = () => {
         {/* user pages */}
         <Route path="/" element={<UserAuthProtector><Home/></UserAuthProtector>}/>
         <Route path="/doctors" element={<UserAuthProtector><Doctors/></UserAuthProtector>}/>
+        <Route path="/doctors/:id" element={<UserAuthProtector><SingleDoctor/></UserAuthProtector>}/>
         <Route path="/login" element={<LoginPageUser/>}/>
         <Route path="/google-callback" element={<GoogleCallBack/>}/>
         <Route path="/user-profile" element={<UserAuthProtector><UserProfilePage/></UserAuthProtector>}/>

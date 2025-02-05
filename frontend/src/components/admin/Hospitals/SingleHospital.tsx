@@ -57,7 +57,7 @@ export const SingleHospital = () => {
                                     }))
                             }} type="text"/>
                          
-                            <ReactSelectLocations onCategoryChange={(locationId : string) => {
+                            <ReactSelectLocations onLocationChange={(locationId : string) => {
                                 setpostInputs(c => ({
                                     ...c,
                                     locationId 

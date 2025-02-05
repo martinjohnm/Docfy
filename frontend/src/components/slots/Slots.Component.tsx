@@ -3,7 +3,7 @@ import { MultipleDateSelector } from "../Common/Date.Picker";
 import { TimeSelector } from "../Common/Time.Selector";
 import { SlotsCreateInput } from "../../types/zod.types";
 import { DurationSelector } from "../Common/Duration.selector";
-import { createSlots } from "../../apis/doctor/doctorSlotApis";
+import { useSlotUpdate } from "../../hooks/doctor/useSlotUpdate";
 
 export const SlotsComponent = () => {
 
@@ -23,6 +23,8 @@ export const SlotsComponent = () => {
     const setToggleAdd = () => {
         setIsToggle(c => !c)
     }
+
+    const  {updatedSlot} = useSlotUpdate()
 
     useEffect(() => {
 
@@ -45,7 +47,7 @@ export const SlotsComponent = () => {
             ...c,
             selectedDates : postInputs.selectedDates.map(c => (new Date(c).toISOString()))
         }))
-        await createSlots(postInputs)
+        await updatedSlot(postInputs)
 
 
         

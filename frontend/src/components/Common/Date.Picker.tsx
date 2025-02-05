@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, addMonths, subMonths, isSameMonth } from "date-fns";
+import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, addMonths, subMonths } from "date-fns";
 import { weekdays, weekMap } from "../../utils/dateTimeHelpers";
 import { useRecoilValue } from "recoil";
 import { slotsByDoctorAtom } from "../../store/atoms/doctor/slotsByDoctorAtom";
@@ -16,17 +16,16 @@ export const MultipleDateSelector = ({onSubmit, setTimeToggle} : {onSubmit : any
 
   const slots = useRecoilValue(slotsByDoctorAtom)
 
-  console.log(slots?.length);
-  const sameMonthSlot = slots?.filter((slot) => isSameMonth(slot.startTime, currentMonth)
-  )
+
+  // console.log(slots?.length);
+  // const sameMonthSlot = slots?.filter((slot) => isSameMonth(slot.startTime, currentMonth)
+  // )
 
   const dayWiseSlots = ({day} : {day : Date}) : SlotResponseType[] =>  { 
     return slots?.filter((slot) => isSameDay(slot.startTime, day) ) as SlotResponseType[]
 
 }
-  console.log(sameMonthSlot?.length);
-  
-  
+
 
   // Generate dates for the current month
   const daysInMonth = eachDayOfInterval({
@@ -40,7 +39,10 @@ export const MultipleDateSelector = ({onSubmit, setTimeToggle} : {onSubmit : any
     divs.push(<div key={i}></div>);
   }
 
-  
+  const [isToggle, setIsToggle] = useState<boolean>(true)
+  const setToggleAdd = () => {
+      setIsToggle(c => !c)
+  }
   
   // Toggle date selection
   const toggleDate = (date: Date) => {
@@ -63,7 +65,7 @@ export const MultipleDateSelector = ({onSubmit, setTimeToggle} : {onSubmit : any
     <div className="max-w-lg">
       <div className="flex justify-between items-center mb-4">
         <button
-          className={`p-2 bg-blue-400 rounded hover:bg-blue-500 ${currentMonth.getMonth() <= new Date().getMonth() ? "pointer-events-none cursor-not-allowed bg-gray-400" : ""}`}
+          className={`p-2 bg-blue-400 rounded hover:bg-blue-500 ${currentMonth <= new Date()? "pointer-events-none cursor-not-allowed bg-gray-400" : ""}`}
           onClick={goToPreviousMonth}
         >
           Previous
@@ -122,6 +124,7 @@ export const MultipleDateSelector = ({onSubmit, setTimeToggle} : {onSubmit : any
               </button>) : (
                 <button
                 className={`py-2 rounded-lg text-center bg-slate-700 text-white`}
+                onClick={setToggleAdd}
                 >
                   {format(date, "d")}
                 </button>
@@ -129,8 +132,8 @@ export const MultipleDateSelector = ({onSubmit, setTimeToggle} : {onSubmit : any
               
             )
             
-            
-      
+
+
         ))}
       </div>
  
@@ -140,6 +143,27 @@ export const MultipleDateSelector = ({onSubmit, setTimeToggle} : {onSubmit : any
           setTimeToggle()
         }} className="bg-green-600 text-white px-4 py-2 rounded-md">Submit</button>
         <button onClick={() => setSelectedDates([])} className="bg-red-500 text-white px-4 py-2 rounded-md">Cancel</button>
+      </div>
+
+      <div>
+          {/* Daywise slot view */}
+              <div className={`absolute top-0 bg-opacity-65 left-0 z-50 w-screen h-screen bg-slate-300 ${isToggle ? "hidden" : ""} flex justify-center p-4`}>
+                      <div className="bg-opacity-85 rounded-2xl bg-white w-80 h-fit">
+                          <div className="w-full justify-between items-end flex p-2 text-black">
+                              <div className="font-bold text-lg">
+                                  <p>Slots</p>
+                              </div>
+                              <div className="justify-between">
+                                  <button onClick={setToggleAdd} className="bg-red-500 hover:bg-red-700 text-white p-1 rounded-xl font-medium text-sm">Close</button>
+                              </div>
+                          </div>
+                          <div className="w-full mx-auto container p-2">
+                            
+                              
+                          </div>
+
+                      </div>
+              </div>
       </div>
     </div>
   );

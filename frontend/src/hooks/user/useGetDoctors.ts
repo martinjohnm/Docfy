@@ -18,9 +18,7 @@ export const useGetDoctors = () => {
 
         const getdoctor = async () => {
             
-            const doctor = await getDoctors()
-            console.log(doctor);
-            
+            const doctor = await getDoctors()            
 
             if (doctor.success) {
                 setDoctors(doctor.data?.doctors ?? null)

@@ -6,6 +6,7 @@ import session from "express-session";
 import cors from "cors"
 import userAuthhRoute from "./routes/user/auth"
 import doctorRoute from "./routes/user/doctor"
+import slotRoute from "./routes/user/slot"
 
 
 import doctorAuthhRoute from "./routes/doctor/auth.doctor"
@@ -51,6 +52,7 @@ app.use(
 // user routes
 app.use("/auth", userAuthhRoute)
 app.use("/doctor", doctorRoute)
+app.use("/slot", slotRoute)
 // doctor routes
 app.use("/doctor/auth", doctorAuthhRoute)
 app.use("/doctor/edit", doctorEdithRoute)

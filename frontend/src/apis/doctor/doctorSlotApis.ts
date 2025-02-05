@@ -12,7 +12,7 @@ export const fetchAllHospitalsDoctor = async () => {
 
 
 export const createSlots = async (postInputs : SlotsCreateInput) => {
-  return doctorApi<{ success : boolean,  data : {slots : SlotResponseType} , message : string}>(`doctor/slot/create`, "POST", postInputs)
+  return doctorApi<{ success : boolean,  data : {slots : SlotResponseType[]} , message : string}>(`doctor/slot/create`, "POST", postInputs)
 };
 export const getSlotsForDoctor = async () => {
   return doctorApi<{ success : boolean,  data : {slots : SlotResponseType[]} , message : string}>(`doctor/slot/get-slots-doctor`, "GET")

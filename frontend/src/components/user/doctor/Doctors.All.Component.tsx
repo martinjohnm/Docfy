@@ -4,6 +4,7 @@
 import { useRecoilValue } from "recoil"
 import { allDoctorsAtom } from "../../../store/atoms/user/doctorsState"
 import { useGetDoctors } from "../../../hooks/user/useGetDoctors"
+import { useNavigate } from "react-router-dom"
 
 
 
@@ -29,17 +30,21 @@ export const DoctorsAllComponent = () => {
             </p>
         </div>
     </div>
-    <div className="max-w-7xl container mx-auto justify-center lg:grid lg:grid-cols-3 sm:grid sm:grid-cols-2 gap-6">
-        {allDoctorsFromStore?.map((doctor) => (<DoctorProfileDiv location={doctor.hospital?.location.city ?? ""} name={doctor?.name ?? ""} dept={doctor.specialization?.name ?? ""} hospital={doctor.hospital?.name ?? ""}/>))}
+    <div className="max-w-7xl container mx-auto justify-center lg:grid lg:grid-cols-3 sm:grid sm:grid-cols-2 gap-6" >
+        {allDoctorsFromStore?.map((doctor) => (<DoctorProfileDiv key={doctor.id} id={doctor.id} location={doctor.hospital?.location.city ?? ""} name={doctor?.name ?? ""} dept={doctor.specialization?.name ?? ""} hospital={doctor.hospital?.name ?? ""}/>))}
     </div>
 </div>
 }
 
-const DoctorProfileDiv = ({name, dept, hospital, location} : {name : string , dept : string, hospital : string, location : string}) => {
+const DoctorProfileDiv = ({name, dept, hospital, location, id} : {name : string , dept : string, hospital : string, location : string, id : string}) => {
+
+    const navigate = useNavigate()
 
     return <div className="flex justify-center items-center">
         
-        <div className="w-80 h-96 bg-slate-200 border-spacing-5 rounded-2xl shadow-xl px-2 mt-6">
+        <div className="w-80 h-96 bg-slate-200 border-spacing-5 rounded-2xl shadow-xl px-2 mt-6 cursor-pointer" onClick={() => {
+            navigate(id)
+        }}>
          
             <div className="flex w-full py-2">
                 <div className="p-2">
