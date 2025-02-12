@@ -62,5 +62,6 @@ export interface SlotResponseType {
     endTime             : Date
     duration            : number
     doctorId            : string,
-    
+    status              : "BOOKED" | "AVAILABLE"
 }
+

@@ -25,6 +25,8 @@ export const slotDoctorWise = async (req : Request, res : Response) => {
           }
         })
 
+
+
         res.status(200).json({
             message : "slots fetched successfully",
             data : {

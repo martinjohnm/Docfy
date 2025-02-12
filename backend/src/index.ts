@@ -7,7 +7,7 @@ import cors from "cors"
 import userAuthhRoute from "./routes/user/auth"
 import doctorRoute from "./routes/user/doctor"
 import slotRoute from "./routes/user/slot"
-
+import bookingRoute from "./routes/user/booking"
 
 import doctorAuthhRoute from "./routes/doctor/auth.doctor"
 import doctorhospitalsRoute from "./routes/doctor/hospitals.doctor"
@@ -53,6 +53,7 @@ app.use(
 app.use("/auth", userAuthhRoute)
 app.use("/doctor", doctorRoute)
 app.use("/slot", slotRoute)
+app.use("/booking", bookingRoute)
 // doctor routes
 app.use("/doctor/auth", doctorAuthhRoute)
 app.use("/doctor/edit", doctorEdithRoute)

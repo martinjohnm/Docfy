@@ -88,7 +88,9 @@ model Booking  {
   patient         User   @relation(fields: [patientId], references: [id])
   slotId          String? @unique
   slot            Slot? @relation(fields: [slotId], references: [id])
-  appointmentDate DateTime
+  startTime       DateTime
+  endTime         DateTime 
+  duration        Int
   status          BookingStatus @default(PENDING)
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
@@ -102,7 +104,7 @@ model Slot     {
   endTime        DateTime 
   duration       Int
   booking        Booking?
-
+  status         SlotStatus @default(AVAILABLE)
   // composite uniqueness to prevent duplicates
   @@unique([doctorId, startTime, endTime])
 }
@@ -111,6 +113,11 @@ enum AuthProvider {
   EMAIL
   GOOGLE
   GUEST
+}
+
+enum SlotStatus {
+  BOOKED
+  AVAILABLE
 }
 
 enum BookingStatus {

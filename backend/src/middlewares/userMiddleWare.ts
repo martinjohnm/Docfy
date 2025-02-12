@@ -21,6 +21,9 @@ export const userMiddleWare = (req : Request, res : Response, next : NextFunctio
             res.status(401).json({ success: false, message: 'Token expired Login again' });
               return
         }
+
+
+        req.user = userFromTokne
         
         next()
         } catch(e) {

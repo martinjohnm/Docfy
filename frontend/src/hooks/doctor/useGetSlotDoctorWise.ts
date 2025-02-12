@@ -15,27 +15,25 @@ export const useGetSlotDoctorWise = (id : string) => {
 
     const setSlotsByDoctor = useSetRecoilState(slotsByDoctorForUserAtom)
 
+    const getslots = async ( id : string) => {
+        const slots = await getSlotsDoctorWise({id})
+
+        if (slots) {
+            setslots(slots.data.slots)
+            setDoctor(slots.data.doctor)
+            setSlotsByDoctor(slots.data.slots)
+            setLoading(false)
+        } else {
+            setLoading(false)
+        }
+    }
 
 
     useEffect(() => {
-
-        const getslots = async ( id : string) => {
-            const slots = await getSlotsDoctorWise({id})
-            
-
-            if (slots) {
-                setslots(slots.data.slots)
-                setDoctor(slots.data.doctor)
-                setSlotsByDoctor(slots.data.slots)
-                setLoading(false)
-            } else {
-                setLoading(false)
-            }
-        }
 
         getslots(id)
 
     }, [])
 
-    return {loading, slots, doctor}
+    return {loading, slots, doctor, getslots}
 }

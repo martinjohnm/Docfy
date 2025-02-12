@@ -21,7 +21,7 @@ export const MultipleDateSelector = ({onSubmit, setTimeToggle} : {onSubmit : any
   // const sameMonthSlot = slots?.filter((slot) => isSameMonth(slot.startTime, currentMonth)
   // )
 
-  const dayWiseSlots = ({day} : {day : Date}) : SlotResponseType[] =>  { 
+ const dayWiseSlots = ({day} : {day : Date}) : SlotResponseType[] =>  { 
     return slots?.filter((slot) => isSameDay(slot.startTime, day) ) as SlotResponseType[]
 
 }
