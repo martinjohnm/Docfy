@@ -35,6 +35,7 @@ app.use(
     })
 )
 
+
 const allowedHosts = process.env.ALLOWED_HOSTS
   ? process.env.ALLOWED_HOSTS.split(',')
   : [];

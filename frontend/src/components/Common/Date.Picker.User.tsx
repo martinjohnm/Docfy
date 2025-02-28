@@ -97,14 +97,14 @@ export const DatePickerUser = ({onSelectedDateChANGE} : {onSelectedDateChANGE : 
                       : (
                         dayWiseSlots({day : date})?.length === 0 ? (<button
                             key={date.toISOString()}
-                            className={`py-2 rounded-lg text-center bg-slate-700" ${isSameDay(date, selectedDate) ? "bg-blue-500" : "bg-gray-100"} text-gray-800`}
+                            className={`py-2 rounded-lg text-center bg-slate-700" ${isSameDay(date, selectedDate) ? "bg-blue-500" : "bg-gray-100"} text-gray-800 hover:bg-blue-300`}
                             onClick={() => {
                                 selectDay({date})
                                 }}
                           >
                             {format(date, "d")}
                           </button>) : (
-                            <button key={date.toISOString()} className={`py-2 rounded-lg text-center border border-black hover:bg-green-500 cursor-pointer ${isSameDay(date, selectedDate) ? "bg-blue-500" : "bg-green-400"}`}
+                            <button key={date.toISOString()} className={`py-2 rounded-lg text-center border border-black hover:bg-blue-300 cursor-pointer ${isSameDay(date, selectedDate) ? "bg-blue-500" : "bg-green-400"}`}
                             onClick={() => {
                                 selectDay({date})
                                 }}>

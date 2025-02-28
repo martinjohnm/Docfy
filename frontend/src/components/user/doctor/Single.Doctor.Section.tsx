@@ -6,6 +6,7 @@ import { DatePickerUser } from "../../Common/Date.Picker.User";
 import { useEffect, useState } from "react";
 import { format, formatDate, isAfter, isSameDay } from "date-fns";
 import { SlotResponseType } from "../../../types/response.types";
+import { useCreateBooking } from "../../../hooks/user/useCreateBooking";
 
 
 
@@ -20,8 +21,6 @@ export const SingleDoctorSection = () => {
     const [selectedDate, setSelectedDate] = useState<Date>(new Date())
     const [selectedSlot, setSelectedSlot] = useState<SlotResponseType | null>(null)
  
-    console.log(selectedSlot);
-    
 
     useEffect(() => {
 
@@ -36,6 +35,7 @@ export const SingleDoctorSection = () => {
     }, [slotsByDoctor])
 
 
+    const {createBookingFn} = useCreateBooking()
 
 
     // calculate slots for selected day
@@ -59,6 +59,7 @@ export const SingleDoctorSection = () => {
         getslots(id)
     }
 
+ 
 
     return <div className="w-full">
     <div className="md:grid md:grid-cols-2 max-w-7xl container mx-auto min-h-96 rounded-xl bg-slate-200 p-4 gap-4">
@@ -110,6 +111,8 @@ export const SingleDoctorSection = () => {
                             slot={slot} 
                             onClick={() => {
                                 setSelectedSlot(slot)
+                                createBookingFn(slot.id)
+                                reloadSlots()
                             }}
                             selectedSlot={selectedSlot}
                             />

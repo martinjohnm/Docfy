@@ -54,6 +54,16 @@ export interface UserResponseType {
 
 export interface BookingResponseType {
     id                  :      string
+    doctorId            :      string
+    doctor              :      DoctorResponseType
+    patientId           :      string
+    patient             :      UserResponseType
+    slotId              :      string
+    slot                :      SlotResponseType
+    startTime           :      Date
+    endTime             :      Date
+    duration            :      number
+    status              :      "CONFIRMED" | "CANCELLED" | "PENDING"
 }
 
 export interface SlotResponseType {

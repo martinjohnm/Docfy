@@ -31,6 +31,9 @@ import { DoctorAuthProtector } from "./protected/DoctorAuthProtector"
 import { SignUpPageDoctor } from "./pages/doctor/SignUpPageDoctor"
 import { SlotsDoctor } from "./pages/doctor/Slots.Doctor"
 import { SingleDoctor } from "./pages/user/doctor/SingleDoctor"
+import { Toaster } from "react-hot-toast";
+import { Bookings } from "./pages/user/bookings/Bookings"
+
 
 function App() {
 
@@ -40,6 +43,7 @@ function App() {
   <RecoilRoot>
     <Suspense fallback={<Loader />}>
       <InitialLoader>
+        <Toaster position="top-right"/>
         <AuthApp />
       </InitialLoader>
     </Suspense>
@@ -58,6 +62,7 @@ const AuthApp = () => {
         <Route path="/" element={<UserAuthProtector><Home/></UserAuthProtector>}/>
         <Route path="/doctors" element={<UserAuthProtector><Doctors/></UserAuthProtector>}/>
         <Route path="/doctors/:id" element={<UserAuthProtector><SingleDoctor/></UserAuthProtector>}/>
+        <Route path="/bookings" element={<UserAuthProtector><Bookings/></UserAuthProtector>}/>
         <Route path="/login" element={<LoginPageUser/>}/>
         <Route path="/google-callback" element={<GoogleCallBack/>}/>
         <Route path="/user-profile" element={<UserAuthProtector><UserProfilePage/></UserAuthProtector>}/>
