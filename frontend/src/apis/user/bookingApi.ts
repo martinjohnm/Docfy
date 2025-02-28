@@ -11,3 +11,9 @@ export const getBookings = async ({skip, take} : {skip : number, take : number})
   return userApi<{ success : boolean,  data : {bookings : BookingResponseType[], totalNoOfBookings : number} , message : string }>(`booking/get-all/?skip=${skip}&take=${take}`, 'GET');
 };
 
+export const getBookingsUpcoming = async ({skip, take} : {skip : number, take : number}) => {
+  return userApi<{ success : boolean,  data : {bookings : BookingResponseType[], totalNoOfBookings : number} , message : string }>(`booking/get-all-upcoming/?skip=${skip}&take=${take}`, 'GET');
+};
+export const getBookingsCompleted = async ({skip, take} : {skip : number, take : number}) => {
+  return userApi<{ success : boolean,  data : {bookings : BookingResponseType[], totalNoOfBookings : number} , message : string }>(`booking/get-all-completed/?skip=${skip}&take=${take}`, 'GET');
+};

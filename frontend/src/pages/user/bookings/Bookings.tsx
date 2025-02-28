@@ -8,7 +8,8 @@ import { HomeTermsCondition } from "../../../components/user/home/Home.Terms.Con
 
 
 export const Bookings = () => {
- 
+
+
     return <div className="p-2">
     
         <div className="sticky top-0 z-40">

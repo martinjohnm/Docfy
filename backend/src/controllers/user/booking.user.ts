@@ -120,9 +120,7 @@ export const getAllBookingsForUser = async (req : Request, res : Response) => {
         const skip = Number(req.query.skip) ?? 0
         const take = Number(req.query.take) ?? 10
 
-        console.log(skip, take);
-        
-
+ 
         const totalNoOfBookings = await db.booking.count()
         
         const bookings = await db.booking.findMany({
@@ -214,3 +212,147 @@ export const getBookingById = async (req : Request, res : Response) => {
             })
     }
 }
+
+
+export const getBookingsUpcoming = async (req : Request, res : Response) => {
+
+    try {
+
+        const userId = String(req.user.id);
+
+        const skip = Number(req.query.skip) ?? 0
+        const take = Number(req.query.take) ?? 10
+
+
+
+        const now = new Date();
+
+        const bookings = await db.booking.findMany({
+            where : {
+                patientId : userId,
+                startTime : {
+                    gt:now
+                }
+            },
+            include : {
+                slot : true,
+                doctor : true
+            },
+           
+            skip : skip *10 ,
+            take ,
+
+            orderBy : {
+                startTime : "asc"
+            },
+        })
+
+        const totalNoOfBookings = await db.booking.count({
+            where : {
+                patientId : userId,
+                startTime : {
+                    gt:now
+                }
+            },
+        })
+
+
+
+  
+        res.status(200).json({
+            message : "slot booked fetched successfully",
+            data : {
+                bookings,
+                totalNoOfBookings
+            },
+            success : true
+        })
+        
+    
+    } catch(error) {
+        let message
+        if (error instanceof Error) message = error.message
+        else message = String(error)
+        console.log("Error during create Booking",  message); 
+        res.status(500).json(
+            {
+                success : false,
+                message : "Internal server error"
+            })
+    }
+}
+
+
+
+export const getBookingsCompleted = async (req : Request, res : Response) => {
+
+    try {
+
+        const userId = String(req.user.id);
+
+        const skip = Number(req.query.skip) ?? 0
+        const take = Number(req.query.take) ?? 10
+
+
+
+       
+        const now = new Date();
+
+        const bookings = await db.booking.findMany({
+            where : {
+                patientId : userId,
+                startTime : {
+                    lt:now
+                }
+            },
+            include : {
+                slot : true,
+                doctor : true
+            },
+           
+            skip : skip *10 ,
+            take ,
+
+            orderBy : {
+                startTime : "asc"
+            },
+        })
+
+        const totalNoOfBookings = await db.booking.count({
+            where : {
+                patientId : userId,
+                startTime : {
+                    lt:now
+                }
+            },
+        })
+        
+
+
+
+  
+        res.status(200).json({
+            message : "slot booked fetched successfully",
+            data : {
+                bookings,
+                totalNoOfBookings
+            },
+            success : true
+        })
+        
+    
+    } catch(error) {
+        let message
+        if (error instanceof Error) message = error.message
+        else message = String(error)
+        console.log("Error during create Booking",  message); 
+        res.status(500).json(
+            {
+                success : false,
+                message : "Internal server error"
+            })
+    }
+}
+
+
+
