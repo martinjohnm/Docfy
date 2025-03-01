@@ -8,75 +8,23 @@ import { BookingTypeToFetch } from "../../types/recoil/user/bookings.state.type"
 
 
 
-export const useGetBookings = () =>{
+export const useGetNextPageBookings = () =>{
     
-    const [bookings, setbookings] = useState<BookingResponseType[] | null>(null)
+    const [_bookings, setbookings] = useState<BookingResponseType[] | null>(null)
     const [loading, setLoading] = useState<boolean>(false)
 
     const setBookingsState = useSetRecoilState(bookingsAtomUser)
     const setTotalBookings = useSetRecoilState(totalNoOfBookings)
-
+    const selectedPageNo = useRecoilValue(selectedPageNumber)
     const bookingFilter = useRecoilValue(selectedBookingstypeTofetch)
-
-    const setSelectedPageNo = useSetRecoilState(selectedPageNumber)
     
+
     useEffect(() => {
 
-        getBookingsFn({bookingFilter})
-        setSelectedPageNo(1)
+        nextPageFn({bookingFilter, selectedPageNo})
 
-    }, [bookingFilter])
+    }, [selectedPageNo])
 
-    const getBookingsFn = async ({bookingFilter} : {bookingFilter : BookingTypeToFetch})  => {
-                
-        try {
-                setLoading(true)
-
-                const skip = 0
-                const take = 10
-              
-                if (bookingFilter == "all"){
-
-                    const booking = await getBookings({skip, take})
-                    if (booking.success) {
-                        
-                        setbookings(booking.data.bookings)
-                        setBookingsState(booking.data.bookings)
-                        setTotalBookings(booking.data.totalNoOfBookings)
-                        setLoading(false)
-                    } else {
-                        
-                        setLoading(false)
-                    }
-
-                } else if (bookingFilter == "upcoming") {
-                    const booking = await getBookingsUpcoming({skip, take})
-                    if (booking.success) {
-                        setbookings(booking.data.bookings)
-                        setBookingsState(booking.data.bookings)
-                        setTotalBookings(booking.data.totalNoOfBookings)
-                        setLoading(false)
-                    } else {
-                        
-                        setLoading(false)
-                    }
-                } else if (bookingFilter == "completed") {
-                    const booking = await getBookingsCompleted({skip, take})
-                    if (booking.success) {
-                        setbookings(booking.data.bookings)
-                        setBookingsState(booking.data.bookings)
-                        setTotalBookings(booking.data.totalNoOfBookings)
-                        setLoading(false)
-                    } else {
-                        
-                        setLoading(false)
-                    }
-                }
-                
-        } catch(e) {
-            setLoading(false)
-        }
-    }
 
     const nextPageFn = async({bookingFilter, selectedPageNo} : {bookingFilter : BookingTypeToFetch, selectedPageNo : number}) => {
         try {
@@ -130,5 +78,5 @@ export const useGetBookings = () =>{
 
    
 
-    return {loading, bookings, getBookingsFn, nextPageFn}
+    return {loading, nextPageFn}
 }

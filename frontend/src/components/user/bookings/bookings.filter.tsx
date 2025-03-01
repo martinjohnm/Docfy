@@ -27,7 +27,11 @@ const Filter = ({filter} : {filter : BookingTypeToFetch}) => {
 
     useGetBookings()
 
-    return <button onClick={() => setBookingFIlter(filter)} className={`px-4 py-2 text-sm ${filter == bookingFilter ? "bg-blue-300": "bg-slate-200"}`}>
+    const onFIlterChange = () => {
+        setBookingFIlter(filter)
+    }
+
+    return <button onClick={onFIlterChange} className={`px-4 py-2 text-sm ${filter == bookingFilter ? "bg-blue-300": "bg-slate-200"}`}>
         {filter}
     </button>
 }
