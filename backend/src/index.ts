@@ -4,10 +4,14 @@ import { configDotenv } from "dotenv";
 import cookieParser from "cookie-parser"
 import session from "express-session";
 import cors from "cors"
+
 import userAuthhRoute from "./routes/user/auth"
 import doctorRoute from "./routes/user/doctor"
 import slotRoute from "./routes/user/slot"
 import bookingRoute from "./routes/user/booking"
+import hospitalRoute from "./routes/user/hospital"
+import categoryRoute from "./routes/user/category"
+
 
 import doctorAuthhRoute from "./routes/doctor/auth.doctor"
 import doctorhospitalsRoute from "./routes/doctor/hospitals.doctor"
@@ -55,6 +59,8 @@ app.use("/auth", userAuthhRoute)
 app.use("/doctor", doctorRoute)
 app.use("/slot", slotRoute)
 app.use("/booking", bookingRoute)
+app.use("/hospital", hospitalRoute)
+app.use("/category", categoryRoute)
 // doctor routes
 app.use("/doctor/auth", doctorAuthhRoute)
 app.use("/doctor/edit", doctorEdithRoute)

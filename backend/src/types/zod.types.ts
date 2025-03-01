@@ -113,6 +113,13 @@ export const slotsCreateInput = z.object({
 })
 
 
+export const queryDoctorSchema = z.object({
+    hospitalId: z.string().optional(),
+    specializationId: z.string().optional(),
+    searchTerm : z.string().optional()
+  });
+
+
 // Location 
 export type LocationAddInput = z.infer<typeof locaitonAddInput>
 // Category 
