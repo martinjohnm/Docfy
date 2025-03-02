@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { DoctorResponseType } from "../../../types/response.types"
 import { useRecoilValue, useSetRecoilState } from "recoil"
-import { doctorSearchTermAtom, filteredDoctorsAtom } from "../../../store/atoms/user/doctorsState"
+import { doctorSearchTermAtom, filteredDoctorsAtom, selectedDateForFilter } from "../../../store/atoms/user/doctorsState"
 import { getDoctorsByFilters } from "../../../apis/user/doctorApi"
 import { doctorCategoryFilterAtom, doctorHospitalFilterAtom } from "../../../store/atoms/user/hospitalsUser"
 
@@ -14,7 +14,13 @@ export const useGetFilteredDoctor = () => {
     const hospitalId = useRecoilValue(doctorHospitalFilterAtom) ?? ""
     const categoryId = useRecoilValue(doctorCategoryFilterAtom) ?? ""
     const searchTerm = useRecoilValue(doctorSearchTermAtom) ?? ""
+    const dateFromStore = useRecoilValue(selectedDateForFilter) ?? ""
 
+    let date = ''
+    if (dateFromStore != "") {
+        date = dateFromStore.toISOString()
+    }
+    
     const setFilteredDoctors = useSetRecoilState(filteredDoctorsAtom)
 
 
@@ -22,7 +28,7 @@ export const useGetFilteredDoctor = () => {
 
         const getdoctor = async () => {
             
-            const doctor = await getDoctorsByFilters({hospitalId, categoryId, searchTerm})            
+            const doctor = await getDoctorsByFilters({hospitalId, categoryId, searchTerm, date})            
 
             if (doctor.success) {
                 setDoctors(doctor.data?.doctors ?? null)
@@ -34,7 +40,7 @@ export const useGetFilteredDoctor = () => {
 
         getdoctor()
 
-    }, [hospitalId, categoryId, searchTerm])
+    }, [hospitalId, categoryId, searchTerm,date])
 
     return {loading, doctors}
 }
