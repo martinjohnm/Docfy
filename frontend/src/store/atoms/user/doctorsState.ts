@@ -40,3 +40,25 @@ export const selectedDateForFilter = atom<Date | null>({
   key: 'selectedDateForFilter',
   default: null
 });
+
+
+// pagination
+export const filteredDoctorStartOfPage = atom<number>({
+  key: 'filteredDoctorStartOfPage',
+  default: 0
+});
+export const filteredDoctorPageNoofRecords = atom<number>({
+  key: 'filteredDoctorPageNoofRecords',
+  default: 8
+});
+
+export const filteredDoctorsTotalPages = atom<number>({
+  key: 'filteredDoctorsTotalPages',
+  default: 0
+});
+
+export const filteredDoctorTotalRecords = atom<number>({
+  key: 'filteredDoctorTotalRecords',
+  default: 0
+});
+

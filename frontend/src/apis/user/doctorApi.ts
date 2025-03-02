@@ -10,7 +10,7 @@ export const getDoctors = async () => {
 
 
 
-export const getDoctorsByFilters = async ({hospitalId, categoryId, searchTerm, date} : {hospitalId : string, categoryId : string, searchTerm : string, date : string}) => {
-  return userApi<{ success : boolean,  data : {doctors : DoctorResponseType[]} , message : string}>(`doctor/get-doctors-by-filter/?hospitalId=${hospitalId}&specializationId=${categoryId}&searchTerm=${searchTerm}&date=${date}`, 'GET');
+export const getDoctorsByFilters = async ({hospitalId, categoryId, searchTerm, date, skip, take} : {hospitalId : string, categoryId : string, searchTerm : string, date : string, skip : number, take : number}) => {
+  return userApi<{ success : boolean,  data : {doctors : DoctorResponseType[], totalFilteredDoctors : number} , message : string}>(`doctor/get-doctors-by-filter/?hospitalId=${hospitalId}&specializationId=${categoryId}&searchTerm=${searchTerm}&date=${date}&skip=${String(skip)}&take=${String(take)}`, 'GET');
 };
 

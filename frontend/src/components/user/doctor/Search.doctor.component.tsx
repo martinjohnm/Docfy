@@ -1,4 +1,4 @@
-import { useSetRecoilState } from "recoil"
+import { useRecoilState } from "recoil"
 import { doctorSearchTermAtom } from "../../../store/atoms/user/doctorsState"
 
 
@@ -7,8 +7,8 @@ import { doctorSearchTermAtom } from "../../../store/atoms/user/doctorsState"
 export const SearchDoctorComponent = () => {
 
 
-    const setSearchterm = useSetRecoilState(doctorSearchTermAtom)
-  
+    const [_serchTerm,setSearchterm] = useRecoilState(doctorSearchTermAtom)
+    
 
     return (
     <div className='justify-center items-center flex p-2 w-full'> 

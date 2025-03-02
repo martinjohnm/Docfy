@@ -1,8 +1,9 @@
 import Select from 'react-select'
-import { useRecoilState, useRecoilValue } from "recoil"
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
 import { useGetHospitals } from '../../../../hooks/user/react.selects/useGetHospitals'
 import { doctorAllHospitalsForReactselect, doctorHospitalFilterAtom } from '../../../../store/atoms/user/hospitalsUser'
 import { useGetFilteredDoctor } from '../../../../hooks/user/doctors/useGetFilteredDoctors'
+import { filteredDoctorStartOfPage } from '../../../../store/atoms/user/doctorsState'
 
 
 
@@ -12,6 +13,7 @@ export const ReactSelectHostpitalsUser = () => {
     useGetHospitals()
     useGetFilteredDoctor()
     const [selectedHospital, setSelectedHospital] = useRecoilState(doctorHospitalFilterAtom)
+    const setPageStart = useSetRecoilState(filteredDoctorStartOfPage)
 
     const hospitals = useRecoilValue(doctorAllHospitalsForReactselect)
     let hospitalOptions = hospitals?.map(hospital => ({value : hospital.id, label : hospital.name}))
@@ -23,6 +25,8 @@ export const ReactSelectHostpitalsUser = () => {
       } else {
         setSelectedHospital(null)
       }
+
+      setPageStart(0)
 
     };
 

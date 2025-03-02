@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { DoctorResponseType } from "../../../types/response.types"
 import { useRecoilValue, useSetRecoilState } from "recoil"
-import { doctorSearchTermAtom, filteredDoctorsAtom, selectedDateForFilter } from "../../../store/atoms/user/doctorsState"
+import { doctorSearchTermAtom, filteredDoctorPageNoofRecords, filteredDoctorsAtom, filteredDoctorStartOfPage, filteredDoctorTotalRecords, selectedDateForFilter } from "../../../store/atoms/user/doctorsState"
 import { getDoctorsByFilters } from "../../../apis/user/doctorApi"
 import { doctorCategoryFilterAtom, doctorHospitalFilterAtom } from "../../../store/atoms/user/hospitalsUser"
 
@@ -15,7 +15,12 @@ export const useGetFilteredDoctor = () => {
     const categoryId = useRecoilValue(doctorCategoryFilterAtom) ?? ""
     const searchTerm = useRecoilValue(doctorSearchTermAtom) ?? ""
     const dateFromStore = useRecoilValue(selectedDateForFilter) ?? ""
-
+    const setTotalFilteredDoctorsCount = useSetRecoilState(filteredDoctorTotalRecords)
+    
+    const skip = useRecoilValue(filteredDoctorStartOfPage)
+    const take = useRecoilValue(filteredDoctorPageNoofRecords)
+    
+    
     let date = ''
     if (dateFromStore != "") {
         date = dateFromStore.toISOString()
@@ -28,9 +33,10 @@ export const useGetFilteredDoctor = () => {
 
         const getdoctor = async () => {
             
-            const doctor = await getDoctorsByFilters({hospitalId, categoryId, searchTerm, date})            
+            const doctor = await getDoctorsByFilters({hospitalId, categoryId, searchTerm, date, skip, take})            
 
             if (doctor.success) {
+                setTotalFilteredDoctorsCount(doctor.data.totalFilteredDoctors)
                 setDoctors(doctor.data?.doctors ?? null)
                 setFilteredDoctors(doctor.data?.doctors)
             } else {
@@ -40,7 +46,7 @@ export const useGetFilteredDoctor = () => {
 
         getdoctor()
 
-    }, [hospitalId, categoryId, searchTerm,date])
+    }, [hospitalId, categoryId, searchTerm,date, skip, take])
 
     return {loading, doctors}
 }

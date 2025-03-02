@@ -1,9 +1,10 @@
 import Select from 'react-select'
-import { useRecoilState, useRecoilValue } from "recoil"
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
 import { useGetCategoriesForHospital } from '../../../../hooks/user/react.selects/useGetCategoriesForHospital'
 import { doctorCategoryFilterAtom } from '../../../../store/atoms/user/hospitalsUser'
 import { categoriesByHospitalIdAtom } from '../../../../store/atoms/user/categories.state'
 import { useGetFilteredDoctor } from '../../../../hooks/user/doctors/useGetFilteredDoctors'
+import { filteredDoctorStartOfPage } from '../../../../store/atoms/user/doctorsState'
 
 
 
@@ -14,6 +15,8 @@ export const ReactSelectCategorysUser = () => {
 
     const [selectedCategory, setSelectedCategory] = useRecoilState(doctorCategoryFilterAtom)
     const categories = useRecoilValue(categoriesByHospitalIdAtom)
+    const setPageStart = useSetRecoilState(filteredDoctorStartOfPage)
+    
     let categoryOptions = categories?.map(category => ({value : category.id, label : category.name}))
 
     const curvalue = categoryOptions?.find(category => category.value === selectedCategory) ?? null
@@ -30,6 +33,9 @@ export const ReactSelectCategorysUser = () => {
       } else {
         setSelectedCategory(null)
       }
+
+      setPageStart(0)
+
     };
 
 

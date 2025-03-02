@@ -116,7 +116,10 @@ export const slotsCreateInput = z.object({
 export const queryDoctorSchema = z.object({
     hospitalId: z.string().optional(),
     specializationId: z.string().optional(),
-    searchTerm : z.string().optional()
+    searchTerm : z.string().optional(),
+    date : z.string().optional(),
+    skip : z.string().optional(),
+    take : z.string().optional()
   });
 
 

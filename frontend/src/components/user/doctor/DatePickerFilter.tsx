@@ -5,9 +5,9 @@
 
 import { addMonths, eachDayOfInterval, endOfMonth, format, isBefore, isSameDay, startOfDay, startOfMonth, subDays, subMonths } from "date-fns"
 import { useState } from "react"
-import { useRecoilState } from "recoil"
+import { useRecoilState, useSetRecoilState } from "recoil"
 import { weekdays, weekMap } from "../../../utils/dateTimeHelpers"
-import { isDoctorDateToggleOpen, selectedDateForFilter } from "../../../store/atoms/user/doctorsState"
+import { filteredDoctorStartOfPage, isDoctorDateToggleOpen, selectedDateForFilter } from "../../../store/atoms/user/doctorsState"
 
 
 
@@ -19,6 +19,8 @@ export const DatePickerFIlter = () => {
     const [currentMonth, setCurrentMonth] = useState<Date>(new Date())
     const [selectedDate, setSelectedDate] = useRecoilState<Date | null>(selectedDateForFilter)
     const [_dateFilterToggle, setDateFilterToggle] = useRecoilState(isDoctorDateToggleOpen)
+    const setPageStart = useSetRecoilState(filteredDoctorStartOfPage)
+    
 
     const handleToggle = () => {
         setDateFilterToggle(c => !c)
@@ -108,6 +110,7 @@ export const DatePickerFIlter = () => {
                                     <button key={date.toISOString()} className={`py-2 w-full h-full rounded-lg text-center border border-black hover:bg-blue-300 cursor-pointer bg-blue-500`}
                                         onClick={() => {
                                             setSelectedDate(date)
+                                            setPageStart(0)
                                             }}>
                                             <div key={date.toISOString()}>
                                                 {format(date, "d")}
