@@ -104,7 +104,10 @@ export const getDoctorByFilters = async (req : Request, res : Response) => {
                         location : true
                     }
                 },
-            }
+            },
+            orderBy : {
+                name : "asc"
+            },
         })
 
 
