@@ -5,6 +5,7 @@ import { useGetFilteredDoctor } from '../../../../hooks/user/doctors/useGetFilte
 import { OptionType } from '../../../Common/React.Multi.Select.Categories'
 import { useGetHospitalsForCategoryIdSelected } from '../../../../hooks/user/react.selects/useGetHospitalsForCategoryIdSelected'
 import { useGetCategoriesForHospitalIdSelected } from '../../../../hooks/user/react.selects/useGetCategoriesForHospitalIdSelected'
+import { filteredDoctorStartOfPage } from '../../../../store/atoms/user/doctorsState'
 
 
 
@@ -18,8 +19,7 @@ export const ReactSelectCategorysUser = () => {
     const setCategoryId = useSetRecoilState(categoryIdUserSelected)
     const categoryId = useRecoilValue(categoryIdUserSelected)
 
-
-    //const setPageStart = useSetRecoilState(filteredDoctorStartOfPage)
+    const setPageStart = useSetRecoilState(filteredDoctorStartOfPage)
 
     let categoryOptions : OptionType[] = categoriesAll?.map(cat => ({value : cat.id, label : cat.name})) ?? []
 
@@ -27,7 +27,7 @@ export const ReactSelectCategorysUser = () => {
   
     const handleChange = (e : any) => {
         setCategoryId(e?.value ?? null)
- 
+        setPageStart(0)
     }
 
     const curvalue = categoryOptions.find(c => c.value == categoryId)
@@ -40,7 +40,7 @@ export const ReactSelectCategorysUser = () => {
           value={curvalue}
           isClearable required className='border border-gray-300 text-black 
           outline-none text-sm rounded-lg w-96' 
-          placeholder="Department" 
+          placeholder="Select Department" 
           options={categoryOptions}  onChange={handleChange}/>        
     </div> )
 }

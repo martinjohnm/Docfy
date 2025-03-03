@@ -36,10 +36,18 @@ export const DoctorsAllComponent = () => {
 
     return <div className="w-full">
    
-    <div className="max-w-7xl container mx-auto justify-center lg:grid lg:grid-cols-4 sm:grid sm:grid-cols-3 bg-slate-100" >
+   {allDoctorsFromStore?.length != 0 ? (
+    <div className="max-w-7xl container mx-auto min-h-[640px] justify-center rounded-lg lg:grid lg:grid-cols-4 sm:grid sm:grid-cols-3 bg-blue-50" >
         {allDoctorsFromStore?.map((doctor) => (<DoctorProfileDiv key={doctor.id} id={doctor.id} location={doctor.hospital?.location.city ?? ""} name={doctor?.name ?? ""} dept={doctor.specialization?.name ?? ""} hospital={doctor.hospital?.name ?? ""}/>))}
-        
     </div>
+    ) : (
+    <div className="max-w-7xl mx-auto min-h-[640px] justify-center rounded-lg bg-blue-50 items-center w-full h-28">
+        <div className="flex justify-center items-center h-full w-full font-bold text-xl">
+            No Doctors Available, Try changing filters
+        </div>
+    </div>
+   )}
+    
     <div className="max-w-7xl w-full container mx-auto justify-center items-center">
         <div className="flex justify-center items-center">
         <button onClick={prevPage} className={`px-2 text-sm items-center justify-center flex bg-blue-100 hover:bg-blue-300 rounded-md
@@ -66,9 +74,9 @@ const DoctorProfileDiv = ({name, dept, hospital, location, id} : {name : string 
 
     const navigate = useNavigate()
 
-    return <div className="flex justify-center items-center">
+    return <div className="flex justify-center">
         
-        <div className="w-60 h-72 bg-white border-spacing-5 rounded-2xl shadow-xl px-2 mb-3 mt-1 cursor-pointer" onClick={() => {
+        <div className="w-80 h-96 sm:w-48 sm:h-60 lg:w-60 lg:h-72 bg-white border-spacing-5 rounded-2xl shadow-xl px-2 mb-3 mt-1 cursor-pointer" onClick={() => {
             navigate(id)
         }}>
          

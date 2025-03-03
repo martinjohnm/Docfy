@@ -10,7 +10,7 @@ export const DoctorFilter = () => {
 
 
     return <div className="w-full">
-      <div className="max-w-7xl container mx-auto bg-blue-100 sticky">
+      <div className="max-w-7xl container mx-auto bg-blue-100 sticky rounded-lg">
         <div className="grid-cols-3 grid">
           <ReactSelectCategorysUser/>
           <ReactSelectHostpitalsUser/>
