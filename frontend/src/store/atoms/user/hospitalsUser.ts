@@ -14,13 +14,28 @@ export const doctorAllHospitalsForReactselect = atom<HospitalResponseType[] | nu
   default: null
 });
 
-export const doctorHospitalFilterAtom = atom<string | null>({
-  key: 'doctorHospitalFilterAtom',
+export const hospitalIdUserSelected = atom<string | null>({
+  key: 'hospitalIdUserSelected',
   default: null
 });
 
-export const doctorCategoryFilterAtom = atom<string | null>({
-  key: 'doctorCategoryFilterAtom',
+export const hospitalsForCategoryIdUserSelected = atom< HospitalResponseType[] | null>({
+  key: 'hospitalsForCategoryIdUserSelected',
   default: null
 });
+
+// export const doctorHospitalsForCategories = atom< HospitalResponseType[] | null>({
+//   key: 'doctorHospitalsForCategories',
+//   default: null
+// });
+
+// export const doctorHospitalFilterAtom = atom<string | null>({
+//   key: 'doctorHospitalFilterAtom',
+//   default: null
+// });
+
+// export const doctorCategoryFilterAtom = atom<string | null>({
+//   key: 'doctorCategoryFilterAtom',
+//   default: null
+// });
 

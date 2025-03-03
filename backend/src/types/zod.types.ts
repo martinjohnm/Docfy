@@ -122,6 +122,14 @@ export const queryDoctorSchema = z.object({
     take : z.string().optional()
   });
 
+export const queryHospitalsBycategoryIdSchema = z.object({
+    categoryId : z.string().optional()
+})
+
+export const queryCategoriesByhospitalIdSchema = z.object({
+    hospitalId : z.string().optional()
+})
+
 
 // Location 
 export type LocationAddInput = z.infer<typeof locaitonAddInput>

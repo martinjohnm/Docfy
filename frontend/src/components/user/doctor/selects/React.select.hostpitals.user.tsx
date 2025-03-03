@@ -1,41 +1,37 @@
 import Select from 'react-select'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
-import { useGetHospitals } from '../../../../hooks/user/react.selects/useGetHospitals'
-import { doctorAllHospitalsForReactselect, doctorHospitalFilterAtom } from '../../../../store/atoms/user/hospitalsUser'
+import { useRecoilValue, useSetRecoilState } from "recoil"
 import { useGetFilteredDoctor } from '../../../../hooks/user/doctors/useGetFilteredDoctors'
-import { filteredDoctorStartOfPage } from '../../../../store/atoms/user/doctorsState'
+import { OptionType } from '../../../Common/React.Multi.Select.Categories'
+import { hospitalIdUserSelected, hospitalsForCategoryIdUserSelected } from '../../../../store/atoms/user/hospitalsUser'
 
 
 
 export const ReactSelectHostpitalsUser = () => {
 
 
-    useGetHospitals()
     useGetFilteredDoctor()
-    const [selectedHospital, setSelectedHospital] = useRecoilState(doctorHospitalFilterAtom)
-    const setPageStart = useSetRecoilState(filteredDoctorStartOfPage)
+    //const setPageStart = useSetRecoilState(filteredDoctorStartOfPage)
+    const setHospitalId = useSetRecoilState(hospitalIdUserSelected)
+    const hospitalId = useRecoilValue(hospitalIdUserSelected)
+    const hospitalAll = useRecoilValue(hospitalsForCategoryIdUserSelected)
+  
+    let hospitalOptions : OptionType[] = hospitalAll?.map(hospital => ({value : hospital.id, label : hospital.name})) ?? []
 
-    const hospitals = useRecoilValue(doctorAllHospitalsForReactselect)
-    let hospitalOptions = hospitals?.map(hospital => ({value : hospital.id, label : hospital.name}))
-      
-    const handleChange = (option : any) => {
     
-      if (option){
-        setSelectedHospital(option.value)
-      } else {
-        setSelectedHospital(null)
-      }
+ 
+    const handleChange = (e : any) => {
+      setHospitalId(e?.value ?? null)
+      console.log(e?.value);
+      
+    }
 
-      setPageStart(0)
+    const curvalue = hospitalOptions?.find(c => c.value == hospitalId)
 
-    };
-
-    const curvalue = hospitalOptions?.find(hospital => hospital.value === selectedHospital)
-
+ 
 
     return (
       <div className='justify-center items-center flex p-2'> 
-            <Select isClearable value={curvalue} required className='border border-gray-300 text-black outline-none text-sm rounded-lg w-96' placeholder="Hospital" options={hospitalOptions} onChange={handleChange} />        
+            <Select value={curvalue} isClearable required className='border border-gray-300 text-black outline-none text-sm rounded-lg w-96' placeholder="Hospital" options={hospitalOptions} onChange={handleChange} />        
       </div> 
     )
 }

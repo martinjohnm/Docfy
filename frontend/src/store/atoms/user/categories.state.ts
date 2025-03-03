@@ -8,8 +8,16 @@ export const categoriesAtom = atom< CategoryResponseType[] | null>({
 });
 
 
-export const categoriesByHospitalIdAtom = atom< CategoryResponseType[] | null>({
-  key: 'categoriesByHospitalIdAtom',
+
+
+// categoryId user currenly selected
+export const categoryIdUserSelected = atom<string | null>({
+  key : "categoryIdUserSelected",
+  default : null
+})
+
+// categories for the currently selected hospitalId
+export const categoriesForHospitalIdUserSelected = atom< CategoryResponseType[] | null>({
+  key: 'categoriesForHospitalIdUserSelected',
   default: null
 });
-

@@ -5,6 +5,6 @@ const router = Router()
 
 
 router.get("/get-categories", getAllCategories)
-router.get("/get-by-hospitalId/:id", getAllCategoriesByHospital)
+router.get("/get-by-hospitalId", getAllCategoriesByHospital)
 
 export default router
