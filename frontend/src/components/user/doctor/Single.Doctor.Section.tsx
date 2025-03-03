@@ -65,6 +65,22 @@ export const SingleDoctorSection = () => {
       navigate(-1);
     };
 
+    const handleBooking = (slot : SlotResponseType | null) => {
+        if (slot){
+            setSelectedSlot(slot)
+            createBookingFn(slot.id)
+            reloadSlots()
+        } else return
+    }
+
+    const closeToggleWithSelectedSlotRemoval = () => {
+        setSelectedSlot(null)
+        setBookingToggle(c => !c)
+    }
+
+
+    const [bookingToggle, setBookingToggle] = useState<Boolean>(false)
+
  
 
     return <div className="w-full">
@@ -107,7 +123,7 @@ export const SingleDoctorSection = () => {
             </div>
             <div>
                 <div className="py-2 justify-between flex p-4">
-                    <p className="text-lg font-semibold">Slots for {formatDate(selectedDate, "d:MM:yyyy")} </p>
+                    <p className="text-lg font-semibold">Slots for {formatDate(selectedDate, "dd MMMM yyyy")} </p>
                     <button onClick={reloadSlots} className="bg-blue-500 text-xs text-white p-2 rounded-md">Reload</button>
                 </div>
                 <div >
@@ -121,8 +137,7 @@ export const SingleDoctorSection = () => {
                                 slot={slot} 
                                 onClick={() => {
                                     setSelectedSlot(slot)
-                                    createBookingFn(slot.id)
-                                    reloadSlots()
+                                    setBookingToggle(c => !c)
                                 }}
                                 selectedSlot={selectedSlot}
                                 />
@@ -132,15 +147,39 @@ export const SingleDoctorSection = () => {
                 
                 </div>
             </div>
+           
         </div>
     </div>
+    <div className={`${bookingToggle ?  "visible" : "hidden"} fixed inset-0 flex items-center justify-center bg-black bg-opacity-50`}>
 
+        <div className="bg-slate-300 rounded-3xl min-w-[300px] min-h-[400px]">
+            <div className="p-2 items-center justify-center">
+                <div className="justify-between flex items-center">
+                    <div className="text-lg font-semibold ">{"Confirm Booking"}</div>
+                    <button onClick={closeToggleWithSelectedSlotRemoval} className="bg-red-400 rounded-lg text-xs p-2 justify-center items-center flex hover:bg-red-600">close</button>
+                </div>
+                <div className="mt-4 justify-center items-center flex">
+                    <div>
+                        <div><span className="">{`Are You Sure want to Book `}</span> </div>
+                        <div><span>{`Dr : ${doctor?.name}`}</span> </div>
+                        <div><span>{`on : ${format(selectedDate, "dd MMMM yyy")}`}</span></div>
+                        <div><span>{`time : ${format(selectedSlot?.startTime ?? new Date(), "hh:mm:aaa")}`}</span>
+                        <span>{` : ${format(selectedSlot?.endTime ?? new Date(), "hh:mm:aaa")}`}</span></div>
+                    </div>
+                </div>
+                <div className="mt-4 justify-center items-center gap-2 flex w-full p-4">
+                    <button onClick={closeToggleWithSelectedSlotRemoval} className="bg-red-400 hover:bg-red-600 p-2 rounded-md">Cancel</button>
+                    <button onClick={() => {handleBooking(selectedSlot)}} className="bg-green-400 hover:bg-green-600 p-2 rounded-md">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 }
 
 const SingleSlot = ({slot, onClick, selectedSlot} : {slot : SlotResponseType, onClick : any, selectedSlot : SlotResponseType | null}) => {
     return <button onClick={onClick} className={`w-28 h-11 items-center justify-center flex rounded-lg  text-black text-sm font-bold border border-green-600
     ${slot.status === "AVAILABLE" ? "cursor-pointer hover:bg-blue-500" : "bg-red-300 pointer-events-none"} ${selectedSlot?.id == slot.id ? "bg-blue-500" : ""}`}>
-        {format(slot.startTime, "H:mm")} to {format(slot.endTime, "HH:mm")}
+        {format(slot.startTime, "hh:mm aaaa")} to {format(slot.endTime, "hh:mm aaaa")}
 </button> 
 }
