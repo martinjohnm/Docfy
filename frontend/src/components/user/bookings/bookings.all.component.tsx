@@ -1,5 +1,5 @@
 import { useRecoilState, useRecoilValue } from "recoil"
-import { bookingsAtomUser, selectedPageNumber, totalNoOfBookingPages, totalNoOfBookings } from "../../../store/atoms/user/bookingsAtomUser"
+import { bookingsAtomUser, bookingTakePagination, selectedPageNumber, totalNoOfBookingPages, totalNoOfBookings } from "../../../store/atoms/user/bookingsAtomUser"
 import { format, isAfter } from "date-fns"
 import { useGetNextPageBookings } from "../../../hooks/user/useGetNextPageBookings"
 import { useHandleCancelBooking } from "../../../hooks/user/useHandleCancelBooking"
@@ -11,17 +11,18 @@ import { useHandleCancelBooking } from "../../../hooks/user/useHandleCancelBooki
 export const BookingsAllComponent = () => {
 
     const bookings = useRecoilValue(bookingsAtomUser)
+    const filterNoOfRecords = useRecoilValue(bookingTakePagination)
     const totalNoOfBooking = useRecoilValue(totalNoOfBookings)
     const [totalNoOfPages, setTotalNoOfPages] = useRecoilState(totalNoOfBookingPages)
     const [selectedPageNo, setSelectedPageNo] = useRecoilState(selectedPageNumber)
     
 
  
-    if (totalNoOfBooking %10 == 0){
-        setTotalNoOfPages(Math.floor(totalNoOfBooking/10))
+    if (totalNoOfBooking %filterNoOfRecords == 0){
+        setTotalNoOfPages(Math.floor(totalNoOfBooking/filterNoOfRecords))
 
     } else {
-        setTotalNoOfPages(Math.floor(totalNoOfBooking/10)+1)
+        setTotalNoOfPages(Math.floor(totalNoOfBooking/filterNoOfRecords)+1)
 
     }
 

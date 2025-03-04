@@ -2,7 +2,7 @@
 
 
 import { useRecoilState, useRecoilValue } from "recoil"
-import { filteredDoctorsAtom, filteredDoctorStartOfPage, filteredDoctorsTotalPages, filteredDoctorTotalRecords } from "../../../store/atoms/user/doctorsState"
+import { filteredDoctorPageNoofRecords, filteredDoctorsAtom, filteredDoctorStartOfPage, filteredDoctorsTotalPages, filteredDoctorTotalRecords } from "../../../store/atoms/user/doctorsState"
 import { useNavigate } from "react-router-dom"
 
 
@@ -11,12 +11,19 @@ import { useNavigate } from "react-router-dom"
 export const DoctorsAllComponent = () => {
 
     const allDoctorsFromStore = useRecoilValue(filteredDoctorsAtom)
+    const filterNoOfRecords = useRecoilValue(filteredDoctorPageNoofRecords)
     const totalNoOfBooking = useRecoilValue(filteredDoctorTotalRecords)
     const [totalNoOfPages, setTotalNoOfPages] = useRecoilState(filteredDoctorsTotalPages)
     const [selectedPageNo, setSelectedPageNo] = useRecoilState(filteredDoctorStartOfPage)
 
 
-    setTotalNoOfPages(Math.floor(totalNoOfBooking/10) + 1)
+    if (totalNoOfBooking %filterNoOfRecords == 0){
+        setTotalNoOfPages(Math.floor(totalNoOfBooking/filterNoOfRecords))
+
+    } else {
+        setTotalNoOfPages(Math.floor(totalNoOfBooking/filterNoOfRecords)+1)
+
+    }
 
      
     const prevPage = () => {

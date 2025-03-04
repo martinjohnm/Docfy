@@ -1,6 +1,6 @@
 import { useRecoilState, useRecoilValue } from "recoil"
 import { format } from "date-fns"
-import { bookingsByDoctorAtom, selectedPageNumberDoctor, totalNoOfBookingPagesDoctor, totalNoOfBookingsDoctor } from "../../../store/atoms/doctor/bookingsByDoctorAtom"
+import { bookingsByDoctorAtom, bookingTakePaginationDoctor, selectedPageNumberDoctor, totalNoOfBookingPagesDoctor, totalNoOfBookingsDoctor } from "../../../store/atoms/doctor/bookingsByDoctorAtom"
 import { useGetNextPageBookingsDoctor } from "../../../hooks/doctor/useGetNextPageBookingsDoctor"
 
 
@@ -13,6 +13,7 @@ export const PatientsAllComponent = () => {
     useGetNextPageBookingsDoctor()
 
     const totalNoOfBooking = useRecoilValue(totalNoOfBookingsDoctor)
+    const filterNoOfRecords = useRecoilValue(bookingTakePaginationDoctor)
     const [totalNoOfPages, setTotalNoOfPages] = useRecoilState(totalNoOfBookingPagesDoctor)
     const [selectedPageNo, setSelectedPageNo] = useRecoilState(selectedPageNumberDoctor)
     const bookings = useRecoilValue(bookingsByDoctorAtom)
@@ -21,11 +22,11 @@ export const PatientsAllComponent = () => {
     
 
     
-    if (totalNoOfBooking %10 == 0){
-        setTotalNoOfPages(Math.floor(totalNoOfBooking/10))
+    if (totalNoOfBooking %filterNoOfRecords == 0){
+        setTotalNoOfPages(Math.floor(totalNoOfBooking/filterNoOfRecords))
 
     } else {
-        setTotalNoOfPages(Math.floor(totalNoOfBooking/10)+1)
+        setTotalNoOfPages(Math.floor(totalNoOfBooking/filterNoOfRecords)+1)
 
     }
 
