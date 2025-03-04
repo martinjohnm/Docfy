@@ -3,6 +3,7 @@
 
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { TOKEN } from '../consts';
+import toast from 'react-hot-toast';
 
 const BACKEND_URL = import.meta.env.VITE_APP_BACKEND_URL ?? 'http://localhost:3000';
 
@@ -52,7 +53,8 @@ export const userApi = async <T>(
    
     return response.data;
   } catch (error: any) {
-  
+    
+    toast.error(error.message)
     throw new Error(
       
       error.response?.data?.message || 'Something went wrong. Please try again.'

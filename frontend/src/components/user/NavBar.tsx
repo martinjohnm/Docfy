@@ -35,13 +35,13 @@ export const Navbar = ({page} : {page : NavbarTypes}) => {
                         <Link to={"/bookings"} className={`flex justify-center hover:text-slate-300 cursor-pointer ${page == 'bookings' ? "text-green-400" : ""}`}>
                             Bookings
                         </Link>
-                        <Link to={"/user-profile"} className={`flex justify-center hover:text-slate-300 cursor-pointer ${page == 'user-profile' ? "text-green-400" : ""}`}>
+                        {/* <Link to={"/user-profile"} className={`flex justify-center hover:text-slate-300 cursor-pointer ${page == 'user-profile' ? "text-green-400" : ""}`}>
                             Profile
-                        </Link>
+                        </Link> */}
                      
                     </div>
                     <div className="col-span-3 flex justify-between items-center gap-2">
-                        <button className="bg-slate-500 p-2 rounded-md hover:bg-white hover:text-black justify-start">Book an Appointment</button>
+                        <button onClick={() => {navi("/doctor-login")}} className="bg-slate-500 p-2 rounded-md hover:bg-white hover:text-black justify-start">Login as doctor</button>
                         {user ? (
                             <div className="px-10 cursor-pointer hover:text-blue-900" onClick={logout}>
                             <button className="bg-blue-700 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-900">

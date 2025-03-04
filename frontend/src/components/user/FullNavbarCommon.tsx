@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Navbar } from "../../components/user/NavBar";
+import { Link } from "react-router-dom";
 
 export type NavbarTypes  = "" | "doctors" | "user-profile" | "bookings" | "none"
 
@@ -80,10 +81,10 @@ export const FullNavBarCommon = ({page} : {page : NavbarTypes}) => {
                   <img className="h-10" src="https://demo.casethemes.net/medicross/wp-content/uploads/2024/07/logo.png" alt="" />
           </div>
           <ul className="space-y-4 p-4 text-lg">
-            <li><a href="/" className={`block hover:text-gray-300 ${page == "" ? "text-green-300" : "text-white"}`}>Home</a></li>
-            <li><a href="/doctors" className={`block hover:text-gray-300 ${page == "doctors" ? "text-green-300" : "text-white"}`}>Doctors</a></li>
-            <li><a href="/bookings" className={`block hover:text-gray-300 ${page == "bookings" ? "text-green-300" : "text-white"}`}>Bookings</a></li>
-            <li><a href="/profile" className={`block hover:text-gray-300 ${page == "user-profile" ? "text-green-300" : "text-white"}`}>Profile</a></li>
+            <li><Link to="/" className={`block hover:text-gray-300 ${page == "" ? "text-green-300" : "text-white"}`}>Home</Link></li>
+            <li><Link to="/doctors" className={`block hover:text-gray-300 ${page == "doctors" ? "text-green-300" : "text-white"}`}>Doctors</Link></li>
+            <li><Link to="/bookings" className={`block hover:text-gray-300 ${page == "bookings" ? "text-green-300" : "text-white"}`}>Bookings</Link></li>
+            <li><Link to="/profile" className={`block hover:text-gray-300 ${page == "user-profile" ? "text-green-300" : "text-white"}`}>Profile</Link></li>
           </ul>
         </nav>
       </div>

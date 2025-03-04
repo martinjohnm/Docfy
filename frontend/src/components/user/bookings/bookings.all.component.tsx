@@ -14,6 +14,8 @@ export const BookingsAllComponent = () => {
     const [totalNoOfPages, setTotalNoOfPages] = useRecoilState(totalNoOfBookingPages)
     const [selectedPageNo, setSelectedPageNo] = useRecoilState(selectedPageNumber)
 
+    console.log(totalNoOfBooking);
+    
     setTotalNoOfPages(Math.floor(totalNoOfBooking/10) + 1)
 
     useGetNextPageBookings()
@@ -38,33 +40,49 @@ export const BookingsAllComponent = () => {
     return <div className="w-full">
     
 
-    <div className="max-w-5xl container mx-auto justify-center">
-        <div className="py-1">
-            {bookings?.map((booking) => (
-                <div key={booking.id} className="">
-                    <div className="flex bg-slate-100 p-4 gap-2 rounded-lg">
-                        <div className="bg-slate-200 rounded-md p-2 w-full flex gap-2">
-                            <p className="font-semibold">{"Doctor :"}</p>
-                            <p>{booking.doctor.name}</p>
-                            
-                        </div>
-                        <div className="bg-slate-200 rounded-md p-2 justify-center items-center w-full flex gap-2">
-                            <p className="font-semibold">{"Time : "}</p>
-                            <p>{`${format(booking.startTime, "dd MMM yyy")}`}</p>
-                            <div className="flex gap-2">
-                                <p>{`${format(booking.startTime, "hh:mm a")}`}</p>
-                                <p>To</p>
-                                <p>{`${format(booking.endTime, "hh:mm a")}`}</p>
+    <div className="max-w-5xl container mx-auto justify-center min-h-[700px] w-full bg-slate-100 rounded-lg">
+        <div className="py-1 w-full h-full">
+            {bookings?.length != 0 ? (
+                    bookings?.map((booking) => (
+                        <div key={booking.id} className="">
+                            <div className="flex bg-slate-100 p-4 gap-2 rounded-lg">
+                                <div className="bg-slate-200 rounded-md p-2 w-full flex gap-2">
+                                    <p className="font-semibold">{"Doctor :"}</p>
+                                    <p>{booking.doctor.name}</p>
+                                    
+                                </div>
+                                <div className="bg-slate-200 rounded-md p-2 justify-center items-center w-full flex gap-2">
+                                    <p className="font-semibold">{"Time : "}</p>
+                                    <p>{`${format(booking.startTime, "dd MMM yyy")}`}</p>
+                                    <div className="flex gap-2">
+                                        <p>{`${format(booking.startTime, "hh:mm a")}`}</p>
+                                        <p>To</p>
+                                        <p>{`${format(booking.endTime, "hh:mm a")}`}</p>
+                                    </div>
+                                    <p>{`${`(${booking.duration} mins`})`}</p>
+                                </div>
+                        
                             </div>
-                            <p>{`${`(${booking.duration} mins`})`}</p>
+                        
                         </div>
+                        
+                    ))
+            ) : (
                 
+                    <div className="w-full h-full justify-center items-center flex">
+                        <div className="justify-center items-center flex w-full h-full p-16">
+                            <p className="">No Such Bookings availbale.. Try changing filters..</p>
+                        </div>
                     </div>
-                   
-                </div>
                 
-            ))}
-            <div className="flex justify-center items-center gap-2 py-1">
+            )}
+            
+            
+        
+        </div>
+    </div>
+
+    <div className={`flex justify-center items-center gap-2 py-1 ${bookings?.length ==0 ? "hidden" : "visible"}`}>
                 <button onClick={prevPage} className={`px-2 text-sm items-center justify-center flex bg-blue-100 hover:bg-blue-300 rounded-md
                     ${selectedPageNo == 1 ? "cursor-not-allowed" : ""}`}>
                     <p>{"<<prev"}</p>
@@ -79,9 +97,6 @@ export const BookingsAllComponent = () => {
                     ${selectedPageNo == totalNoOfPages ? "cursor-not-allowed" : ""}`}>
                     <p>{"next>>"}</p>
                 </button>
-            </div>
-        
-        </div>
     </div>
 
 </div>

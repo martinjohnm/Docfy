@@ -70,12 +70,18 @@ export const SingleDoctorSection = () => {
             setSelectedSlot(slot)
             createBookingFn(slot.id)
             reloadSlots()
-        } else return
+        } 
+
+        closeToggleWithSelectedSlotRemoval()
+        // for updated slot reload
+        getslots(id)
     }
 
     const closeToggleWithSelectedSlotRemoval = () => {
         setSelectedSlot(null)
         setBookingToggle(c => !c)
+        // for reloading the updated slots
+        getslots(id)
     }
 
 

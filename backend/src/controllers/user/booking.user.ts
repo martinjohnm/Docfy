@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import db from "../../db"
-import { number } from "zod";
 
 
 export const createBooking = async (req : Request, res : Response) => {
@@ -34,6 +33,8 @@ export const createBooking = async (req : Request, res : Response) => {
             return
         }
 
+        console.log(slot.status);
+        
   
       
         if (slot.status == "BOOKED") {
@@ -43,6 +44,7 @@ export const createBooking = async (req : Request, res : Response) => {
             })
             return
         }
+
 
         const existingBooking = await db.booking.findUnique({
             where : {
@@ -89,7 +91,7 @@ export const createBooking = async (req : Request, res : Response) => {
         
 
         res.status(200).json({
-            message : "slot booked fetched successfully",
+            message : "slot booked successfully",
             data : {
                 booking : newBooking
             },
@@ -117,12 +119,10 @@ export const getAllBookingsForUser = async (req : Request, res : Response) => {
 
         const userId = String(req.user.id);
 
-        const skip = Number(req.query.skip) ?? 0
-        const take = Number(req.query.take) ?? 10
+        const skip = Number(req.query.skip) || 0
+        const take = Number(req.query.take) || 10
 
  
-        const totalNoOfBookings = await db.booking.count()
-        
         const bookings = await db.booking.findMany({
             where : {
                 patientId : userId
@@ -140,6 +140,13 @@ export const getAllBookingsForUser = async (req : Request, res : Response) => {
             },
         })
 
+
+        const totalNoOfBookings = await db.booking.count({
+            where : {
+                patientId : userId,
+                
+            },
+        })
 
 
   
@@ -220,8 +227,8 @@ export const getBookingsUpcoming = async (req : Request, res : Response) => {
 
         const userId = String(req.user.id);
 
-        const skip = Number(req.query.skip) ?? 0
-        const take = Number(req.query.take) ?? 10
+        const skip = Number(req.query.skip) || 0
+        const take = Number(req.query.take) || 10
 
 
 
@@ -290,8 +297,8 @@ export const getBookingsCompleted = async (req : Request, res : Response) => {
 
         const userId = String(req.user.id);
 
-        const skip = Number(req.query.skip) ?? 0
-        const take = Number(req.query.take) ?? 10
+        const skip = Number(req.query.skip) || 0
+        const take = Number(req.query.take) || 10
 
 
 

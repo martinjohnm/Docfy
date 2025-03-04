@@ -41,6 +41,8 @@ export const NavbarDoctor = ({page} : {page : NavbarTypesDoctor}) => {
                      
                     </div>
                     <div className="col-span-3 flex justify-between items-center gap-2">
+                    <button onClick={() => {navi("/login")}} className="bg-slate-500 p-2 rounded-md hover:bg-white hover:text-black justify-start">Login as Patient</button>
+
                         {doctor ? (
                             <div className="px-10 cursor-pointer hover:text-blue-900" onClick={logout}>
                             <button className="bg-blue-700 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-900">
