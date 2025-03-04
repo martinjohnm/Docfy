@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from "react"
 import { BookingResponseType } from "../../types/response.types"
-import { getBookings, getBookingsCompleted, getBookingsUpcoming } from "../../apis/user/bookingApi"
+import { getBookings, getBookingsCancelled, getBookingsCompleted, getBookingsUpcoming } from "../../apis/user/bookingApi"
 import { useRecoilValue, useSetRecoilState } from "recoil"
 import { bookingsAtomUser, selectedBookingstypeTofetch, selectedPageNumber, totalNoOfBookings } from "../../store/atoms/user/bookingsAtomUser"
 import { BookingTypeToFetch } from "../../types/recoil/user/bookings.state.type"
@@ -62,6 +62,17 @@ export const useGetBookings = () =>{
                     }
                 } else if (bookingFilter == "completed") {
                     const booking = await getBookingsCompleted({skip, take})
+                    if (booking.success) {
+                        setbookings(booking.data.bookings)
+                        setBookingsState(booking.data.bookings)
+                        setTotalBookings(booking.data.totalNoOfBookings)
+                        setLoading(false)
+                    } else {
+                        
+                        setLoading(false)
+                    }
+                } else if (bookingFilter == "canceled") {
+                    const booking = await getBookingsCancelled({skip, take})
                     if (booking.success) {
                         setbookings(booking.data.bookings)
                         setBookingsState(booking.data.bookings)

@@ -14,7 +14,9 @@ export const BookingsFilter = () => {
 
             <Filter filter="upcoming"/>
             <Filter filter="completed"/>
+            <Filter filter="canceled"/>
             <Filter filter="all"/>
+            
           
     </div>
 }

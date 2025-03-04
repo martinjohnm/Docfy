@@ -95,7 +95,7 @@ model Booking  {
   status          BookingStatus @default(PENDING)
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
-  @@unique([doctorId, startTime, endTime])
+  @@unique([doctorId, startTime, endTime, status, id])
 }
 
 model Slot     {

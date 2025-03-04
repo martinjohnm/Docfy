@@ -17,3 +17,15 @@ export const getBookingsUpcoming = async ({skip, take} : {skip : number, take : 
 export const getBookingsCompleted = async ({skip, take} : {skip : number, take : number}) => {
   return userApi<{ success : boolean,  data : {bookings : BookingResponseType[], totalNoOfBookings : number} , message : string }>(`booking/get-all-completed/?skip=${skip}&take=${take}`, 'GET');
 };
+export const getBookingsCancelled = async ({skip, take} : {skip : number, take : number}) => {
+  return userApi<{ success : boolean,  data : {bookings : BookingResponseType[], totalNoOfBookings : number} , message : string }>(`booking/get-all-cancelled/?skip=${skip}&take=${take}`, 'GET');
+};
+
+
+export const updateBookingTocancel = async (id : string) => {
+  return userApi<{ success : boolean,  data : {booking : BookingResponseType, totalNoOfBookings : number} , message : string }>(`booking/cancel-booking/${id}`, 'PUT');
+};
+
+
+
+

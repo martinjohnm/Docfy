@@ -20,7 +20,14 @@ export const PatientsAllComponent = () => {
     console.log(bookings?.length);
     
 
-    setTotalNoOfPages(Math.floor(totalNoOfBooking/10) + 1)
+    
+    if (totalNoOfBooking %10 == 0){
+        setTotalNoOfPages(Math.floor(totalNoOfBooking/10))
+
+    } else {
+        setTotalNoOfPages(Math.floor(totalNoOfBooking/10)+1)
+
+    }
 
     
     const prevPage = () => {
@@ -45,7 +52,7 @@ export const PatientsAllComponent = () => {
 
     <div className="max-w-5xl container mx-auto justify-center min-h-[700px] w-full bg-slate-100 rounded-lg">
         <div className="py-1 w-full h-full">
-            {bookings?.length != 0 ? (
+            {totalNoOfBooking!= 0 ? (
                 bookings?.map((booking) => (
                     <div key={booking.id} className="">
                         <div className="flex bg-slate-100 p-4 gap-2 rounded-lg">

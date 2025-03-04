@@ -54,7 +54,9 @@ export const userApi = async <T>(
     return response.data;
   } catch (error: any) {
     
-    toast.error(error.message)
+    toast.error(error.response.data.message)
+    console.log(error.response.data);
+    
     throw new Error(
       
       error.response?.data?.message || 'Something went wrong. Please try again.'

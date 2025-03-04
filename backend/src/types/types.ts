@@ -15,3 +15,9 @@ export interface Admin {
     id: string;
     email: string
 }
+
+export enum BookingStatus {
+    PENDING,
+    CONFIRMED,
+    CANCELLED
+  }
