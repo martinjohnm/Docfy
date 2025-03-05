@@ -75,10 +75,14 @@ export const DatePickerFIlter = () => {
             ))}
             </div>
             
-            <div className="grid grid-cols-7 gap-2">
-                 {/* Blank divs */}
-                {divs.map((div) => (
-                    <div key={div.id}/>
+                <div className="grid grid-cols-7 gap-2" >
+                
+                {/* Blank divs */}
+                {Array.from({ length: divs.length }).map((_, index) => (
+          
+                    <button key={index} className="bg-red-300"> 
+                        hai
+                    </button>
                 ))}
                 
                 {daysInMonth.map((date) => (

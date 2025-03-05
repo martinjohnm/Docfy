@@ -183,7 +183,7 @@ export const SingleDoctorSection = () => {
 </div>
 }
 
-const SingleSlot = ({slot, onClick, selectedSlot} : {slot : SlotResponseType, onClick : any, selectedSlot : SlotResponseType | null}) => {
+export const SingleSlot = ({slot, onClick, selectedSlot} : {slot : SlotResponseType, onClick : any, selectedSlot? : SlotResponseType | null}) => {
     return <button onClick={onClick} className={`w-28 h-11 items-center justify-center flex rounded-lg  text-black text-sm font-bold border border-green-600
     ${slot.status === "AVAILABLE" ? "cursor-pointer hover:bg-blue-500" : "bg-red-300 pointer-events-none"} ${selectedSlot?.id == slot.id ? "bg-blue-500" : ""}`}>
         {format(slot.startTime, "hh:mm aaaa")} to {format(slot.endTime, "hh:mm aaaa")}

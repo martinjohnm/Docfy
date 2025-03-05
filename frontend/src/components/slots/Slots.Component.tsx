@@ -4,9 +4,20 @@ import { TimeSelector } from "../Common/Time.Selector";
 import { SlotsCreateInput } from "../../types/zod.types";
 import { DurationSelector } from "../Common/Duration.selector";
 import { useSlotUpdate } from "../../hooks/doctor/useSlotUpdate";
+import { useRecoilValue } from "recoil";
+import { slotsByDoctorAtom } from "../../store/atoms/doctor/slotsByDoctorAtom";
+import { format, formatDate, isSameDay } from "date-fns";
+import { SingleSlot } from "../user/doctor/Single.Doctor.Section";
+import { SlotResponseType } from "../../types/response.types";
+import { useDeleteSlotById } from "../../hooks/doctor/useDeleteSLotById";
 
 export const SlotsComponent = () => {
 
+
+    const {deleteSlotByIdFn} = useDeleteSlotById()
+
+
+    const [alreadySlotedDate, SetAlreadySlotedDate] = useState<Date | null>(null)
     const [postInputs, setPostInputs] = useState<SlotsCreateInput>({
         selectedDates : [],
         startTime : 9,
@@ -15,20 +26,30 @@ export const SlotsComponent = () => {
         breakStartTime : 12,
         duration : 15
     })
+    const [isToggle, setIsToggle] = useState<boolean>(false)
+    const [deleteToggle, setDeleteToggle] = useState<boolean>(false)
+    const [selectedSLotToDelete, setSelectedSLotToDelete] = useState<SlotResponseType | null>(null)
 
 
-   
+    const slots = useRecoilValue(slotsByDoctorAtom)
 
-    const [isToggle, setIsToggle] = useState<boolean>(true)
+
+
+    
+    const handleAlreadySlotedDate = (date : Date) => {
+        SetAlreadySlotedDate(date)
+    }
+
     const setToggleAdd = () => {
         setIsToggle(c => !c)
     }
 
     const  {updatedSlot} = useSlotUpdate()
 
+    
     useEffect(() => {
-
-    },[postInputs])
+     
+    },[])
 
 
     const getSelectedDates = (dates : string[]) => {
@@ -54,27 +75,87 @@ export const SlotsComponent = () => {
         //alert(createdloc.message)
         
     }   
+
+
+  
+    const dayWiseSlots = ({day} : {day : Date}) : SlotResponseType[] =>  { 
+        return slots?.filter((slot) => isSameDay(slot.startTime, day) ) as SlotResponseType[]
+  
+    }
+
+    let slotsForTheDay : SlotResponseType[] = []    
+   
+    if (alreadySlotedDate != null) {
+        slotsForTheDay = dayWiseSlots({day : alreadySlotedDate})  
+    }
+
+    const handleSLotDelete = (id : string) => {
+        if (selectedSLotToDelete) {
+            deleteSlotByIdFn(id)
+        }
+        toggleDeleteCOnfirmation()
+    }
+
+    const toggleDeleteCOnfirmation = () => {
+        setDeleteToggle(c => !c)
+    }
+
     
     return <div className="bg-[#DAEAF5] rounded-md w-full p-4 relative mt-2 min-h-svh">
 
-        <div className="max-w-3xl container mx-auto">
-            <div className="p-2 font-semibold text-xl">
-                Create slots
-            </div>
+        <div className="max-w-7xl container mx-auto grid grid-cols-2 gap-2">
+            <div className="col-span-1 w-full">
+                    <div className=" font-semibold text-xl">
+                        Create slots
+                    </div>
 
-            <div className="p-2">
-                <p className="underline">Choose dates</p>
-            </div>
+                    <div className="">
+                        <p className="underline">Choose dates/date, start time, end time, break time and duration</p>
+                    </div>
 
-            <div className="p-2 font-normal text-base h-[600px]">
-                <div>
-                    <MultipleDateSelector setTimeToggle={() => {
-                        setIsToggle((c) => !c)
-                    }} onSubmit={getSelectedDates}/>
+                    <div className="font-normal text-base">
+                        <div>
+                            <MultipleDateSelector setTimeToggle={() => {
+                                setIsToggle((c) => !c)
+                            }} onSubmit={getSelectedDates} alreadySlotedDate={alreadySlotedDate} onSelectAlreadySlotedDay={(date : Date) => handleAlreadySlotedDate(date)}/>
+                        </div>
+                    </div>
+            </div>
+            <div className="col-span-1">
+                <div className="py-2 justify-between flex p-4">
+                                    {alreadySlotedDate ? (
+                                        <p className="text-lg font-semibold">Slots for {formatDate(alreadySlotedDate, "dd MMMM yyyy")} </p>
+
+                                    ) : (
+                                        <p className="text-lg font-semibold">Select a date</p>
+                                    )}
+                                    <button onClick={() => {}} className="bg-blue-500 text-xs text-white p-2 rounded-md">Reload</button>
+                                </div>
+                                <div >
+                                    {slotsForTheDay.length === 0 ? (
+                                        <div>No slots for this day</div>
+                                    ) : (
+                                        <div className="grid grid-cols-4 lg:grid-cols-4 md:grid-cols-3 gap-2 mt-4">
+                                            {slotsForTheDay.map((slot) => (
+                                                <SingleSlot 
+                                                key={String(slot.startTime)} 
+                                                slot={slot} 
+                                                onClick={() => {
+                                                    setSelectedSLotToDelete(slot)
+                                                    toggleDeleteCOnfirmation()
+                                                }}
+                                                />
+                                            ))}
+                                        </div>
+                                    )}
+                                
                 </div>
             </div>
-            <div>
-                    <div className={`absolute top-0 bg-opacity-65 left-0 z-50 w-screen h-screen bg-slate-300 ${isToggle ? "hidden" : ""} flex justify-center p-4`}>
+        </div>
+
+
+        <div>
+                    <div className={`absolute top-0 bg-opacity-65 left-0 z-50 w-screen h-screen bg-slate-300 ${!isToggle ? "hidden" : ""} flex justify-center p-4`}>
                             <div className="bg-opacity-85 rounded-2xl bg-white w-80 h-fit">
                                 <div className="w-full justify-between items-end flex p-2 text-black">
                                     <div className="font-bold text-lg">
@@ -143,6 +224,39 @@ export const SlotsComponent = () => {
                             </div>
                 
                     </div>
+        </div>
+
+
+        <div>
+            <div className={`absolute top-0 bg-opacity-65 left-0 z-50 w-screen h-screen bg-slate-300 ${!deleteToggle ? "hidden" : ""} flex justify-center p-4`}>
+                    <div className="bg-opacity-85 rounded-2xl bg-slate-600 w-80 h-96 items-center justify-center flex">
+                        <div>
+                            <div className="w-full justify-between items-end flex p-2 text-white">
+                                <div className="font-bold text-lg">
+                                    <p>Delete Slot</p>
+                                </div>
+                                <div className="justify-between">
+                                    <button onClick={toggleDeleteCOnfirmation} className="bg-red-500 hover:bg-red-700 text-white p-1 rounded-xl font-medium text-sm">Close</button>
+                                </div>
+                            </div>
+                            <div className="w-full justify-center items-center flex p-2 text-white">
+                                <div>
+                                    <p>Are You want to delete</p>
+                                    <p>The slot on {format(selectedSLotToDelete?.startTime ?? new Date(), "dd MMMM yyy")}</p>
+                                    <p>{format(selectedSLotToDelete?.startTime ?? new Date(), "hh:mm:a")} to {format(selectedSLotToDelete?.endTime ?? new Date(), "hh:mm:a")}</p>
+                                </div>
+                            </div>
+
+                            <div className="w-full justify-between items-center flex p-2 text-white gap-1">
+                                <button onClick={toggleDeleteCOnfirmation} className="p-4 bg-red-400">Cancel</button>
+                                <button onClick={() => {
+                                    handleSLotDelete(selectedSLotToDelete?.id ?? "")
+                                    
+                                    }} className="p-4 bg-green-400">Confirm</button>
+                            </div>
+                        </div>
+                    </div>
+        
             </div>
         </div>
 </div>

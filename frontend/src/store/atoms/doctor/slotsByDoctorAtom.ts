@@ -7,3 +7,15 @@ export const slotsByDoctorAtom = atom< SlotResponseType[] | null>({
   default: null
 });
 
+
+export const slotsByDoctorSelectedDate = atom< SlotResponseType[] | null>({
+  key: 'slotsByDoctorSelectedDate',
+  default: null
+});
+
+
+export const selectedAlreadyCreatedSlotDate = atom< SlotResponseType[] | null>({
+  key: 'selectedAlreadyCreatedSlotDate',
+  default: null
+});
+

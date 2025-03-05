@@ -17,7 +17,6 @@ export const useGetSlotsDoctor = () => {
     const [loading, setLoading] = useState<boolean>(true)
 
     const setSlotsForDoctr = useSetRecoilState(slotsByDoctorAtom)
-    console.log("hai from useGetslots doctor");
     
 
     useEffect(() => {

@@ -17,8 +17,6 @@ export const PatientsAllComponent = () => {
     const [totalNoOfPages, setTotalNoOfPages] = useRecoilState(totalNoOfBookingPagesDoctor)
     const [selectedPageNo, setSelectedPageNo] = useRecoilState(selectedPageNumberDoctor)
     const bookings = useRecoilValue(bookingsByDoctorAtom)
-
-    console.log(bookings?.length);
     
 
     

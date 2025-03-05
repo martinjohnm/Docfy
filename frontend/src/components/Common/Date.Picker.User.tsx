@@ -74,9 +74,9 @@ export const DatePickerUser = ({onSelectedDateChANGE} : {onSelectedDateChANGE : 
             </div>
             
             <div className="grid grid-cols-7 gap-2">
-                 {/* Blank divs */}
-                {divs.map((div) => (
-                    <div key={div.id}/>
+                {/* Blank divs */}
+                {Array.from({ length: divs.length }, (_, index) => (
+                                       <div key={index}/>
                 ))}
                 
                 {daysInMonth.map((date) => (
