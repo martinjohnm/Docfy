@@ -1,3 +1,4 @@
+import { BookingsAllAdminCompoent } from "./Bookings.All.Component.Admin"
 import { BookingsFilter } from "./BookingsFilter"
 import { BookingssNavbar } from "./BookingsNavBar"
 
@@ -7,8 +8,9 @@ export const Bookings = () => {
             <BookingssNavbar/>
             <BookingsFilter/>
         </div>
- 
-        <div className=""></div>
+        <div className="p-2">
+            <BookingsAllAdminCompoent/>
+        </div>
     </div>
 }
 
