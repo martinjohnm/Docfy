@@ -3,9 +3,8 @@
 
 export const DoctorFilter = () => {
     return <div className="bg-white flex justify-start items-center">
-            <FilterOption filter="All Doctors" selected={true}/>
-            <FilterOption filter="Active Doctors" selected={false}/>
-            <FilterOption filter="Blocked Doctors" selected={false}/>
+            <FilterOption filter="all" selected={true}/>
+            
     </div>
 }
 

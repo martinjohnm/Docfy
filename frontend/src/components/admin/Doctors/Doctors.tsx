@@ -1,4 +1,5 @@
 import { DoctorFilter } from "./DoctorFilter"
+import { DoctorsComponentAdmin } from "./Doctors.component.admin"
 import { DoctorsNavbar } from "./DoctorsNavBar"
 
 
@@ -11,7 +12,9 @@ export const Doctors = () => {
             <DoctorFilter/>
         </div>
  
-        <div className=""></div>
+        <div className="p-2">
+            <DoctorsComponentAdmin/>
+        </div>
     </div>
 }
 

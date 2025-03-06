@@ -12,10 +12,10 @@ export const SideBar = ({name} : {name : SelectedAdminSidebarType}) => {
             <SideComp title="Dashboard" isSelected={(name === "Dashboard") ? true : false} link={"admin-dashboard"}/>
             <SideComp title="Doctors" isSelected={(name === "Doctors") ? true : false} link={"admin-doctors"}/>
             <SideComp title="Users" isSelected={(name === "Users") ? true : false} link={"admin-users"}/>
+            <SideComp title="Bookings" isSelected={(name === "Bookings") ? true : false} link={"admin-bookings"}/>
             <SideComp title="Departments" isSelected={(name === "Departments") ? true : false} link={"admin-departments"}/>
             <SideComp title="Hospitals" isSelected={(name === "Hospitals") ? true : false} link={"admin-hospitals"}/>
             <SideComp title="Locations" isSelected={(name === "Locations") ? true : false} link={"admin-locations"}/>
-            <SideComp title="Bookings" isSelected={(name === "Bookings") ? true : false} link={"admin-bookings"}/>
             <SideComp title="Reports" isSelected={(name === "Reports") ? true : false} link={"admin-reports"}/>
         </div>
         
