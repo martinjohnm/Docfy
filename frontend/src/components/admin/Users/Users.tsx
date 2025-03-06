@@ -1,4 +1,5 @@
 import { UserFilter } from "./UserFilter"
+import { UsersComponentAdmin } from "./Users.component.admin"
 import { UsersNavbar } from "./UsersNavbar"
 
 
@@ -9,6 +10,8 @@ export const Users = () => {
                 <UserFilter/>
             </div>
      
-            <div className=""></div>
+              <div className="p-2">
+                    <UsersComponentAdmin/>
+                </div>
         </div>
 }

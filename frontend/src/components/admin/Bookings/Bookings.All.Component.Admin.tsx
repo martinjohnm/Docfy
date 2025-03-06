@@ -18,9 +18,6 @@ export const BookingsAllAdminCompoent = () => {
     const [totalNoOfPages, setTotalNoOfPages] = useRecoilState(totalNoOfBookingPagesAdmin)
     const [selectedPageNo, setSelectedPageNo] = useRecoilState(selectedPageNumberAdmin)
 
-    console.log(totalNoOfBooking, bookings?.length);
-    
-
     
     if (totalNoOfBooking %filterNoOfRecords == 0){
         setTotalNoOfPages(Math.floor(totalNoOfBooking/filterNoOfRecords))

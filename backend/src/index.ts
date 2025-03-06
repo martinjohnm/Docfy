@@ -24,6 +24,7 @@ import hospitalAdminRoute from "./routes/admin/hospital.admin"
 import locationAdminRoute from "./routes/admin/location.admin"
 import bookingAdminRoute from "./routes/admin/booking.admin"
 import doctorAdminRoute from "./routes/admin/doctor.admin"
+import userAdminRoute from "./routes/admin/user.admin"
 
 
 import { initPassport } from "./passport";
@@ -78,6 +79,7 @@ app.use("/admin/hospital", hospitalAdminRoute)
 app.use("/admin/location", locationAdminRoute)
 app.use("/admin/booking", bookingAdminRoute)
 app.use("/admin/doctor", doctorAdminRoute)
+app.use("/admin/user", userAdminRoute)
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

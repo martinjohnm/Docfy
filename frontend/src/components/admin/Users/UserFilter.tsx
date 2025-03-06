@@ -7,9 +7,8 @@
 
 export const UserFilter = () => {
     return <div className="bg-white flex justify-start items-center">
-            <FilterOption filter="All Users" selected={true}/>
-            <FilterOption filter="Active Users" selected={false}/>
-            <FilterOption filter="Blocked Users" selected={false}/>
+            <FilterOption filter="all" selected={true}/>
+            
     </div>
 }
 

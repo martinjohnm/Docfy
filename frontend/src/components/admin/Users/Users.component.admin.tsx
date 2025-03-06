@@ -1,27 +1,27 @@
 import { useRecoilState, useRecoilValue } from "recoil"
-import { useGetDoctorsAdmin } from "../../../hooks/admin/doctor/useGetDoctorsAdmin"
-import { doctorsByAdminAtom, doctorsTakePaginationAdmin, selectedDoctorPageNumberAdmin, totalNoOfdoctorsAdmin, totalNoOfDoctorsPagesAdmin } from "../../../store/atoms/admin/doctorsAdminAtoms"
+import { useGetUsersAdmin } from "../../../hooks/admin/user/useGetUsersAdmin"
+import { selectedusersPageNumberAdmin, totalNoOfuserssAdmin, totalNoOfuserssPagesAdmin, userssByAdminAtom, userssTakePaginationAdmin } from "../../../store/atoms/admin/usersAdminAtoms"
 
 
 
 
 
-export const DoctorsComponentAdmin = () => {
+export const UsersComponentAdmin = () => {
 
-    useGetDoctorsAdmin()
-    const doctors = useRecoilValue(doctorsByAdminAtom)
-    const totalNoOfDoctors = useRecoilValue(totalNoOfdoctorsAdmin)
-    const filterNoOfRecords = useRecoilValue(doctorsTakePaginationAdmin)
-    const [totalNoOfPages, setTotalNoOfPages] = useRecoilState(totalNoOfDoctorsPagesAdmin)
-    const [selectedPageNo, setSelectedPageNo] = useRecoilState(selectedDoctorPageNumberAdmin)
+    useGetUsersAdmin()
+    const users = useRecoilValue(userssByAdminAtom)
+    const totalNoOfusers = useRecoilValue(totalNoOfuserssAdmin)
+    const filterNoOfRecords = useRecoilValue(userssTakePaginationAdmin)
+    const [totalNoOfPages, setTotalNoOfPages] = useRecoilState(totalNoOfuserssPagesAdmin)
+    const [selectedPageNo, setSelectedPageNo] = useRecoilState(selectedusersPageNumberAdmin)
 
 
 
-    if (totalNoOfDoctors %filterNoOfRecords == 0){
-        setTotalNoOfPages(Math.floor(totalNoOfDoctors/filterNoOfRecords))
+    if (totalNoOfusers %filterNoOfRecords == 0){
+        setTotalNoOfPages(Math.floor(totalNoOfusers/filterNoOfRecords))
 
     } else {
-        setTotalNoOfPages(Math.floor(totalNoOfDoctors/filterNoOfRecords)+1)
+        setTotalNoOfPages(Math.floor(totalNoOfusers/filterNoOfRecords)+1)
 
     }
 
@@ -48,8 +48,8 @@ export const DoctorsComponentAdmin = () => {
     return <div className="p-2 bg-slate-200">
         <div className="max-w-5xl container mx-auto justify-center min-h-[700px] w-full bg-slate-100 rounded-lg">
                 <div className="py-1 w-full h-full">
-                    {totalNoOfDoctors!= 0 ? (
-                        doctors?.map((doctor) => (
+                    {totalNoOfusers!= 0 ? (
+                        users?.map((doctor) => (
                             <div key={doctor.id} className="">
                                 <div className="flex bg-slate-100 p-4 gap-2 rounded-lg">
                                     <div className="bg-slate-200 rounded-md p-2 w-full flex gap-2">
@@ -61,7 +61,7 @@ export const DoctorsComponentAdmin = () => {
                                      
                                         <p>{doctor.email}</p>
                                         <div className="flex gap-2">
-                                            {`${doctor.specialization?.name} at ${doctor.hospital?.name}`}
+                                            
                                             
                                         </div>
                                         
@@ -87,7 +87,7 @@ export const DoctorsComponentAdmin = () => {
                 
             </div>
         
-            <div className={`flex justify-center items-center gap-2 py-1 ${doctors?.length ==0 ? "hidden" : "visible"}`}>
+            <div className={`flex justify-center items-center gap-2 py-1 ${users?.length ==0 ? "hidden" : "visible"}`}>
                         <button onClick={prevPage} className={`px-2 text-sm items-center justify-center flex bg-blue-100 hover:bg-blue-300 rounded-md
                             ${selectedPageNo == 1 ? "cursor-not-allowed" : ""}`}>
                             <p>{"<<prev"}</p>
