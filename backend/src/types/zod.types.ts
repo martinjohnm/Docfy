@@ -104,7 +104,7 @@ export const userAddInput = z.object({
 // SLots
 
 export const slotsCreateInput = z.object({
-    selectedDates : z.array(z.string()),
+    selectedDates : z.array(z.string()).min(1, "Should choose atleast one date"),
     startTime : z.number(),
     endTime : z.number(),
     breakStartTime : z.number(),

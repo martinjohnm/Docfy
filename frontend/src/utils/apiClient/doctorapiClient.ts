@@ -1,6 +1,7 @@
 
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { DOCTOR_TOKEN } from '../consts';
+import toast from 'react-hot-toast';
 
 const BACKEND_URL = import.meta.env.VITE_APP_BACKEND_URL ?? 'http://localhost:3000';
 
@@ -56,7 +57,7 @@ const apiDoctor = axios.create({
       if (error.response) {
         // Handle error responses from the server
         // console.error('API Error:', error.response.status, error.response.data.message);
-        console.log(error.response.data);
+        toast.error("Input error")     
         return error.response.data
   
       } else if (error.request) {

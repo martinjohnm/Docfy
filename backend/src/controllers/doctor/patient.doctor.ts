@@ -144,7 +144,8 @@ export const getPatientsCompleted = async (req : Request, res : Response) => {
                 }
             },
             include : {
-                slot : true,
+                slot  :true,
+                patient  :true,
                 doctor : true
             },
            

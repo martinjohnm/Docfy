@@ -19,6 +19,8 @@ export const PatientsAllComponent = () => {
     const bookings = useRecoilValue(bookingsByDoctorAtom)
     
 
+    console.log(totalNoOfBooking);
+    
     
     if (totalNoOfBooking %filterNoOfRecords == 0){
         setTotalNoOfPages(Math.floor(totalNoOfBooking/filterNoOfRecords))

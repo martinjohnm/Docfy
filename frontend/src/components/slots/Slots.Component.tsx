@@ -10,12 +10,16 @@ import { format, formatDate, isSameDay } from "date-fns";
 import { SingleSlot } from "../user/doctor/Single.Doctor.Section";
 import { SlotResponseType } from "../../types/response.types";
 import { useDeleteSlotById } from "../../hooks/doctor/useDeleteSLotById";
+import { useReloadSlotForDoctor } from "../../hooks/doctor/useReloadSlotForDoctor";
 
 export const SlotsComponent = () => {
 
 
     const {deleteSlotByIdFn} = useDeleteSlotById()
-
+    const  {updatedSlot} = useSlotUpdate()
+    const {reloadSlotsForDoctor} =  useReloadSlotForDoctor()
+    const slots = useRecoilValue(slotsByDoctorAtom)
+    
 
     const [alreadySlotedDate, SetAlreadySlotedDate] = useState<Date | null>(null)
     const [postInputs, setPostInputs] = useState<SlotsCreateInput>({
@@ -31,9 +35,6 @@ export const SlotsComponent = () => {
     const [selectedSLotToDelete, setSelectedSLotToDelete] = useState<SlotResponseType | null>(null)
 
 
-    const slots = useRecoilValue(slotsByDoctorAtom)
-
-
 
     
     const handleAlreadySlotedDate = (date : Date) => {
@@ -43,13 +44,6 @@ export const SlotsComponent = () => {
     const setToggleAdd = () => {
         setIsToggle(c => !c)
     }
-
-    const  {updatedSlot} = useSlotUpdate()
-
-    
-    useEffect(() => {
-     
-    },[])
 
 
     const getSelectedDates = (dates : string[]) => {
@@ -83,12 +77,6 @@ export const SlotsComponent = () => {
   
     }
 
-    let slotsForTheDay : SlotResponseType[] = []    
-   
-    if (alreadySlotedDate != null) {
-        slotsForTheDay = dayWiseSlots({day : alreadySlotedDate})  
-    }
-
     const handleSLotDelete = (id : string) => {
         if (selectedSLotToDelete) {
             deleteSlotByIdFn(id)
@@ -100,6 +88,25 @@ export const SlotsComponent = () => {
         setDeleteToggle(c => !c)
     }
 
+
+    const reloadSlots = () => {
+        reloadSlotsForDoctor()
+    }
+
+
+
+    let slotsForTheDay : SlotResponseType[] = []    
+   
+    if (alreadySlotedDate != null) {
+        slotsForTheDay = dayWiseSlots({day : alreadySlotedDate})  
+    }
+
+
+
+    useEffect(() => {
+     
+    },[])
+
     
     return <div className="bg-[#DAEAF5] rounded-md w-full p-4 relative mt-2 min-h-svh">
 
@@ -110,7 +117,7 @@ export const SlotsComponent = () => {
                     </div>
 
                     <div className="">
-                        <p className="underline">Choose dates/date, start time, end time, break time and duration</p>
+                        <p className="underline">Choose dates/date on the white colored dates and then, start time, end time, break time and duration</p>
                     </div>
 
                     <div className="font-normal text-base">
@@ -129,7 +136,7 @@ export const SlotsComponent = () => {
                                     ) : (
                                         <p className="text-lg font-semibold">Select a date</p>
                                     )}
-                                    <button onClick={() => {}} className="bg-blue-500 text-xs text-white p-2 rounded-md">Reload</button>
+                                    <button onClick={reloadSlots} className="bg-blue-500 text-xs text-white p-2 rounded-md">Reload</button>
                                 </div>
                                 <div >
                                     {slotsForTheDay.length === 0 ? (

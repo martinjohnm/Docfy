@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, addMonths, subMonths } from "date-fns";
+import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, addMonths, subMonths, isFuture } from "date-fns";
 import { weekdays, weekMap } from "../../utils/dateTimeHelpers";
 import { useRecoilValue } from "recoil";
 import { slotsByDoctorAtom } from "../../store/atoms/doctor/slotsByDoctorAtom";
@@ -11,6 +11,9 @@ import { SlotResponseType } from "../../types/response.types";
 export const MultipleDateSelector = ({onSubmit, setTimeToggle, onSelectAlreadySlotedDay} : {onSubmit : any, setTimeToggle:any, onSelectAlreadySlotedDay : any, alreadySlotedDate : Date | null}) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDates, setSelectedDates] = useState<Date[]>([]);  
+
+
+  console.log(selectedDates.length);
   
   useGetSlotsDoctor()
 
@@ -89,7 +92,7 @@ export const MultipleDateSelector = ({onSubmit, setTimeToggle, onSelectAlreadySl
                     {/* Date divs */}
                     {daysInMonth.map((date) => (
             
-                        date <= new Date() ? (
+                        (!isFuture(date) && !isSameDay(date , new Date())) ? (
                           <div className={`py-2 rounded-lg text-center relative bg-gray-300`}>
                             <div
                               key={date.toISOString()}
@@ -132,7 +135,7 @@ export const MultipleDateSelector = ({onSubmit, setTimeToggle, onSelectAlreadySl
                     ))}
                   </div>
             
-                  <div className="mt-4 grid gap-2 grid-cols-2 max-w-[60%]">
+                  <div className={`mt-4 grid gap-2 grid-cols-2 max-w-[60%]}`}>
                     <button onClick={() => {
                       onSubmit(selectedDates)
                       setTimeToggle()

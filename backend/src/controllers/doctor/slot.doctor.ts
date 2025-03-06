@@ -3,24 +3,24 @@ import { Request, Response } from "express";
 import db from "../../db"
 import { comparePassword, generatToken, getUserFromToken, hashPassword } from "../../utils";
 import { slotsCreateInput } from "../../types/zod.types";
-import { CreateSlots } from "../../utils/slotUtil";
+import { CreateSlots, slotstoreturn } from "../../utils/slotUtil";
 import { filteredCurrentAndNewSlotToCreateArr, getSLotsByDOctorIdandDatesArr } from "../../utils/dateUtils";
-
 
 
 export const createSlot = async (req : Request, res : Response) => {
     try {
         
         const parsedSlotInput = slotsCreateInput.safeParse(req.body);
-        
+
         
         if (!parsedSlotInput.success) {
             res.status(400).json({
-                message : "Input error",
+                message : parsedSlotInput.error,
                 success : false
             })
             return
         }
+
 
 
         const slotsToCreate = CreateSlots(
@@ -54,11 +54,7 @@ export const createSlot = async (req : Request, res : Response) => {
         })
 
         
-        const slotstoreturn = await db.slot.findMany({
-            where : {
-                doctorId : req.doctor.id
-            }
-        })
+        const slottsstoreturn = await slotstoreturn(req.doctor.id)
 
 
         
@@ -66,7 +62,7 @@ export const createSlot = async (req : Request, res : Response) => {
         res.status(200).json({
             message : "Slot created successfully",
             data : {
-                slots : slotstoreturn
+                slots : slottsstoreturn
             },
             success : true
         })
@@ -94,8 +90,7 @@ export const deleteSlotById = async (req : Request, res : Response) => {
         
         const id = String(req.params.id )       
         
-        console.log(id);
-        
+   
         const slotTodelete = await db.slot.findUnique({
             where : {
                 id
@@ -112,7 +107,7 @@ export const deleteSlotById = async (req : Request, res : Response) => {
         }
 
         if (slotTodelete.status == "BOOKED") {
-            console.log("slot booked");
+            
 
             res.status(204).json({
                 message : "Cannot delete a slot already booked",
@@ -130,18 +125,15 @@ export const deleteSlotById = async (req : Request, res : Response) => {
 
 
 
-        const slotstoreturn = await db.slot.findMany({
-            where : {
-                doctorId : req.doctor.id
-            }
-        })
+        const slottsstoreturn = await slotstoreturn(req.doctor.id)
+
 
 
 
         res.status(200).json({
             message : "Slot deleted",
             data : {
-                slots : slotstoreturn
+                slots : slottsstoreturn
             },
             success : true
         })
@@ -165,21 +157,15 @@ export const deleteSlotById = async (req : Request, res : Response) => {
 export const getSlotsByDoctor = async (req : Request, res : Response) => {
     try {
         
-        
-        const slotstoreturn = await db.slot.findMany({
-            where : {
-                doctorId : req.doctor.id
-            },
-            orderBy : {
-                startTime : "asc"
-            }
-        })
+
+        const slottsstoreturn = await slotstoreturn(req.doctor.id)
+
 
 
         res.status(200).json({
             message : "Slot created successfully",
             data : {
-                slots : slotstoreturn
+                slots : slottsstoreturn
             },
             success : true
         })

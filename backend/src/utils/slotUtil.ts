@@ -70,3 +70,23 @@ export function CreateSlots({dates, duration, startTime, endTime, breakEndTime, 
 
     return slots
 }
+
+
+
+export async function slotstoreturn(doctorId : string) {
+    const slots = await db.slot.findMany({
+        where : {
+            doctorId,
+            startTime : {
+                gt : new Date()
+            }
+        },
+        orderBy : {
+            startTime : "asc"
+        }
+        
+    })
+
+    return slots
+}  
+
