@@ -4,9 +4,9 @@ import { HospitalsNavbar } from "./HospitalsNavbar"
 import { createHospitalAdmin } from "../../../apis/admin/adminHospital"
 import { HospitalAddInput } from "../../../types/zod.types"
 import { TextInput } from "../../Common/TextInput"
-import { useGetHospitals } from "../../../hooks/admin/useGetHospitals"
 import { Link } from "react-router-dom"
 import { ReactSelectLocations } from "../../Common/ReactSelectLocations"
+import { useGetHospitals } from "../../../hooks/admin/hospitals/useGetHospitals"
 
 
 

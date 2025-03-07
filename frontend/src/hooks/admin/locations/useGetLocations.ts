@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import { getLocationsData } from "../../apis/admin/adminLocation"
-import { LocationResponseType } from "../../types/response.types"
+import { LocationResponseType } from "../../../types/response.types"
+import { getLocationsData } from "../../../apis/admin/adminLocation"
 
 
 

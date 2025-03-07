@@ -148,7 +148,7 @@ export const updateHospitalCategoryAdmin = async (req : Request, res : Response)
             }, 
             data : {
                 categories : {
-                    connect : parsedCategories.data.categories.map(( id ) => (id))
+                    connect : parsedCategories?.data.categories?.map(( id ) => (id))
                 }
             }
         })

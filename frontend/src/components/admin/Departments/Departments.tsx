@@ -2,7 +2,7 @@ import { ChangeEvent, useState } from "react"
 import { createCategoryAdmin } from "../../../apis/admin/adminCategory"
 import { DepartmentsFilter } from "./DepartmentsFilter"
 import { DepartmentsNavbar } from "./DepartmentsNavbar"
-import { useGetCategories } from "../../../hooks/admin/useGetCategories"
+import { useGetCategories } from "../../../hooks/admin/categories/useGetCategories"
 import { CategoryAddInput } from "../../../types/zod.types"
 import { TextInput } from "../../Common/TextInput"
 

@@ -1,4 +1,3 @@
-import { CiSearch } from "react-icons/ci"
 
 
 
@@ -13,7 +12,7 @@ export const BookingssNavbar = () => {
         </div>
         <div className="col-span-3 justify-center items-center">
           
-            <div className="">
+            {/* <div className="">
                 <div className="p-4 flex justify-center items-center gap-1 max-w-3xl">
                     <input className="rounded-lg bg-slate-100 border w-full outline-none p-2" type="text" placeholder="Search For Bookings" />
                     <div className="rounded-lg bg-slate-100 border outline-none p-3 cursor-pointer hover:bg-slate-200">
@@ -21,7 +20,7 @@ export const BookingssNavbar = () => {
                     </div>
                    
                 </div>
-            </div>
+            </div> */}
         </div>
     </div>
 }

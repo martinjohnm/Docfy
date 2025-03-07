@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react"
-import { HospitalResponseType } from "../../types/response.types"
-import { getSingleHospitalData } from "../../apis/admin/adminHospital"
-
-
+import { HospitalResponseType } from "../../../types/response.types"
+import { getSingleHospitalData } from "../../../apis/admin/adminHospital"
 
 
 export const useGetSingleHospital = (id : string) => {

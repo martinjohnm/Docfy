@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react"
-import { getHospitalsData } from "../../apis/admin/adminHospital"
-import { HospitalResponseType } from "../../types/response.types"
-
-
+import { HospitalResponseType } from "../../../types/response.types"
+import { getHospitalsData } from "../../../apis/admin/adminHospital"
 
 
 

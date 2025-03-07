@@ -9,7 +9,7 @@ export const SideBar = ({name} : {name : SelectedAdminSidebarType}) => {
             <div className="flex justify-center items-center w-ful text-white gap-2 py-4">
                 <span className="self-center text-xl font-semibold whitespace-nowrap">Docdy</span>
             </div>
-            <SideComp title="Dashboard" isSelected={(name === "Dashboard") ? true : false} link={"admin-dashboard"}/>
+            {/* <SideComp title="Dashboard" isSelected={(name === "Dashboard") ? true : false} link={"admin-dashboard"}/> */}
             <SideComp title="Doctors" isSelected={(name === "Doctors") ? true : false} link={"admin-doctors"}/>
             <SideComp title="Users" isSelected={(name === "Users") ? true : false} link={"admin-users"}/>
             <SideComp title="Bookings" isSelected={(name === "Bookings") ? true : false} link={"admin-bookings"}/>

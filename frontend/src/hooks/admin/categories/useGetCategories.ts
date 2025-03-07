@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
-import { getCategoriesData } from "../../apis/admin/adminCategory"
+import { getCategoriesData } from "../../../apis/admin/adminCategory"
 import { useSetRecoilState } from "recoil"
-import { categoriesAtom } from "../../store/atoms/user/categories.state"
+import { categoriesAtom } from "../../../store/atoms/user/categories.state"
 
 
 interface CategoriesTypes {

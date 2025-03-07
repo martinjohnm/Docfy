@@ -77,6 +77,11 @@ export const SlotsComponent = () => {
   
     }
 
+    // const dayWiseSlotss = useRecoilValue(daywiseSlot(new Date()))
+
+    // console.log(dayWiseSlotss);
+    
+
     const handleSLotDelete = (id : string) => {
         if (selectedSLotToDelete) {
             deleteSlotByIdFn(id)

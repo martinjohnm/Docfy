@@ -1,6 +1,6 @@
 import Select, { MultiValue } from 'react-select'
 import { useEffect } from 'react';
-import { useGetCategories } from '../../hooks/admin/useGetCategories';
+import { useGetCategories } from '../../hooks/admin/categories/useGetCategories';
 
 export type OptionType = {
   value: string;

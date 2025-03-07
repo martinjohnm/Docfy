@@ -6,6 +6,7 @@ import { SlotResponseType } from "../../types/response.types"
 import { createSlots } from "../../apis/doctor/doctorSlotApis"
 import { useSetRecoilState } from "recoil"
 import { slotsByDoctorAtom } from "../../store/atoms/doctor/slotsByDoctorAtom"
+import toast from "react-hot-toast"
 
 
 
@@ -31,6 +32,7 @@ export const useSlotUpdate = () =>{
                     setUpdatedSlots(slot.data.slots)
                     setSlots(slot.data.slots)
                     setLoading(false)
+                    toast.success(slot.message)
                     return slot
                 } else {
                     setLoading(false)

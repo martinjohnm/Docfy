@@ -4,9 +4,9 @@ import { SingleHospitalNavbar } from "./SingleHospitalNavbar"
 import { ReactMultiSelectCategories } from "../../Common/React.Multi.Select.Categories"
 import { ChangeEvent, useEffect, useState } from "react"
 import { HospitalUpdateInput } from "../../../types/zod.types"
-import { useGetSingleHospital } from "../../../hooks/admin/useGetSingleHospital"
 import { ReactSelectLocations } from "../../Common/ReactSelectLocations"
 import { updateHospital } from "../../../apis/admin/adminHospital"
+import { useGetSingleHospital } from "../../../hooks/admin/hospitals/useGetSingleHospital"
 
 
 

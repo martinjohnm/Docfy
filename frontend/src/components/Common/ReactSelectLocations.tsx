@@ -3,7 +3,7 @@
 
 import Select from 'react-select'
 import { useEffect, useState } from 'react';
-import { useGetlocations } from '../../hooks/admin/useGetLocations';
+import { useGetlocations } from '../../hooks/admin/locations/useGetLocations';
 
 type OptionType = {
   value: string;

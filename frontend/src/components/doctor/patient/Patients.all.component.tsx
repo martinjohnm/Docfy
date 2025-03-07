@@ -17,10 +17,7 @@ export const PatientsAllComponent = () => {
     const [totalNoOfPages, setTotalNoOfPages] = useRecoilState(totalNoOfBookingPagesDoctor)
     const [selectedPageNo, setSelectedPageNo] = useRecoilState(selectedPageNumberDoctor)
     const bookings = useRecoilValue(bookingsByDoctorAtom)
-    
 
-    console.log(totalNoOfBooking);
-    
     
     if (totalNoOfBooking %filterNoOfRecords == 0){
         setTotalNoOfPages(Math.floor(totalNoOfBooking/filterNoOfRecords))

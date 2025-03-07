@@ -12,9 +12,6 @@ export const MultipleDateSelector = ({onSubmit, setTimeToggle, onSelectAlreadySl
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDates, setSelectedDates] = useState<Date[]>([]);  
 
-
-  console.log(selectedDates.length);
-  
   useGetSlotsDoctor()
 
 
@@ -87,7 +84,9 @@ export const MultipleDateSelector = ({onSubmit, setTimeToggle, onSelectAlreadySl
 
                     {/* Blank divs */}
                     {Array.from({ length: Number(weekMap.get(format(startOfMonth(currentMonth), "EE"))) }, (_, index) => (
-                                          <div key={index}/>
+                      
+                      
+                                          <div key={index}></div>
                     ))}
                     {/* Date divs */}
                     {daysInMonth.map((date) => (

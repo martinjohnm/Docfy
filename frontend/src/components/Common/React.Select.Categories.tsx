@@ -1,6 +1,6 @@
 import Select from 'react-select'
 import { useEffect, useState } from 'react';
-import { useGetCategories } from '../../hooks/admin/useGetCategories';
+import { useGetCategories } from '../../hooks/admin/categories/useGetCategories';
 
 type OptionType = {
   value: string;

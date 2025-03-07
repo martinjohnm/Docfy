@@ -4,7 +4,7 @@ import { LocationsNavbar } from "./LocationsNavbar"
 import { LocationAddInput } from "../../../types/zod.types"
 import { createLocationAdmin } from "../../../apis/admin/adminLocation"
 import { TextInput } from "../../Common/TextInput"
-import { useGetlocations } from "../../../hooks/admin/useGetLocations"
+import { useGetlocations } from "../../../hooks/admin/locations/useGetLocations"
 
 
 export const Locations = () => {
