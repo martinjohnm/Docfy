@@ -12,14 +12,14 @@ export const doctorMiddleWare = (req : Request, res : Response, next : NextFunct
    
         if (!token) {
         
-            res.status(401).json({ success: false, message: 'Unauthorized' });
+            res.status(203).json({ success: false, message: 'Unauthorized' });
             return
         }
 
         const userFromTokne = getUserFromToken(token)
    
         if (!userFromTokne) {
-            res.status(401).json({ success: false, message: 'Token expired Login again' });
+            res.status(203).json({ success: false, message: 'Token expired Login again' });
               return
         }
 

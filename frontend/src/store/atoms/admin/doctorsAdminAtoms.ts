@@ -20,7 +20,7 @@ export const doctorskipPaginationAdmin = atom<number>({
   })
   
   export const doctorsTakePaginationAdmin = atom<number>({
-    key : "bookingTakePaginationAdmin",
+    key : "doctorsTakePaginationAdmin",
     default : 10
   })
   

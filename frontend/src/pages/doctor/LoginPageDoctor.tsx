@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { getDoctorToken } from "../../utils/tokenUtils";
 import { useDoctor } from "../../store/hooks/useDoctor";
 import { doctorGoogelLogin } from "../../apis/doctor/doctorAuthApis";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { doctorAtom } from "../../store/atoms/authDoctorState";
 import { DoctorLoginInput } from "../../types/zod.types";
 import { useDoctorLogin } from "../../hooks/doctor/useDoctorLogin";
@@ -12,17 +12,18 @@ import { DoctorResponseType } from "../../types/response.types";
 
 
 export const LoginPageDoctor = () => {
+
     const navi = useNavigate()
     const doctor = useDoctor()
     const setRecoilDoctor = useSetRecoilState(doctorAtom)
 
     const doctorLogin = useDoctorLogin()
 
-    const doc = useRecoilValue(doctorAtom)
+    // const doc = useRecoilValue(doctorAtom)
 
 
     useEffect(() => {
-      if (doc.isAuthenticated && getDoctorToken()) {
+      if (doctor.isAuthenticated && getDoctorToken()) {
         navi("/doctor")
       }
     }, [doctor])
