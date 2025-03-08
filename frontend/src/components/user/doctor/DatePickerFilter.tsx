@@ -80,8 +80,8 @@ export const DatePickerFIlter = () => {
                 {/* Blank divs */}
                 {Array.from({ length: divs.length }).map((_, index) => (
           
-                    <button key={index} className="bg-red-300"> 
-                        hai
+                    <button key={index} className=""> 
+                        
                     </button>
                 ))}
                 

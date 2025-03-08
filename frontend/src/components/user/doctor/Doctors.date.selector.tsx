@@ -18,7 +18,7 @@ export const DoctorsDateSelector = () => {
     }
 
     return (    
-    <div className='justify-center items-center p-2'> 
+    <div className='justify-center flex p-2'> 
 
         <div className="flex">
             <input value={value} onChange={() => {}} onClick={toggleDateSelector} placeholder="Select date" className="border border-gray-300 bg-white text-black outline-none text-sm rounded-lg w-96 p-2">
