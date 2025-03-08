@@ -29,6 +29,12 @@ model User {
   lastLogin     DateTime?
 }
 
+model Admin {
+  id            String @id @default(uuid())
+  email         String @unique
+  password      String @unique
+}
+
 model Doctor {
   id                  String   @id @default(uuid())
   name                String?

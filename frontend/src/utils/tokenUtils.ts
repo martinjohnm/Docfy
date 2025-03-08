@@ -1,4 +1,4 @@
-import { DOCTOR_TOKEN, TOKEN } from "./consts";
+import { ADMIN_TOKEN, DOCTOR_TOKEN, TOKEN } from "./consts";
 
 // utils/auth.ts
   export const getToken = (): string | null => {
@@ -24,5 +24,18 @@ import { DOCTOR_TOKEN, TOKEN } from "./consts";
   
   export const removeDoctorToken = (): void => {
     localStorage.removeItem(DOCTOR_TOKEN);
+  };
+
+
+  export const geAdminToken = (): string | null => {
+    return localStorage.getItem(ADMIN_TOKEN);
+  };
+  
+  export const seAdminToken = (token: string): void => {
+    localStorage.setItem(ADMIN_TOKEN, token);
+  };
+  
+  export const removAdminToken = (): void => {
+    localStorage.removeItem(ADMIN_TOKEN);
   };
   

@@ -25,13 +25,18 @@ import locationAdminRoute from "./routes/admin/location.admin"
 import bookingAdminRoute from "./routes/admin/booking.admin"
 import doctorAdminRoute from "./routes/admin/doctor.admin"
 import userAdminRoute from "./routes/admin/user.admin"
+import dashAdminRoute from "./routes/admin/dash.admin"
+import authAdminRoute from "./routes/admin/auth.admin"
 
 
 import { initPassport } from "./passport";
+import { adminCreationScript } from "./utils/adminUtils";
 
 const app = express();
 configDotenv()
 initPassport()
+adminCreationScript()
+
 app.use(express.json())
 app.use(cookieParser())
 app.use(
@@ -80,6 +85,8 @@ app.use("/admin/location", locationAdminRoute)
 app.use("/admin/booking", bookingAdminRoute)
 app.use("/admin/doctor", doctorAdminRoute)
 app.use("/admin/user", userAdminRoute)
+app.use("/admin/dash", dashAdminRoute)
+app.use("/admin/auth", authAdminRoute)
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

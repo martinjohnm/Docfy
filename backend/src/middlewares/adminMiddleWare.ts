@@ -1,6 +1,6 @@
 
 import { Request, Response, NextFunction } from "express"
-import { getUserFromToken, verifyToken } from "../utils";
+import { getAdminFromToken, getUserFromToken, verifyToken } from "../utils";
 
 
 export const adminMiddleWare = (req : Request, res : Response, next : NextFunction) => {
@@ -16,12 +16,15 @@ export const adminMiddleWare = (req : Request, res : Response, next : NextFuncti
             return
         }
 
-        const userFromTokne = getUserFromToken(token)
+        const adminFromToken = getAdminFromToken(token)
    
-        if (!userFromTokne) {
+        if (!adminFromToken) {
             res.status(401).json({ success: false, message: 'Token expired Login again' });
               return
         }
+
+        req.admin = adminFromToken
+        
         
         next()
         } catch(e) {

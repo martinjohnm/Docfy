@@ -52,6 +52,11 @@ export interface UserResponseType {
     bookings            :      string
 }
 
+export interface AdminResponseType {
+    id                  :      string
+    email               :      string
+}
+
 export interface BookingResponseType {
     id                  :      string
     doctorId            :      string

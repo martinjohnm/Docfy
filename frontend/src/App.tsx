@@ -33,6 +33,10 @@ import { SlotsDoctor } from "./pages/doctor/Slots.Doctor"
 import { SingleDoctor } from "./pages/user/doctor/SingleDoctor"
 import { Toaster } from "react-hot-toast";
 import { Bookings } from "./pages/user/bookings/Bookings"
+import { LoginPageAdmin } from "./pages/admin/LoginPageAdmin"
+import { AdminAuthProtector } from "./protected/AdminAuthProtector"
+import { adminAtom, adminLoadingState, adminTokenAtom, isAdminAuthenticated } from "./store/atoms/admin/adminAuthState"
+import { fetchAdmin } from "./apis/admin/adminLoginApi"
 
 
 function App() {
@@ -68,15 +72,16 @@ const AuthApp = () => {
         <Route path="/user-profile" element={<UserAuthProtector><UserProfilePage/></UserAuthProtector>}/>
     
         {/* admin pages */}
-        <Route path="/admin-dashboard" element={<DashboardPageAdmin/>}/>
-        <Route path="/admin-bookings" element={<BookingsPageAdmin/>}/>
-        <Route path="/admin-users" element={<UsersPageAdmin/>}/>
-        <Route path="/admin-doctors" element={<DoctorsPageAdmin/>}/>
-        <Route path="/admin-reports" element={<ReportsPageAdmin/>}/>
-        <Route path="/admin-hospitals" element={<HospitalsPageAdmin/>}/>
-        <Route path="/admin-hospitals/:id" element={<SingleHospitalPageAdmin/>}/>
-        <Route path="/admin-departments" element={<DepartmentPageAdmin/>}/>
-        <Route path="/admin-locations" element={<LocationsPageAdmin/>}/>
+        <Route path="/admin-dashboard" element={<AdminAuthProtector><DashboardPageAdmin/></AdminAuthProtector>}/>
+        <Route path="/admin-bookings" element={<AdminAuthProtector><BookingsPageAdmin/></AdminAuthProtector>}/>
+        <Route path="/admin-users" element={<AdminAuthProtector><UsersPageAdmin/></AdminAuthProtector>}/>
+        <Route path="/admin-doctors" element={<AdminAuthProtector><DoctorsPageAdmin/></AdminAuthProtector>}/>
+        <Route path="/admin-reports" element={<AdminAuthProtector><ReportsPageAdmin/></AdminAuthProtector>}/>
+        <Route path="/admin-hospitals" element={<AdminAuthProtector><HospitalsPageAdmin/></AdminAuthProtector>}/>
+        <Route path="/admin-hospitals/:id" element={<AdminAuthProtector><SingleHospitalPageAdmin/></AdminAuthProtector>}/>
+        <Route path="/admin-departments" element={<AdminAuthProtector><DepartmentPageAdmin/></AdminAuthProtector>}/>
+        <Route path="/admin-locations" element={<AdminAuthProtector><LocationsPageAdmin/></AdminAuthProtector>}/>
+        <Route path="/admin-login" element={<LoginPageAdmin/>}/>
 
 
         {/* doctor pages */}
@@ -100,11 +105,20 @@ const  InitialLoader  = ({ children } : {children : React.ReactNode}) =>  {
 
   const userLoading = useRecoilValue(userLoadingState)
   const doctorLoading = useRecoilValue(doctorLoadingState)
+  const adminLoading = useRecoilValue(adminLoadingState)
+
   const setUser = useSetRecoilState(userAtom);
   const setDoctor = useSetRecoilState(doctorAtom)
 
   const setUserLoading = useSetRecoilState(userLoadingState)
   const setDoctorLoading = useSetRecoilState(doctorLoadingState)
+  const setAdminLoading = useSetRecoilState(adminLoadingState)
+
+
+  const setAdminAtom = useSetRecoilState(adminAtom)
+  const setAdminBool = useSetRecoilState(isAdminAuthenticated)
+  const setAdminToken = useSetRecoilState(adminTokenAtom)
+
 
   useEffect(() => {
     const getUserData = async () => {
@@ -157,14 +171,40 @@ const  InitialLoader  = ({ children } : {children : React.ReactNode}) =>  {
       }
     };
 
+
+    const getAdminData = async () => {
+      try {
+        setAdminLoading(true)
+        const fetchedData = await fetchAdmin() ;    
+        
+
+           
+        if (fetchedData.success) {
+   
+          setAdminAtom(fetchedData.data.admin)
+          setAdminToken(fetchedData.data.adminToken)
+          setAdminBool(true)
+        };
+
+        
+      } catch (error) {
+        setAdminAtom(null)
+        setAdminToken(null)
+        setAdminBool(false)
+      } finally {
+         setAdminLoading(false)
+      }
+    };
+
     
 
     getUserData();
     getDoctorData()
-  }, [setUser])
+    getAdminData()
+  }, [])
 
 
-  if (userLoading || doctorLoading) {
+  if (userLoading || doctorLoading || adminLoading) {
     return <div>Loading...</div>;
   }
 

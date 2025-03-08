@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../store/hooks/useUser";
 import { getToken } from "../../utils/tokenUtils";
+import toast from "react-hot-toast";
 
 const BACKEND_URL = import.meta.env.VITE_APP_BACKEND_URL ?? 'http://localhost:3000';
 
@@ -45,7 +46,7 @@ export const LoginPageUser = () => {
       if (data.success) {
         navi("/")
       } else {
-        alert(data.message)
+        toast.error(data.message)
       }
       
     };

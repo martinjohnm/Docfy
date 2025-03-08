@@ -3,7 +3,7 @@
 import { configDotenv } from "dotenv";
 import bcrypt from 'bcryptjs';
 import jwt from "jsonwebtoken";
-import { User } from "./types/types";
+import { Admin, User } from "./types/types";
 
 interface TokeInputType {
     id : string,
@@ -36,6 +36,21 @@ export const getUserFromToken  = (token : string) : User | null => {
   try {
     // Verify the token
     const decoded = verifyToken(token) as User
+
+    return decoded
+  } catch (err) {
+    
+    return null
+  }
+
+}
+
+
+export const getAdminFromToken  = (token : string) : User | null => {
+
+  try {
+    // Verify the token
+    const decoded = verifyToken(token) as Admin
 
     return decoded
   } catch (err) {
