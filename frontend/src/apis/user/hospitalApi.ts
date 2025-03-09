@@ -9,7 +9,7 @@ export const getHospitals = async () => {
 };
 
 
-export const getHospitalDepatments = async (hospitalId : string) => {
+export const getHospitalDepatments = async () => {
   return userApi<{ success : boolean,  data : {hospitals : HospitalResponseType[]} , message : string}>('department/get-all', 'GET');
 };
 

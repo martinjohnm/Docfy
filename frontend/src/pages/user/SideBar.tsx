@@ -17,7 +17,7 @@ export const SideBar: React.FC = () => {
       <div className="bg-[#061e34] rounded-3xl w-full">
           {/* Normal navbar */}
           <div className="text-white hidden lg:block">
-              <Navbar/>
+              <Navbar page=""/>
           </div>
           {/* navbar with collapsable Hamburger Menu */}
           <div className="w-full px-4 py-4 gap-2 justify-between flex items-center lg:hidden">
