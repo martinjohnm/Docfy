@@ -3,15 +3,18 @@ import { Request, Response } from "express";
 import db from "../../db"
 import { comparePassword, generatToken, getUserFromToken, hashPassword } from "../../utils";
 import { slotsCreateInput } from "../../types/zod.types";
-import { CreateSlots, slotstoreturn } from "../../utils/slotUtil";
+import { slotstoreturn } from "../../utils/slotUtil";
 import { filteredCurrentAndNewSlotToCreateArr, getSLotsByDOctorIdandDatesArr } from "../../utils/dateUtils";
 
 
 export const createSlot = async (req : Request, res : Response) => {
     try {
         
+        console.log(req.body);
+        
         const parsedSlotInput = slotsCreateInput.safeParse(req.body);
 
+      
         
         if (!parsedSlotInput.success) {
             res.status(400).json({
@@ -22,31 +25,14 @@ export const createSlot = async (req : Request, res : Response) => {
         }
 
 
-
-        const slotsToCreate = CreateSlots(
-            {
-                dates : parsedSlotInput.data.selectedDates, 
-                startTime : parsedSlotInput.data.startTime, 
-                endTime : parsedSlotInput.data.endTime, 
-                breakEndTime : parsedSlotInput.data.breakEndTime, 
-                breakStartTime : parsedSlotInput.data.breakStartTime, 
-                duration : parsedSlotInput.data.duration,
-                doctorId : req.doctor.id
-            }
-        )
-
-
         // get slots already created for the doctorId and the given dates
-        const currentSlotsForTheGivenDateArr = await getSLotsByDOctorIdandDatesArr({dates : parsedSlotInput.data.selectedDates, doctorId : req.doctor.id})
+        const currentSlotsForTheGivenDateArr = await getSLotsByDOctorIdandDatesArr({dates : parsedSlotInput.data.dates, doctorId : req.doctor.id})
    
         
         // check if the currentSlotsForTheGivenDateArr already created is conflicts with the slotsToCreate and return a filtererd array
-        const nonConflictingSlotsToCreate = filteredCurrentAndNewSlotToCreateArr({newSlots : slotsToCreate, currentSlots : currentSlotsForTheGivenDateArr})
+        const nonConflictingSlotsToCreate = filteredCurrentAndNewSlotToCreateArr({newSlots : parsedSlotInput.data.slotsToCreate, currentSlots : currentSlotsForTheGivenDateArr})
 
 
-        // nonConflictingSlotsToCreate.forEach(ele => {
-        //     console.log(` ${ele.startTime.getDate()} ${ele.startTime.getHours()}:${ele.startTime.getMinutes()} to ${ele.endTime.getHours()}:${ele.endTime.getMinutes()}`)
-        // })
         
         await db.slot.createMany({
             data : nonConflictingSlotsToCreate,

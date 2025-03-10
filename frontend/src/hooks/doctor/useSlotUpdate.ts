@@ -1,11 +1,10 @@
 
 
 import { useEffect, useState } from "react"
-import { SlotsCreateInput } from "../../types/zod.types"
 import { SlotResponseType } from "../../types/response.types"
 import { createSlots } from "../../apis/doctor/doctorSlotApis"
-import { useSetRecoilState } from "recoil"
-import { slotsByDoctorAtom } from "../../store/atoms/doctor/slotsByDoctorAtom"
+import { useRecoilValue, useSetRecoilState } from "recoil"
+import { createdSlotsAtom, selectedDatesToCreateSlotsAtom, slotsByDoctorAtom } from "../../store/atoms/doctor/slotsByDoctorAtom"
 import toast from "react-hot-toast"
 
 
@@ -16,6 +15,10 @@ export const useSlotUpdate = () =>{
     const [loading, setLoading] = useState<boolean>(false)
 
     const setSlots = useSetRecoilState(slotsByDoctorAtom)
+    const slotsToCreate = useRecoilValue(createdSlotsAtom)
+    const datesFromAtom = useRecoilValue(selectedDatesToCreateSlotsAtom)
+
+    const dates : string[] = datesFromAtom.map((date) => (date.toISOString()))
     
     useEffect(() => {
 
@@ -23,11 +26,11 @@ export const useSlotUpdate = () =>{
     }, [updatedSlots])
 
 
-    const updatedSlot = async ( postInputs : SlotsCreateInput)  => {
+    const updatedSlot = async ()  => {
 
         try {
                 setLoading(true)
-                const slot = await createSlots(postInputs)
+                const slot = await createSlots({slotsToCreate, dates})
                 if (slot.success) {
                     setUpdatedSlots(slot.data.slots)
                     setSlots(slot.data.slots)

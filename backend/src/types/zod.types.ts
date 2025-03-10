@@ -1,6 +1,6 @@
 
 
-import z from "zod"
+import z, { string } from "zod"
 
 const BookingStatusEnum = z.enum(['PENDING', 'CONFIRMED', 'CANCELLED']);
 
@@ -104,12 +104,13 @@ export const userAddInput = z.object({
 // SLots
 
 export const slotsCreateInput = z.object({
-    selectedDates : z.array(z.string()).min(1, "Should choose atleast one date"),
-    startTime : z.number(),
-    endTime : z.number(),
-    breakStartTime : z.number(),
-    breakEndTime : z.number(),
-    duration : z.number()
+    slotsToCreate : z.array(z.object({
+        startTime : z.string(),
+        endTime : z.string(),
+        duration : z.number(),
+        doctorId : z.string()
+    })), 
+    dates : z.array(z.string())
 })
 
 

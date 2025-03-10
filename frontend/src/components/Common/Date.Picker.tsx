@@ -1,16 +1,18 @@
 import { useState } from "react";
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, addMonths, subMonths, isFuture } from "date-fns";
 import { weekdays, weekMap } from "../../utils/dateTimeHelpers";
-import { useRecoilValue } from "recoil";
-import { slotsByDoctorAtom } from "../../store/atoms/doctor/slotsByDoctorAtom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { selectedDatesToCreateSlotsAtom, slotsByDoctorAtom } from "../../store/atoms/doctor/slotsByDoctorAtom";
 import { useGetSlotsDoctor } from "../../hooks/doctor/useGetSlotsDoctor";
 import { SlotResponseType } from "../../types/response.types";
 
 
 
-export const MultipleDateSelector = ({onSubmit, setTimeToggle, onSelectAlreadySlotedDay} : {onSubmit : any, setTimeToggle:any, onSelectAlreadySlotedDay : any, alreadySlotedDate : Date | null}) => {
+export const MultipleDateSelector = ({setTimeToggle, onSelectAlreadySlotedDay} : {setTimeToggle:any, onSelectAlreadySlotedDay : any}) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDates, setSelectedDates] = useState<Date[]>([]);  
+  const [_selectedDatesToCreateSlots, setSelectedDatesToCreateSlots] = useRecoilState(selectedDatesToCreateSlotsAtom)
+
 
   useGetSlotsDoctor()
 
@@ -18,9 +20,12 @@ export const MultipleDateSelector = ({onSubmit, setTimeToggle, onSelectAlreadySl
   const slots = useRecoilValue(slotsByDoctorAtom)
 
   const dayWiseSlots = ({day} : {day : Date}) : SlotResponseType[] =>  { 
+    
       return slots?.filter((slot) => isSameDay(slot.startTime, day) ) as SlotResponseType[]
 
   }
+
+
 
 
 
@@ -31,9 +36,16 @@ export const MultipleDateSelector = ({onSubmit, setTimeToggle, onSelectAlreadySl
   });
 
 
+
   
   // Toggle date selection
   const toggleDate = (date: Date) => {
+
+    setSelectedDatesToCreateSlots((prevDates) => (
+      prevDates.some((d) => isSameDay(d, date)) ? prevDates.filter((d) => !isSameDay(d, date)) : 
+      [...prevDates, date]
+    ))
+
     setSelectedDates((prev) =>
       prev.some((d) => isSameDay(d, date))
         ? prev.filter((d) => !isSameDay(d, date)) // Remove date
@@ -50,6 +62,17 @@ export const MultipleDateSelector = ({onSubmit, setTimeToggle, onSelectAlreadySl
   // Change month
   const goToPreviousMonth = () => setCurrentMonth(subMonths(currentMonth, 1));
   const goToNextMonth = () => setCurrentMonth(addMonths(currentMonth, 1));
+
+
+
+
+  const onCancel = () => {
+    setSelectedDates([])
+    setSelectedDatesToCreateSlots([])
+    }
+  const onSubmitInputs = () => {
+      setTimeToggle()
+  }
 
   return (
     <div className="">
@@ -113,17 +136,20 @@ export const MultipleDateSelector = ({onSubmit, setTimeToggle, onSelectAlreadySl
                                 : "bg-gray-100 text-gray-800"
                             } hover:bg-blue-200 transition`}
                             onClick={() => {
+           
                               toggleDate(date)
                               
                             }}
                           >
                             {format(date, "d")}
                           </button>) : (
+                  
                             <button
                             className={`py-2 rounded-lg text-center bg-slate-700 text-white`}
-                            onClick={() => {onSelectAlreadySlotedDay(date)}}
+                            onClick={() => {onSelectAlreadySlotedDay(date.toISOString())}}
                             >
                               {format(date, "d")}
+
                             </button>
                           )
                           
@@ -135,11 +161,8 @@ export const MultipleDateSelector = ({onSubmit, setTimeToggle, onSelectAlreadySl
                   </div>
             
                   <div className={`mt-4 grid gap-2 grid-cols-2 max-w-[60%]}`}>
-                    <button onClick={() => {
-                      onSubmit(selectedDates)
-                      setTimeToggle()
-                    }} className="bg-green-600 text-white px-4 py-2 rounded-md">Submit</button>
-                    <button onClick={() => setSelectedDates([])} className="bg-red-500 text-white px-4 py-2 rounded-md">Cancel</button>
+                    <button onClick={onSubmitInputs} className="bg-green-600 text-white px-4 py-2 rounded-md">Submit</button>
+                    <button onClick={onCancel} className="bg-red-500 text-white px-4 py-2 rounded-md">Cancel</button>
                   </div>
 
       </div>

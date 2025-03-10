@@ -103,13 +103,20 @@ export const userAddInput = z.object({
 
 // SLots
 
+export interface localSlotType {
+    startTime : string 
+    endTime : string ,
+    duration : number,
+    doctorId : string
+}
+
 export const slotsCreateInput = z.object({
-    selectedDates : z.array(z.string()),
-    startTime : z.number(),
-    endTime : z.number(),
-    breakStartTime : z.number(),
-    breakEndTime : z.number(),
-    duration : z.number()
+    slots : z.array(z.object({
+        startTime : z.string(),
+        endTime : z.string(),
+        duration : z.number(),
+    })),
+    dates : z.array(z.string())
 })
 
 

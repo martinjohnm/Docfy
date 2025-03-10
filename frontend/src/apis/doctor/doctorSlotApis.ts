@@ -1,5 +1,5 @@
 import { HospitalResponseType, SlotResponseType } from '../../types/response.types';
-import { SlotsCreateInput } from '../../types/zod.types';
+import { localSlotType } from '../../types/zod.types';
 import { doctorApi } from '../../utils/apiClient/doctorapiClient';
 
 
@@ -11,8 +11,8 @@ export const fetchAllHospitalsDoctor = async () => {
 
 
 
-export const createSlots = async (postInputs : SlotsCreateInput) => {
-  return doctorApi<{ success : boolean,  data : {slots : SlotResponseType[]} , message : string}>(`doctor/slot/create`, "POST", postInputs)
+export const createSlots = async ({slotsToCreate, dates } : {slotsToCreate : localSlotType[], dates : string[]}) => {
+  return doctorApi<{ success : boolean,  data : {slots : SlotResponseType[]} , message : string}>(`doctor/slot/create`, "POST", {slotsToCreate, dates})
 };
 
 

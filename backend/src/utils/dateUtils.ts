@@ -51,7 +51,7 @@ export function filteredCurrentAndNewSlotToCreateArr({newSlots, currentSlots} : 
     const nonConflictingSlotsToCreate = newSlots.filter(newSlot => {
         return !currentSlots.some(existingSlot => {
                 return (
-                    newSlot.startTime.getTime() < existingSlot.endTime.getTime() && newSlot.endTime.getTime() > existingSlot.startTime.getTime()
+                    new Date(newSlot.startTime) < existingSlot.endTime && new Date(newSlot.endTime) > existingSlot.startTime
                 )
             }
         )
