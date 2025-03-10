@@ -7,6 +7,7 @@ import { HospitalUpdateInput } from "../../../types/zod.types"
 import { ReactSelectLocations } from "../../Common/ReactSelectLocations"
 import { updateHospital } from "../../../apis/admin/adminHospital"
 import { useGetSingleHospital } from "../../../hooks/admin/hospitals/useGetSingleHospital"
+import toast from "react-hot-toast"
 
 
 
@@ -33,7 +34,10 @@ export const SingleHospital = () => {
 
     const handleSubmit = async () => {
         if (postInputs){
-            await updateHospital({hospitalId : id, postInputs : postInputs})
+            const updated = await updateHospital({hospitalId : id, postInputs : postInputs})
+            if (updated.success) {
+                toast.success("hospital updated!!")
+            }
         }
     }
     
@@ -73,7 +77,7 @@ export const SingleHospital = () => {
                             
                         </div>
                         <div className="w-full h-full p-4 bg-white mx-auto container rounded-lg mt-2 justify-start items-center flex gap-2">
-                            <button onClick={handleGoBack} className="px-4 bg-red-600 rounded-md text-white text-base py-1">Cancel</button>
+                            <button onClick={handleGoBack} className="px-4 bg-red-600 rounded-md text-white text-base py-1">Go back</button>
                             <button onClick={handleSubmit} className="px-4 bg-green-600 rounded-md text-white text-base py-1">Update</button>
                         </div>
                       
