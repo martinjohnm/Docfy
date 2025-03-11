@@ -119,6 +119,7 @@ export const queryDoctorSchema = z.object({
     specializationId: z.string().optional(),
     searchTerm : z.string().optional(),
     date : z.string().optional(),
+    dateLoc : z.string().optional(),
     skip : z.string().optional(),
     take : z.string().optional()
   });

@@ -24,8 +24,21 @@ export const useGetFilteredDoctor = () => {
     
     
     let date = ''
+    let dateLoc = ""
+
+    
     if (dateFromStore != "") {
+        // const offset = -dateFromStore.getTimezoneOffset();
+        // date = dateFromStore.toISOString()
+        
+        // const sign = offset >= 0 ? '+' : '-';
+        // const hours = String(Math.floor(Math.abs(offset) / 60)).padStart(2, '0');
+        // const minutes = String(Math.abs(offset) % 60).padStart(2, '0');
+        // dateLoc = dateFromStore.toISOString().replace('Z', `${sign}${hours}:${minutes}`);
+        
         date = dateFromStore.toISOString()
+        dateLoc = dateFromStore.toLocaleString()
+
     }
     
     const setFilteredDoctors = useSetRecoilState(filteredDoctorsAtom)
@@ -35,7 +48,7 @@ export const useGetFilteredDoctor = () => {
 
         const getdoctor = async () => {
             
-            const doctor = await getDoctorsByFilters({hospitalId, categoryId, searchTerm, date, skip, take})            
+            const doctor = await getDoctorsByFilters({hospitalId, categoryId, searchTerm, date, dateLoc, skip, take})            
 
             if (doctor.success) {
                 setTotalFilteredDoctorsCount(doctor.data.totalFilteredDoctors)

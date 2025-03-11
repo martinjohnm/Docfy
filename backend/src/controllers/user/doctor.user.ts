@@ -82,8 +82,11 @@ export const getDoctorByFilters = async (req : Request, res : Response) => {
 
 
         const validatedQuery = queryDoctorSchema.parse(req.query);
-        const {hospitalId,specializationId, searchTerm, date, skip, take} = validatedQuery
+        const {hospitalId,specializationId, searchTerm, date,dateLoc, skip, take} = validatedQuery
 
+        console.log(date, dateLoc);
+        
+        
         
         const startOfDay = new Date(`${date}`)
         const endOfDay = new Date(`${date}`)
